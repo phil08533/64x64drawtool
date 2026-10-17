@@ -2,9 +2,9 @@
   "title": "Pixel64 Procedural Texture Library",
   "version": "1.0",
   "updated": "2026-10-17",
-  "description": "Expanded named texture recipe archive. Includes original presets plus additional niche material families. Repeatable presets use stable recipe seeds in the site generator; tileable output is designed for repeating game surfaces.",
+  "description": "Named local procedural texture recipes. Duplicate prompt strings were disambiguated to ensure stable seeds produce distinct variants. Seamless entries use a periodic-pattern generator intended for repeating game surfaces.",
   "generation": "Offline, procedural JavaScript; no API key or cloud service required.",
-  "count": 815,
+  "count": 1096,
   "categories": [
     {
       "group": "SHIP & STATION",
@@ -51,7 +51,7 @@
         },
         {
           "name": "Corridor bulkhead",
-          "prompt": "spaceship bulkhead"
+          "prompt": "spaceship bulkhead, distinct corridor bulkhead surface pattern"
         },
         {
           "name": "Viewport windows",
@@ -91,7 +91,7 @@
         },
         {
           "name": "Ship interior wall",
-          "prompt": "spaceship bulkhead"
+          "prompt": "spaceship bulkhead, distinct ship interior wall surface pattern"
         },
         {
           "name": "Titanium hull",
@@ -245,11 +245,11 @@
         },
         {
           "name": "Metal floor plates",
-          "prompt": "industrial floor"
+          "prompt": "industrial floor, distinct metal floor plates surface pattern"
         },
         {
           "name": "Grated catwalk",
-          "prompt": "vent grille"
+          "prompt": "vent grille, distinct grated catwalk surface pattern"
         },
         {
           "name": "Cargo floor",
@@ -269,11 +269,11 @@
         },
         {
           "name": "Pipe trench",
-          "prompt": "coolant pipes"
+          "prompt": "coolant pipes, distinct pipe trench surface pattern"
         },
         {
           "name": "Reactor chamber floor",
-          "prompt": "reactor core"
+          "prompt": "reactor core, distinct reactor chamber floor surface pattern"
         },
         {
           "name": "Industrial wall panels",
@@ -281,15 +281,15 @@
         },
         {
           "name": "Factory safety floor",
-          "prompt": "robot factory floor"
+          "prompt": "robot factory floor, distinct factory safety floor surface pattern"
         },
         {
           "name": "Docking bay markings",
-          "prompt": "landing pad"
+          "prompt": "landing pad, distinct docking bay markings surface pattern"
         },
         {
           "name": "Bulkhead hazard door",
-          "prompt": "airlock door amber"
+          "prompt": "airlock door amber, distinct bulkhead hazard door surface pattern"
         },
         {
           "name": "Concrete station floor",
@@ -297,7 +297,7 @@
         },
         {
           "name": "Scratched metal floor",
-          "prompt": "rusted spaceship metal"
+          "prompt": "rusted spaceship metal, distinct scratched metal floor surface pattern"
         },
         {
           "name": "Dark steel panels",
@@ -378,11 +378,11 @@
         },
         {
           "name": "Toxic swamp",
-          "prompt": "alien biomechanical wall green"
+          "prompt": "alien biomechanical wall green, distinct toxic swamp surface pattern"
         },
         {
           "name": "Organic tendrils",
-          "prompt": "alien hive wall"
+          "prompt": "alien hive wall, distinct organic tendrils surface pattern"
         },
         {
           "name": "Bio-tech panels",
@@ -390,7 +390,7 @@
         },
         {
           "name": "Crystal floor",
-          "prompt": "crystal alien surface"
+          "prompt": "crystal alien surface, distinct crystal floor surface pattern"
         },
         {
           "name": "Black alien stone",
@@ -398,15 +398,15 @@
         },
         {
           "name": "Meteor rock",
-          "prompt": "stone concrete"
+          "prompt": "stone concrete, distinct meteor rock surface pattern"
         },
         {
           "name": "Frozen cave wall",
-          "prompt": "ice planet ground"
+          "prompt": "ice planet ground, distinct frozen cave wall surface pattern"
         },
         {
           "name": "Mossy ruins",
-          "prompt": "mossy stone green"
+          "prompt": "mossy stone green, distinct mossy ruins surface pattern"
         },
         {
           "name": "Sand dunes",
@@ -418,7 +418,7 @@
         },
         {
           "name": "Bioluminescent cave",
-          "prompt": "alien biomechanical wall green"
+          "prompt": "alien biomechanical wall green, distinct bioluminescent cave surface pattern"
         },
         {
           "name": "Purple crystal cluster",
@@ -426,11 +426,11 @@
         },
         {
           "name": "Volcanic crust",
-          "prompt": "lava planet rock"
+          "prompt": "lava planet rock, distinct volcanic crust surface pattern"
         },
         {
           "name": "Ice cracks",
-          "prompt": "ice planet ground blue"
+          "prompt": "ice planet ground blue, distinct ice cracks surface pattern"
         },
         {
           "name": "Alien coral",
@@ -463,7 +463,7 @@
         },
         {
           "name": "Force field · blue",
-          "prompt": "force field grid blue"
+          "prompt": "force field grid blue, distinct force field · blue surface pattern"
         },
         {
           "name": "Force field · red",
@@ -471,15 +471,15 @@
         },
         {
           "name": "Hologram grid",
-          "prompt": "blueprint grid"
+          "prompt": "blueprint grid, distinct hologram grid surface pattern"
         },
         {
           "name": "Radar screen",
-          "prompt": "security scanner green"
+          "prompt": "security scanner green, distinct radar screen surface pattern"
         },
         {
           "name": "Map terminal",
-          "prompt": "data terminal green"
+          "prompt": "data terminal green, distinct map terminal surface pattern"
         },
         {
           "name": "Power display",
@@ -487,7 +487,7 @@
         },
         {
           "name": "Reactor warning screen",
-          "prompt": "reactor core red"
+          "prompt": "reactor core red, distinct reactor warning screen surface pattern"
         },
         {
           "name": "Energy coil",
@@ -495,7 +495,7 @@
         },
         {
           "name": "Laser emitter",
-          "prompt": "reactor core red"
+          "prompt": "reactor core red, distinct laser emitter surface pattern"
         },
         {
           "name": "Shield generator",
@@ -507,7 +507,7 @@
         },
         {
           "name": "Computer screen · teal",
-          "prompt": "data terminal"
+          "prompt": "data terminal, distinct computer screen · teal surface pattern"
         },
         {
           "name": "Computer screen · amber",
@@ -519,7 +519,7 @@
         },
         {
           "name": "Circuit glow · green",
-          "prompt": "circuit board green"
+          "prompt": "circuit board green, distinct circuit glow · green surface pattern"
         },
         {
           "name": "Circuit glow · purple",
@@ -531,7 +531,7 @@
         },
         {
           "name": "Digital rain",
-          "prompt": "data terminal green"
+          "prompt": "data terminal green, distinct digital rain surface pattern"
         },
         {
           "name": "Navigation display",
@@ -580,7 +580,7 @@
         },
         {
           "name": "Mossy stone",
-          "prompt": "mossy stone green"
+          "prompt": "mossy stone green, distinct mossy stone surface pattern"
         },
         {
           "name": "Polished marble",
@@ -588,11 +588,11 @@
         },
         {
           "name": "Concrete",
-          "prompt": "stone concrete"
+          "prompt": "stone concrete, distinct concrete surface pattern"
         },
         {
           "name": "Desert sand",
-          "prompt": "sand dunes"
+          "prompt": "sand dunes, distinct desert sand surface pattern"
         },
         {
           "name": "Red sand",
@@ -604,7 +604,7 @@
         },
         {
           "name": "Moss ground",
-          "prompt": "mossy stone green"
+          "prompt": "mossy stone green, distinct moss ground surface pattern"
         },
         {
           "name": "Deep water",
@@ -620,15 +620,15 @@
         },
         {
           "name": "Ice blocks",
-          "prompt": "ice planet ground"
+          "prompt": "ice planet ground, distinct ice blocks surface pattern"
         },
         {
           "name": "Crystal mineral",
-          "prompt": "crystal alien surface"
+          "prompt": "crystal alien surface, distinct crystal mineral surface pattern"
         },
         {
           "name": "Lava rock",
-          "prompt": "lava planet rock"
+          "prompt": "lava planet rock, distinct lava rock surface pattern"
         },
         {
           "name": "Woven fabric",
@@ -1151,7 +1151,7 @@
       "items": [
         {
           "name": "Brushed alloy",
-          "prompt": "metal panels"
+          "prompt": "metal panels, distinct brushed alloy surface pattern"
         },
         {
           "name": "Gold alloy",
@@ -1163,7 +1163,7 @@
         },
         {
           "name": "Black carbon armor",
-          "prompt": "stealth armor"
+          "prompt": "stealth armor, distinct black carbon armor surface pattern"
         },
         {
           "name": "Blue carbon armor",
@@ -1179,15 +1179,15 @@
         },
         {
           "name": "Warning panel · red",
-          "prompt": "red emergency panels"
+          "prompt": "red emergency panels, distinct warning panel · red surface pattern"
         },
         {
           "name": "Warning panel · green",
-          "prompt": "green biotech panels"
+          "prompt": "green biotech panels, distinct warning panel · green surface pattern"
         },
         {
           "name": "Medical wall tiles",
-          "prompt": "medical bay"
+          "prompt": "medical bay, distinct medical wall tiles surface pattern"
         },
         {
           "name": "Lab wall · blue",
@@ -1207,23 +1207,23 @@
         },
         {
           "name": "Worn paint",
-          "prompt": "rusted spaceship metal"
+          "prompt": "rusted spaceship metal, distinct worn paint surface pattern"
         },
         {
           "name": "Scratched hull",
-          "prompt": "rusted spaceship metal"
+          "prompt": "rusted spaceship metal, distinct scratched hull surface pattern"
         },
         {
           "name": "Panel bolts",
-          "prompt": "armored plating"
+          "prompt": "armored plating, distinct panel bolts surface pattern"
         },
         {
           "name": "Ceramic armor",
-          "prompt": "white lab wall"
+          "prompt": "white lab wall, distinct ceramic armor surface pattern"
         },
         {
           "name": "Soundproof wall",
-          "prompt": "spaceship bulkhead"
+          "prompt": "spaceship bulkhead, distinct soundproof wall surface pattern"
         },
         {
           "name": "Checker tile · dark",
@@ -1235,11 +1235,11 @@
         },
         {
           "name": "Cold blue panels",
-          "prompt": "metal panels blue"
+          "prompt": "metal panels blue, distinct cold blue panels surface pattern"
         },
         {
           "name": "Toxic green panels",
-          "prompt": "metal panels green"
+          "prompt": "metal panels green, distinct toxic green panels surface pattern"
         },
         {
           "name": "Emergency red metal",
@@ -3373,6 +3373,1165 @@
         {
           "name": "Copper pan patina",
           "prompt": "seamless tileable pixel art texture, copper pan patina"
+        }
+      ]
+    },
+    {
+      "group": "ARCHITECTURAL & BUILDING DETAIL",
+      "items": [
+        {
+          "name": "Acoustic foam pyramids",
+          "prompt": "tileable seamless pixel art texture, acoustic foam pyramids, distinctive repeatable motif"
+        },
+        {
+          "name": "Perforated acoustic wood",
+          "prompt": "tileable seamless pixel art texture, perforated acoustic wood, distinctive repeatable motif"
+        },
+        {
+          "name": "Bamboo wall mat",
+          "prompt": "tileable seamless pixel art texture, bamboo wall mat, distinctive repeatable motif"
+        },
+        {
+          "name": "Rammed earth layers",
+          "prompt": "tileable seamless pixel art texture, rammed earth layers, distinctive repeatable motif"
+        },
+        {
+          "name": "Adobe brick weathering",
+          "prompt": "tileable seamless pixel art texture, adobe brick weathering, distinctive repeatable motif"
+        },
+        {
+          "name": "Limewash brush strokes",
+          "prompt": "tileable seamless pixel art texture, limewash brush strokes, distinctive repeatable motif"
+        },
+        {
+          "name": "Terrazzo brass inlay",
+          "prompt": "tileable seamless pixel art texture, terrazzo brass inlay, distinctive repeatable motif"
+        },
+        {
+          "name": "Reclaimed parquet",
+          "prompt": "tileable seamless pixel art texture, reclaimed parquet, distinctive repeatable motif"
+        },
+        {
+          "name": "Herringbone wood floor",
+          "prompt": "tileable seamless pixel art texture, herringbone wood floor, distinctive repeatable motif"
+        },
+        {
+          "name": "End-grain wood blocks",
+          "prompt": "tileable seamless pixel art texture, end-grain wood blocks, distinctive repeatable motif"
+        },
+        {
+          "name": "Worn corkboard",
+          "prompt": "tileable seamless pixel art texture, worn corkboard, distinctive repeatable motif"
+        },
+        {
+          "name": "Cork insulation granules",
+          "prompt": "tileable seamless pixel art texture, cork insulation granules, distinctive repeatable motif"
+        },
+        {
+          "name": "Glass block wall",
+          "prompt": "tileable seamless pixel art texture, glass block wall, distinctive repeatable motif"
+        },
+        {
+          "name": "Wire glass safety pane",
+          "prompt": "tileable seamless pixel art texture, wire glass safety pane, distinctive repeatable motif"
+        },
+        {
+          "name": "Lead came stained glass",
+          "prompt": "tileable seamless pixel art texture, lead came stained glass, distinctive repeatable motif"
+        },
+        {
+          "name": "Concrete aggregate cut",
+          "prompt": "tileable seamless pixel art texture, concrete aggregate cut, distinctive repeatable motif"
+        },
+        {
+          "name": "Exposed rebar concrete",
+          "prompt": "tileable seamless pixel art texture, exposed rebar concrete, distinctive repeatable motif"
+        },
+        {
+          "name": "Precast panel joints",
+          "prompt": "tileable seamless pixel art texture, precast panel joints, distinctive repeatable motif"
+        },
+        {
+          "name": "Expansion joint rubber",
+          "prompt": "tileable seamless pixel art texture, expansion joint rubber, distinctive repeatable motif"
+        },
+        {
+          "name": "Roof membrane seams",
+          "prompt": "tileable seamless pixel art texture, roof membrane seams, distinctive repeatable motif"
+        },
+        {
+          "name": "Standing seam roof",
+          "prompt": "tileable seamless pixel art texture, standing seam roof, distinctive repeatable motif"
+        },
+        {
+          "name": "Copper roof shingles",
+          "prompt": "tileable seamless pixel art texture, copper roof shingles, distinctive repeatable motif"
+        },
+        {
+          "name": "Slate roof courses",
+          "prompt": "tileable seamless pixel art texture, slate roof courses, distinctive repeatable motif"
+        },
+        {
+          "name": "Weathered cedar shingles",
+          "prompt": "tileable seamless pixel art texture, weathered cedar shingles, distinctive repeatable motif"
+        },
+        {
+          "name": "Timber end grain",
+          "prompt": "tileable seamless pixel art texture, timber end grain, distinctive repeatable motif"
+        },
+        {
+          "name": "Wood veneer curl",
+          "prompt": "tileable seamless pixel art texture, wood veneer curl, distinctive repeatable motif"
+        },
+        {
+          "name": "Painted brick flake",
+          "prompt": "tileable seamless pixel art texture, painted brick flake, distinctive repeatable motif"
+        },
+        {
+          "name": "Salt-damaged masonry",
+          "prompt": "tileable seamless pixel art texture, salt-damaged masonry, distinctive repeatable motif"
+        },
+        {
+          "name": "Efflorescent basement wall",
+          "prompt": "tileable seamless pixel art texture, efflorescent basement wall, distinctive repeatable motif"
+        },
+        {
+          "name": "Old ceramic grout",
+          "prompt": "tileable seamless pixel art texture, old ceramic grout, distinctive repeatable motif"
+        },
+        {
+          "name": "Hex bathroom tile",
+          "prompt": "tileable seamless pixel art texture, hex bathroom tile, distinctive repeatable motif"
+        },
+        {
+          "name": "Subway tile glaze",
+          "prompt": "tileable seamless pixel art texture, subway tile glaze, distinctive repeatable motif"
+        },
+        {
+          "name": "Pebble shower floor",
+          "prompt": "tileable seamless pixel art texture, pebble shower floor, distinctive repeatable motif"
+        },
+        {
+          "name": "Rubber gym flooring",
+          "prompt": "tileable seamless pixel art texture, rubber gym flooring, distinctive repeatable motif"
+        },
+        {
+          "name": "Gym mat diamonds",
+          "prompt": "tileable seamless pixel art texture, gym mat diamonds, distinctive repeatable motif"
+        },
+        {
+          "name": "Acoustic ceiling tile",
+          "prompt": "tileable seamless pixel art texture, acoustic ceiling tile, distinctive repeatable motif"
+        },
+        {
+          "name": "Suspended ceiling grid",
+          "prompt": "tileable seamless pixel art texture, suspended ceiling grid, distinctive repeatable motif"
+        },
+        {
+          "name": "Raised computer floor",
+          "prompt": "tileable seamless pixel art texture, raised computer floor, distinctive repeatable motif"
+        },
+        {
+          "name": "Cable floor hatch",
+          "prompt": "tileable seamless pixel art texture, cable floor hatch, distinctive repeatable motif"
+        },
+        {
+          "name": "Elevator button panel",
+          "prompt": "tileable seamless pixel art texture, elevator button panel, distinctive repeatable motif"
+        }
+      ]
+    },
+    {
+      "group": "TOOLS, WORKSHOPS & MAKER MATERIALS",
+      "items": [
+        {
+          "name": "Workbench scarred plywood",
+          "prompt": "tileable seamless pixel art texture, workbench scarred plywood, distinctive repeatable motif"
+        },
+        {
+          "name": "Workbench cutting mat",
+          "prompt": "tileable seamless pixel art texture, workbench cutting mat, distinctive repeatable motif"
+        },
+        {
+          "name": "Soldering mat grid",
+          "prompt": "tileable seamless pixel art texture, soldering mat grid, distinctive repeatable motif"
+        },
+        {
+          "name": "Breadboard contact holes",
+          "prompt": "tileable seamless pixel art texture, breadboard contact holes, distinctive repeatable motif"
+        },
+        {
+          "name": "Perfboard copper pads",
+          "prompt": "tileable seamless pixel art texture, perfboard copper pads, distinctive repeatable motif"
+        },
+        {
+          "name": "Laser-cut plywood edge",
+          "prompt": "tileable seamless pixel art texture, laser-cut plywood edge, distinctive repeatable motif"
+        },
+        {
+          "name": "3D printed layer lines",
+          "prompt": "tileable seamless pixel art texture, 3d printed layer lines, distinctive repeatable motif"
+        },
+        {
+          "name": "Resin print support scars",
+          "prompt": "tileable seamless pixel art texture, resin print support scars, distinctive repeatable motif"
+        },
+        {
+          "name": "FDM infill honeycomb",
+          "prompt": "tileable seamless pixel art texture, fdm infill honeycomb, distinctive repeatable motif"
+        },
+        {
+          "name": "Filament spool winding",
+          "prompt": "tileable seamless pixel art texture, filament spool winding, distinctive repeatable motif"
+        },
+        {
+          "name": "Sandblasted aluminum",
+          "prompt": "tileable seamless pixel art texture, sandblasted aluminum, distinctive repeatable motif"
+        },
+        {
+          "name": "Bead blasted steel",
+          "prompt": "tileable seamless pixel art texture, bead blasted steel, distinctive repeatable motif"
+        },
+        {
+          "name": "Hand-filed metal",
+          "prompt": "tileable seamless pixel art texture, hand-filed metal, distinctive repeatable motif"
+        },
+        {
+          "name": "Hammered copper dimples",
+          "prompt": "tileable seamless pixel art texture, hammered copper dimples, distinctive repeatable motif"
+        },
+        {
+          "name": "Anvil impact marks",
+          "prompt": "tileable seamless pixel art texture, anvil impact marks, distinctive repeatable motif"
+        },
+        {
+          "name": "Weld bead ripples",
+          "prompt": "tileable seamless pixel art texture, weld bead ripples, distinctive repeatable motif"
+        },
+        {
+          "name": "Grinding wheel scratches",
+          "prompt": "tileable seamless pixel art texture, grinding wheel scratches, distinctive repeatable motif"
+        },
+        {
+          "name": "Drill bit spiral flutes",
+          "prompt": "tileable seamless pixel art texture, drill bit spiral flutes, distinctive repeatable motif"
+        },
+        {
+          "name": "Saw kerf timber",
+          "prompt": "tileable seamless pixel art texture, saw kerf timber, distinctive repeatable motif"
+        },
+        {
+          "name": "Chisel cut wood",
+          "prompt": "tileable seamless pixel art texture, chisel cut wood, distinctive repeatable motif"
+        },
+        {
+          "name": "Plane shavings",
+          "prompt": "tileable seamless pixel art texture, plane shavings, distinctive repeatable motif"
+        },
+        {
+          "name": "Sanding swirl marks",
+          "prompt": "tileable seamless pixel art texture, sanding swirl marks, distinctive repeatable motif"
+        },
+        {
+          "name": "Masking tape residue",
+          "prompt": "tileable seamless pixel art texture, masking tape residue, distinctive repeatable motif"
+        },
+        {
+          "name": "Spray paint overspray",
+          "prompt": "tileable seamless pixel art texture, spray paint overspray, distinctive repeatable motif"
+        },
+        {
+          "name": "Powder coat orange peel",
+          "prompt": "tileable seamless pixel art texture, powder coat orange peel, distinctive repeatable motif"
+        },
+        {
+          "name": "Tool handle knurling",
+          "prompt": "tileable seamless pixel art texture, tool handle knurling, distinctive repeatable motif"
+        },
+        {
+          "name": "Rubber grip stipple",
+          "prompt": "tileable seamless pixel art texture, rubber grip stipple, distinctive repeatable motif"
+        },
+        {
+          "name": "Ratcheting gear teeth",
+          "prompt": "tileable seamless pixel art texture, ratcheting gear teeth, distinctive repeatable motif"
+        },
+        {
+          "name": "Wrench forged steel",
+          "prompt": "tileable seamless pixel art texture, wrench forged steel, distinctive repeatable motif"
+        },
+        {
+          "name": "Chain link wear",
+          "prompt": "tileable seamless pixel art texture, chain link wear, distinctive repeatable motif"
+        },
+        {
+          "name": "Rope fiber twist",
+          "prompt": "tileable seamless pixel art texture, rope fiber twist, distinctive repeatable motif"
+        },
+        {
+          "name": "Paracord weave",
+          "prompt": "tileable seamless pixel art texture, paracord weave, distinctive repeatable motif"
+        },
+        {
+          "name": "Sewn canvas seam",
+          "prompt": "tileable seamless pixel art texture, sewn canvas seam, distinctive repeatable motif"
+        },
+        {
+          "name": "Stitching holes leather",
+          "prompt": "tileable seamless pixel art texture, stitching holes leather, distinctive repeatable motif"
+        },
+        {
+          "name": "Velcro hook field",
+          "prompt": "tileable seamless pixel art texture, velcro hook field, distinctive repeatable motif"
+        },
+        {
+          "name": "Foam cut cells",
+          "prompt": "tileable seamless pixel art texture, foam cut cells, distinctive repeatable motif"
+        },
+        {
+          "name": "Packing paper crumple",
+          "prompt": "tileable seamless pixel art texture, packing paper crumple, distinctive repeatable motif"
+        },
+        {
+          "name": "Cardboard corrugation edge",
+          "prompt": "tileable seamless pixel art texture, cardboard corrugation edge, distinctive repeatable motif"
+        },
+        {
+          "name": "Shipping label adhesive",
+          "prompt": "tileable seamless pixel art texture, shipping label adhesive, distinctive repeatable motif"
+        },
+        {
+          "name": "Crate stencil paint",
+          "prompt": "tileable seamless pixel art texture, crate stencil paint, distinctive repeatable motif"
+        }
+      ]
+    },
+    {
+      "group": "SPACE, PLANET & EXTREME WEATHER",
+      "items": [
+        {
+          "name": "Venus sulfur haze ground",
+          "prompt": "tileable seamless pixel art texture, venus sulfur haze ground, distinctive repeatable motif"
+        },
+        {
+          "name": "Mercury impact dust",
+          "prompt": "tileable seamless pixel art texture, mercury impact dust, distinctive repeatable motif"
+        },
+        {
+          "name": "Titan hydrocarbon ice",
+          "prompt": "tileable seamless pixel art texture, titan hydrocarbon ice, distinctive repeatable motif"
+        },
+        {
+          "name": "Io sulfur plains",
+          "prompt": "tileable seamless pixel art texture, io sulfur plains, distinctive repeatable motif"
+        },
+        {
+          "name": "Enceladus ice fractures",
+          "prompt": "tileable seamless pixel art texture, enceladus ice fractures, distinctive repeatable motif"
+        },
+        {
+          "name": "Ganymede dark terrain",
+          "prompt": "tileable seamless pixel art texture, ganymede dark terrain, distinctive repeatable motif"
+        },
+        {
+          "name": "Phobos regolith",
+          "prompt": "tileable seamless pixel art texture, phobos regolith, distinctive repeatable motif"
+        },
+        {
+          "name": "Asteroid breccia",
+          "prompt": "tileable seamless pixel art texture, asteroid breccia, distinctive repeatable motif"
+        },
+        {
+          "name": "Comet sublimation pits",
+          "prompt": "tileable seamless pixel art texture, comet sublimation pits, distinctive repeatable motif"
+        },
+        {
+          "name": "Solar flare corona",
+          "prompt": "tileable seamless pixel art texture, solar flare corona, distinctive repeatable motif"
+        },
+        {
+          "name": "Aurora curtain bands",
+          "prompt": "tileable seamless pixel art texture, aurora curtain bands, distinctive repeatable motif"
+        },
+        {
+          "name": "Magnetosphere flux lines",
+          "prompt": "tileable seamless pixel art texture, magnetosphere flux lines, distinctive repeatable motif"
+        },
+        {
+          "name": "Cosmic ray scorch",
+          "prompt": "tileable seamless pixel art texture, cosmic ray scorch, distinctive repeatable motif"
+        },
+        {
+          "name": "Space debris impact",
+          "prompt": "tileable seamless pixel art texture, space debris impact, distinctive repeatable motif"
+        },
+        {
+          "name": "Radiation pitted hull",
+          "prompt": "tileable seamless pixel art texture, radiation pitted hull, distinctive repeatable motif"
+        },
+        {
+          "name": "Cryovolcano deposits",
+          "prompt": "tileable seamless pixel art texture, cryovolcano deposits, distinctive repeatable motif"
+        },
+        {
+          "name": "Methane lake shore",
+          "prompt": "tileable seamless pixel art texture, methane lake shore, distinctive repeatable motif"
+        },
+        {
+          "name": "Frozen methane cracks",
+          "prompt": "tileable seamless pixel art texture, frozen methane cracks, distinctive repeatable motif"
+        },
+        {
+          "name": "Salt flat polygons",
+          "prompt": "tileable seamless pixel art texture, salt flat polygons, distinctive repeatable motif"
+        },
+        {
+          "name": "Permafrost wedge ice",
+          "prompt": "tileable seamless pixel art texture, permafrost wedge ice, distinctive repeatable motif"
+        },
+        {
+          "name": "Glacial moraine gravel",
+          "prompt": "tileable seamless pixel art texture, glacial moraine gravel, distinctive repeatable motif"
+        },
+        {
+          "name": "Wind-carved sandstone",
+          "prompt": "tileable seamless pixel art texture, wind-carved sandstone, distinctive repeatable motif"
+        },
+        {
+          "name": "Desert varnish streaks",
+          "prompt": "tileable seamless pixel art texture, desert varnish streaks, distinctive repeatable motif"
+        },
+        {
+          "name": "Dust devil spiral tracks",
+          "prompt": "tileable seamless pixel art texture, dust devil spiral tracks, distinctive repeatable motif"
+        },
+        {
+          "name": "Tidal mud cracks",
+          "prompt": "tileable seamless pixel art texture, tidal mud cracks, distinctive repeatable motif"
+        },
+        {
+          "name": "Flood basalt columns",
+          "prompt": "tileable seamless pixel art texture, flood basalt columns, distinctive repeatable motif"
+        },
+        {
+          "name": "Volcanic bomb surface",
+          "prompt": "tileable seamless pixel art texture, volcanic bomb surface, distinctive repeatable motif"
+        },
+        {
+          "name": "Pillow lava pillows",
+          "prompt": "tileable seamless pixel art texture, pillow lava pillows, distinctive repeatable motif"
+        },
+        {
+          "name": "Pumice bubble field",
+          "prompt": "tileable seamless pixel art texture, pumice bubble field, distinctive repeatable motif"
+        },
+        {
+          "name": "Obsidian flow bands",
+          "prompt": "tileable seamless pixel art texture, obsidian flow bands, distinctive repeatable motif"
+        },
+        {
+          "name": "Fumarole mineral crust",
+          "prompt": "tileable seamless pixel art texture, fumarole mineral crust, distinctive repeatable motif"
+        },
+        {
+          "name": "Acid lake shoreline",
+          "prompt": "tileable seamless pixel art texture, acid lake shoreline, distinctive repeatable motif"
+        },
+        {
+          "name": "Sulfur crystal beds",
+          "prompt": "tileable seamless pixel art texture, sulfur crystal beds, distinctive repeatable motif"
+        },
+        {
+          "name": "Meteorite fusion crust",
+          "prompt": "tileable seamless pixel art texture, meteorite fusion crust, distinctive repeatable motif"
+        },
+        {
+          "name": "Lunar bootprint dust",
+          "prompt": "tileable seamless pixel art texture, lunar bootprint dust, distinctive repeatable motif"
+        },
+        {
+          "name": "Mars rover wheel tracks",
+          "prompt": "tileable seamless pixel art texture, mars rover wheel tracks, distinctive repeatable motif"
+        },
+        {
+          "name": "Space station condensation",
+          "prompt": "tileable seamless pixel art texture, space station condensation, distinctive repeatable motif"
+        },
+        {
+          "name": "Microgravity droplet rings",
+          "prompt": "tileable seamless pixel art texture, microgravity droplet rings, distinctive repeatable motif"
+        },
+        {
+          "name": "Solar sail weave",
+          "prompt": "tileable seamless pixel art texture, solar sail weave, distinctive repeatable motif"
+        },
+        {
+          "name": "Planetary ring ice chunks",
+          "prompt": "tileable seamless pixel art texture, planetary ring ice chunks, distinctive repeatable motif"
+        }
+      ]
+    },
+    {
+      "group": "ABSTRACT, GRAPHIC & UI BACKGROUNDS",
+      "items": [
+        {
+          "name": "Topographic contour map",
+          "prompt": "tileable seamless pixel art texture, topographic contour map, distinctive repeatable motif"
+        },
+        {
+          "name": "Bathymetric depth lines",
+          "prompt": "tileable seamless pixel art texture, bathymetric depth lines, distinctive repeatable motif"
+        },
+        {
+          "name": "Seismic waveform trace",
+          "prompt": "tileable seamless pixel art texture, seismic waveform trace, distinctive repeatable motif"
+        },
+        {
+          "name": "Circuit schematic backdrop",
+          "prompt": "tileable seamless pixel art texture, circuit schematic backdrop, distinctive repeatable motif"
+        },
+        {
+          "name": "Blueprint dimension marks",
+          "prompt": "tileable seamless pixel art texture, blueprint dimension marks, distinctive repeatable motif"
+        },
+        {
+          "name": "Architectural hatch symbols",
+          "prompt": "tileable seamless pixel art texture, architectural hatch symbols, distinctive repeatable motif"
+        },
+        {
+          "name": "Isometric grid paper",
+          "prompt": "tileable seamless pixel art texture, isometric grid paper, distinctive repeatable motif"
+        },
+        {
+          "name": "Graph paper worn",
+          "prompt": "tileable seamless pixel art texture, graph paper worn, distinctive repeatable motif"
+        },
+        {
+          "name": "Notebook ruled paper",
+          "prompt": "tileable seamless pixel art texture, notebook ruled paper, distinctive repeatable motif"
+        },
+        {
+          "name": "Ledger paper fibers",
+          "prompt": "tileable seamless pixel art texture, ledger paper fibers, distinctive repeatable motif"
+        },
+        {
+          "name": "Carbon copy ghosting",
+          "prompt": "tileable seamless pixel art texture, carbon copy ghosting, distinctive repeatable motif"
+        },
+        {
+          "name": "Fax noise bands",
+          "prompt": "tileable seamless pixel art texture, fax noise bands, distinctive repeatable motif"
+        },
+        {
+          "name": "Dot matrix printer",
+          "prompt": "tileable seamless pixel art texture, dot matrix printer, distinctive repeatable motif"
+        },
+        {
+          "name": "Thermal label stripes",
+          "prompt": "tileable seamless pixel art texture, thermal label stripes, distinctive repeatable motif"
+        },
+        {
+          "name": "Barcode field pattern",
+          "prompt": "tileable seamless pixel art texture, barcode field pattern, distinctive repeatable motif"
+        },
+        {
+          "name": "QR-like pixel mosaic",
+          "prompt": "tileable seamless pixel art texture, qr-like pixel mosaic, distinctive repeatable motif"
+        },
+        {
+          "name": "Crosshair calibration grid",
+          "prompt": "tileable seamless pixel art texture, crosshair calibration grid, distinctive repeatable motif"
+        },
+        {
+          "name": "Optical calibration dots",
+          "prompt": "tileable seamless pixel art texture, optical calibration dots, distinctive repeatable motif"
+        },
+        {
+          "name": "Color checker patches",
+          "prompt": "tileable seamless pixel art texture, color checker patches, distinctive repeatable motif"
+        },
+        {
+          "name": "Retro console menu grid",
+          "prompt": "tileable seamless pixel art texture, retro console menu grid, distinctive repeatable motif"
+        },
+        {
+          "name": "Arcade bezel stipple",
+          "prompt": "tileable seamless pixel art texture, arcade bezel stipple, distinctive repeatable motif"
+        },
+        {
+          "name": "Synthwave horizon grid",
+          "prompt": "tileable seamless pixel art texture, synthwave horizon grid, distinctive repeatable motif"
+        },
+        {
+          "name": "Memphis geometry pattern",
+          "prompt": "tileable seamless pixel art texture, memphis geometry pattern, distinctive repeatable motif"
+        },
+        {
+          "name": "Op art zigzag",
+          "prompt": "tileable seamless pixel art texture, op art zigzag, distinctive repeatable motif"
+        },
+        {
+          "name": "Op art spiral tiles",
+          "prompt": "tileable seamless pixel art texture, op art spiral tiles, distinctive repeatable motif"
+        },
+        {
+          "name": "Bauhaus circle blocks",
+          "prompt": "tileable seamless pixel art texture, bauhaus circle blocks, distinctive repeatable motif"
+        },
+        {
+          "name": "Constructivist diagonal blocks",
+          "prompt": "tileable seamless pixel art texture, constructivist diagonal blocks, distinctive repeatable motif"
+        },
+        {
+          "name": "Art nouveau tendrils",
+          "prompt": "tileable seamless pixel art texture, art nouveau tendrils, distinctive repeatable motif"
+        },
+        {
+          "name": "Art deco fan repeat",
+          "prompt": "tileable seamless pixel art texture, art deco fan repeat, distinctive repeatable motif"
+        },
+        {
+          "name": "Kintsugi crack lines",
+          "prompt": "tileable seamless pixel art texture, kintsugi crack lines, distinctive repeatable motif"
+        },
+        {
+          "name": "Japanese seigaiha waves",
+          "prompt": "tileable seamless pixel art texture, japanese seigaiha waves, distinctive repeatable motif"
+        },
+        {
+          "name": "Asanoha hemp leaf geometry",
+          "prompt": "tileable seamless pixel art texture, asanoha hemp leaf geometry, distinctive repeatable motif"
+        },
+        {
+          "name": "Kagome basket weave",
+          "prompt": "tileable seamless pixel art texture, kagome basket weave, distinctive repeatable motif"
+        },
+        {
+          "name": "Greek key border repeat",
+          "prompt": "tileable seamless pixel art texture, greek key border repeat, distinctive repeatable motif"
+        },
+        {
+          "name": "Celtic knot repeat",
+          "prompt": "tileable seamless pixel art texture, celtic knot repeat, distinctive repeatable motif"
+        },
+        {
+          "name": "Mayan step fret",
+          "prompt": "tileable seamless pixel art texture, mayan step fret, distinctive repeatable motif"
+        },
+        {
+          "name": "Gothic tracery repeat",
+          "prompt": "tileable seamless pixel art texture, gothic tracery repeat, distinctive repeatable motif"
+        },
+        {
+          "name": "Islamic star tessellation",
+          "prompt": "tileable seamless pixel art texture, islamic star tessellation, distinctive repeatable motif"
+        },
+        {
+          "name": "Moroccan zellige",
+          "prompt": "tileable seamless pixel art texture, moroccan zellige, distinctive repeatable motif"
+        },
+        {
+          "name": "Persian carpet medallion",
+          "prompt": "tileable seamless pixel art texture, persian carpet medallion, distinctive repeatable motif"
+        }
+      ]
+    },
+    {
+      "group": "SMALL DETAILS FOR GAME SPRITES",
+      "items": [
+        {
+          "name": "Rust ring around bolt",
+          "prompt": "tileable seamless pixel art texture, rust ring around bolt, distinctive repeatable motif"
+        },
+        {
+          "name": "Paint chips around handle",
+          "prompt": "tileable seamless pixel art texture, paint chips around handle, distinctive repeatable motif"
+        },
+        {
+          "name": "Finger grease on switch",
+          "prompt": "tileable seamless pixel art texture, finger grease on switch, distinctive repeatable motif"
+        },
+        {
+          "name": "Scratched weapon bluing",
+          "prompt": "tileable seamless pixel art texture, scratched weapon bluing, distinctive repeatable motif"
+        },
+        {
+          "name": "Gunmetal stipple",
+          "prompt": "tileable seamless pixel art texture, gunmetal stipple, distinctive repeatable motif"
+        },
+        {
+          "name": "Wood stock checkering",
+          "prompt": "tileable seamless pixel art texture, wood stock checkering, distinctive repeatable motif"
+        },
+        {
+          "name": "Weapon polymer stipple",
+          "prompt": "tileable seamless pixel art texture, weapon polymer stipple, distinctive repeatable motif"
+        },
+        {
+          "name": "Ammo casing brass",
+          "prompt": "tileable seamless pixel art texture, ammo casing brass, distinctive repeatable motif"
+        },
+        {
+          "name": "Spent shell casing",
+          "prompt": "tileable seamless pixel art texture, spent shell casing, distinctive repeatable motif"
+        },
+        {
+          "name": "Bullet impact crater",
+          "prompt": "tileable seamless pixel art texture, bullet impact crater, distinctive repeatable motif"
+        },
+        {
+          "name": "Scuffed boot leather",
+          "prompt": "tileable seamless pixel art texture, scuffed boot leather, distinctive repeatable motif"
+        },
+        {
+          "name": "Knee pad abrasion",
+          "prompt": "tileable seamless pixel art texture, knee pad abrasion, distinctive repeatable motif"
+        },
+        {
+          "name": "Backpack nylon weave",
+          "prompt": "tileable seamless pixel art texture, backpack nylon weave, distinctive repeatable motif"
+        },
+        {
+          "name": "Backpack zipper teeth",
+          "prompt": "tileable seamless pixel art texture, backpack zipper teeth, distinctive repeatable motif"
+        },
+        {
+          "name": "Tent ripstop grid",
+          "prompt": "tileable seamless pixel art texture, tent ripstop grid, distinctive repeatable motif"
+        },
+        {
+          "name": "Sleeping bag quilting",
+          "prompt": "tileable seamless pixel art texture, sleeping bag quilting, distinctive repeatable motif"
+        },
+        {
+          "name": "Rucksack canvas patches",
+          "prompt": "tileable seamless pixel art texture, rucksack canvas patches, distinctive repeatable motif"
+        },
+        {
+          "name": "Worn glove fingertips",
+          "prompt": "tileable seamless pixel art texture, worn glove fingertips, distinctive repeatable motif"
+        },
+        {
+          "name": "Helmet scrape marks",
+          "prompt": "tileable seamless pixel art texture, helmet scrape marks, distinctive repeatable motif"
+        },
+        {
+          "name": "Visor reflection flecks",
+          "prompt": "tileable seamless pixel art texture, visor reflection flecks, distinctive repeatable motif"
+        },
+        {
+          "name": "Gas mask rubber folds",
+          "prompt": "tileable seamless pixel art texture, gas mask rubber folds, distinctive repeatable motif"
+        },
+        {
+          "name": "Breathing filter pleats",
+          "prompt": "tileable seamless pixel art texture, breathing filter pleats, distinctive repeatable motif"
+        },
+        {
+          "name": "Bandage weave",
+          "prompt": "tileable seamless pixel art texture, bandage weave, distinctive repeatable motif"
+        },
+        {
+          "name": "Medical gauze mesh",
+          "prompt": "tileable seamless pixel art texture, medical gauze mesh, distinctive repeatable motif"
+        },
+        {
+          "name": "Pill blister foil",
+          "prompt": "tileable seamless pixel art texture, pill blister foil, distinctive repeatable motif"
+        },
+        {
+          "name": "Plastic vial ridges",
+          "prompt": "tileable seamless pixel art texture, plastic vial ridges, distinctive repeatable motif"
+        },
+        {
+          "name": "Glass ampoule shine",
+          "prompt": "tileable seamless pixel art texture, glass ampoule shine, distinctive repeatable motif"
+        },
+        {
+          "name": "Syringe barrel markings",
+          "prompt": "tileable seamless pixel art texture, syringe barrel markings, distinctive repeatable motif"
+        },
+        {
+          "name": "Tool pouch canvas",
+          "prompt": "tileable seamless pixel art texture, tool pouch canvas, distinctive repeatable motif"
+        },
+        {
+          "name": "Radio speaker perforations",
+          "prompt": "tileable seamless pixel art texture, radio speaker perforations, distinctive repeatable motif"
+        },
+        {
+          "name": "Walkie-talkie rubber buttons",
+          "prompt": "tileable seamless pixel art texture, walkie-talkie rubber buttons, distinctive repeatable motif"
+        },
+        {
+          "name": "Wristwatch face grid",
+          "prompt": "tileable seamless pixel art texture, wristwatch face grid, distinctive repeatable motif"
+        },
+        {
+          "name": "Old key scratches",
+          "prompt": "tileable seamless pixel art texture, old key scratches, distinctive repeatable motif"
+        },
+        {
+          "name": "Keyring metal wear",
+          "prompt": "tileable seamless pixel art texture, keyring metal wear, distinctive repeatable motif"
+        },
+        {
+          "name": "Coin edge reeding",
+          "prompt": "tileable seamless pixel art texture, coin edge reeding, distinctive repeatable motif"
+        },
+        {
+          "name": "Paper map fold creases",
+          "prompt": "tileable seamless pixel art texture, paper map fold creases, distinctive repeatable motif"
+        },
+        {
+          "name": "Passport security guilloche",
+          "prompt": "tileable seamless pixel art texture, passport security guilloche, distinctive repeatable motif"
+        },
+        {
+          "name": "ID card hologram flecks",
+          "prompt": "tileable seamless pixel art texture, id card hologram flecks, distinctive repeatable motif"
+        },
+        {
+          "name": "Security seal fibers",
+          "prompt": "tileable seamless pixel art texture, security seal fibers, distinctive repeatable motif"
+        },
+        {
+          "name": "Wax stamp cracking",
+          "prompt": "tileable seamless pixel art texture, wax stamp cracking, distinctive repeatable motif"
+        }
+      ]
+    },
+    {
+      "group": "WATER, LIQUIDS & DEPOSITS",
+      "items": [
+        {
+          "name": "Hard water scale rings",
+          "prompt": "tileable seamless pixel art texture, hard water scale rings, distinctive repeatable motif"
+        },
+        {
+          "name": "Soap scum on tile",
+          "prompt": "tileable seamless pixel art texture, soap scum on tile, distinctive repeatable motif"
+        },
+        {
+          "name": "Bath foam bubbles",
+          "prompt": "tileable seamless pixel art texture, bath foam bubbles, distinctive repeatable motif"
+        },
+        {
+          "name": "Oil droplets on water",
+          "prompt": "tileable seamless pixel art texture, oil droplets on water, distinctive repeatable motif"
+        },
+        {
+          "name": "Rainbow gasoline puddle",
+          "prompt": "tileable seamless pixel art texture, rainbow gasoline puddle, distinctive repeatable motif"
+        },
+        {
+          "name": "Diesel sheen puddle",
+          "prompt": "tileable seamless pixel art texture, diesel sheen puddle, distinctive repeatable motif"
+        },
+        {
+          "name": "Rain ripple rings",
+          "prompt": "tileable seamless pixel art texture, rain ripple rings, distinctive repeatable motif"
+        },
+        {
+          "name": "Drip impact crown",
+          "prompt": "tileable seamless pixel art texture, drip impact crown, distinctive repeatable motif"
+        },
+        {
+          "name": "Waterfall foam flecks",
+          "prompt": "tileable seamless pixel art texture, waterfall foam flecks, distinctive repeatable motif"
+        },
+        {
+          "name": "Whitewater turbulence",
+          "prompt": "tileable seamless pixel art texture, whitewater turbulence, distinctive repeatable motif"
+        },
+        {
+          "name": "Estuary sediment bands",
+          "prompt": "tileable seamless pixel art texture, estuary sediment bands, distinctive repeatable motif"
+        },
+        {
+          "name": "River gravel bars",
+          "prompt": "tileable seamless pixel art texture, river gravel bars, distinctive repeatable motif"
+        },
+        {
+          "name": "Tidal pool reflection",
+          "prompt": "tileable seamless pixel art texture, tidal pool reflection, distinctive repeatable motif"
+        },
+        {
+          "name": "Ice melt channels",
+          "prompt": "tileable seamless pixel art texture, ice melt channels, distinctive repeatable motif"
+        },
+        {
+          "name": "Frozen bubble inclusions",
+          "prompt": "tileable seamless pixel art texture, frozen bubble inclusions, distinctive repeatable motif"
+        },
+        {
+          "name": "Lake ice pressure ridges",
+          "prompt": "tileable seamless pixel art texture, lake ice pressure ridges, distinctive repeatable motif"
+        },
+        {
+          "name": "Sea spray salt crystals",
+          "prompt": "tileable seamless pixel art texture, sea spray salt crystals, distinctive repeatable motif"
+        },
+        {
+          "name": "Dried tide line",
+          "prompt": "tileable seamless pixel art texture, dried tide line, distinctive repeatable motif"
+        },
+        {
+          "name": "Evaporated mineral rings",
+          "prompt": "tileable seamless pixel art texture, evaporated mineral rings, distinctive repeatable motif"
+        },
+        {
+          "name": "Rust runoff streaks",
+          "prompt": "tileable seamless pixel art texture, rust runoff streaks, distinctive repeatable motif"
+        },
+        {
+          "name": "Pipe leak mineral trail",
+          "prompt": "tileable seamless pixel art texture, pipe leak mineral trail, distinctive repeatable motif"
+        },
+        {
+          "name": "Condensation rivulets",
+          "prompt": "tileable seamless pixel art texture, condensation rivulets, distinctive repeatable motif"
+        },
+        {
+          "name": "Dew on broad leaf",
+          "prompt": "tileable seamless pixel art texture, dew on broad leaf, distinctive repeatable motif"
+        },
+        {
+          "name": "Frosted spiderweb",
+          "prompt": "tileable seamless pixel art texture, frosted spiderweb, distinctive repeatable motif"
+        },
+        {
+          "name": "Wet soil footprints",
+          "prompt": "tileable seamless pixel art texture, wet soil footprints, distinctive repeatable motif"
+        },
+        {
+          "name": "Mud splash speckles",
+          "prompt": "tileable seamless pixel art texture, mud splash speckles, distinctive repeatable motif"
+        },
+        {
+          "name": "Dried paint puddle",
+          "prompt": "tileable seamless pixel art texture, dried paint puddle, distinctive repeatable motif"
+        },
+        {
+          "name": "Ink bleed in paper",
+          "prompt": "tileable seamless pixel art texture, ink bleed in paper, distinctive repeatable motif"
+        },
+        {
+          "name": "Watercolor pigment blooms",
+          "prompt": "tileable seamless pixel art texture, watercolor pigment blooms, distinctive repeatable motif"
+        },
+        {
+          "name": "Oil paint impasto",
+          "prompt": "tileable seamless pixel art texture, oil paint impasto, distinctive repeatable motif"
+        },
+        {
+          "name": "Resin pour cells",
+          "prompt": "tileable seamless pixel art texture, resin pour cells, distinctive repeatable motif"
+        },
+        {
+          "name": "Epoxy river wood",
+          "prompt": "tileable seamless pixel art texture, epoxy river wood, distinctive repeatable motif"
+        },
+        {
+          "name": "Liquid metal ripples",
+          "prompt": "tileable seamless pixel art texture, liquid metal ripples, distinctive repeatable motif"
+        },
+        {
+          "name": "Mercury bead clusters",
+          "prompt": "tileable seamless pixel art texture, mercury bead clusters, distinctive repeatable motif"
+        },
+        {
+          "name": "Sludge foam scum",
+          "prompt": "tileable seamless pixel art texture, sludge foam scum, distinctive repeatable motif"
+        },
+        {
+          "name": "Industrial coolant rainbow",
+          "prompt": "tileable seamless pixel art texture, industrial coolant rainbow, distinctive repeatable motif"
+        },
+        {
+          "name": "Chemical spill crystals",
+          "prompt": "tileable seamless pixel art texture, chemical spill crystals, distinctive repeatable motif"
+        },
+        {
+          "name": "Acid etch glass",
+          "prompt": "tileable seamless pixel art texture, acid etch glass, distinctive repeatable motif"
+        },
+        {
+          "name": "Lime deposit stalactites",
+          "prompt": "tileable seamless pixel art texture, lime deposit stalactites, distinctive repeatable motif"
+        },
+        {
+          "name": "Brine evaporation crust",
+          "prompt": "tileable seamless pixel art texture, brine evaporation crust, distinctive repeatable motif"
+        },
+        {
+          "name": "Soap bubble film",
+          "prompt": "tileable seamless pixel art texture, soap bubble film, distinctive repeatable motif"
+        }
+      ]
+    },
+    {
+      "group": "PLANTS, BIOMES & BOTANICAL SURFACES",
+      "items": [
+        {
+          "name": "Succulent wax bloom",
+          "prompt": "tileable seamless pixel art texture, succulent wax bloom, distinctive repeatable motif"
+        },
+        {
+          "name": "Cactus rib skin",
+          "prompt": "tileable seamless pixel art texture, cactus rib skin, distinctive repeatable motif"
+        },
+        {
+          "name": "Agave leaf fibers",
+          "prompt": "tileable seamless pixel art texture, agave leaf fibers, distinctive repeatable motif"
+        },
+        {
+          "name": "Palm bark diamonds",
+          "prompt": "tileable seamless pixel art texture, palm bark diamonds, distinctive repeatable motif"
+        },
+        {
+          "name": "Birch bark curls",
+          "prompt": "tileable seamless pixel art texture, birch bark curls, distinctive repeatable motif"
+        },
+        {
+          "name": "Eucalyptus peeling bark",
+          "prompt": "tileable seamless pixel art texture, eucalyptus peeling bark, distinctive repeatable motif"
+        },
+        {
+          "name": "Pine bark plates",
+          "prompt": "tileable seamless pixel art texture, pine bark plates, distinctive repeatable motif"
+        },
+        {
+          "name": "Cork oak bark",
+          "prompt": "tileable seamless pixel art texture, cork oak bark, distinctive repeatable motif"
+        },
+        {
+          "name": "Willow twig weave",
+          "prompt": "tileable seamless pixel art texture, willow twig weave, distinctive repeatable motif"
+        },
+        {
+          "name": "Root web soil",
+          "prompt": "tileable seamless pixel art texture, root web soil, distinctive repeatable motif"
+        },
+        {
+          "name": "Mangrove root lattice",
+          "prompt": "tileable seamless pixel art texture, mangrove root lattice, distinctive repeatable motif"
+        },
+        {
+          "name": "Lotus leaf microtexture",
+          "prompt": "tileable seamless pixel art texture, lotus leaf microtexture, distinctive repeatable motif"
+        },
+        {
+          "name": "Water lily pad veins",
+          "prompt": "tileable seamless pixel art texture, water lily pad veins, distinctive repeatable motif"
+        },
+        {
+          "name": "Monstera leaf holes",
+          "prompt": "tileable seamless pixel art texture, monstera leaf holes, distinctive repeatable motif"
+        },
+        {
+          "name": "Fern fiddlehead coils",
+          "prompt": "tileable seamless pixel art texture, fern fiddlehead coils, distinctive repeatable motif"
+        },
+        {
+          "name": "Bamboo cross section",
+          "prompt": "tileable seamless pixel art texture, bamboo cross section, distinctive repeatable motif"
+        },
+        {
+          "name": "Reed stem nodes",
+          "prompt": "tileable seamless pixel art texture, reed stem nodes, distinctive repeatable motif"
+        },
+        {
+          "name": "Sugarcane fibers",
+          "prompt": "tileable seamless pixel art texture, sugarcane fibers, distinctive repeatable motif"
+        },
+        {
+          "name": "Wheat husk field",
+          "prompt": "tileable seamless pixel art texture, wheat husk field, distinctive repeatable motif"
+        },
+        {
+          "name": "Corn husk weave",
+          "prompt": "tileable seamless pixel art texture, corn husk weave, distinctive repeatable motif"
+        },
+        {
+          "name": "Sunflower seed head",
+          "prompt": "tileable seamless pixel art texture, sunflower seed head, distinctive repeatable motif"
+        },
+        {
+          "name": "Thistle burr hooks",
+          "prompt": "tileable seamless pixel art texture, thistle burr hooks, distinctive repeatable motif"
+        },
+        {
+          "name": "Burr seed spines",
+          "prompt": "tileable seamless pixel art texture, burr seed spines, distinctive repeatable motif"
+        },
+        {
+          "name": "Dandelion seed parachutes",
+          "prompt": "tileable seamless pixel art texture, dandelion seed parachutes, distinctive repeatable motif"
+        },
+        {
+          "name": "Poppy seed pod pores",
+          "prompt": "tileable seamless pixel art texture, poppy seed pod pores, distinctive repeatable motif"
+        },
+        {
+          "name": "Acorn cap scales",
+          "prompt": "tileable seamless pixel art texture, acorn cap scales, distinctive repeatable motif"
+        },
+        {
+          "name": "Chestnut burr spikes",
+          "prompt": "tileable seamless pixel art texture, chestnut burr spikes, distinctive repeatable motif"
+        },
+        {
+          "name": "Pine needle litter",
+          "prompt": "tileable seamless pixel art texture, pine needle litter, distinctive repeatable motif"
+        },
+        {
+          "name": "Cypress knees bark",
+          "prompt": "tileable seamless pixel art texture, cypress knees bark, distinctive repeatable motif"
+        },
+        {
+          "name": "Fallen blossom carpet",
+          "prompt": "tileable seamless pixel art texture, fallen blossom carpet, distinctive repeatable motif"
+        },
+        {
+          "name": "Rotten fruit skin",
+          "prompt": "tileable seamless pixel art texture, rotten fruit skin, distinctive repeatable motif"
+        },
+        {
+          "name": "Mold bloom on fruit",
+          "prompt": "tileable seamless pixel art texture, mold bloom on fruit, distinctive repeatable motif"
+        },
+        {
+          "name": "Lichen crust orange",
+          "prompt": "tileable seamless pixel art texture, lichen crust orange, distinctive repeatable motif"
+        },
+        {
+          "name": "Desiccated leaf veins",
+          "prompt": "tileable seamless pixel art texture, desiccated leaf veins, distinctive repeatable motif"
+        },
+        {
+          "name": "Pressed flower paper",
+          "prompt": "tileable seamless pixel art texture, pressed flower paper, distinctive repeatable motif"
+        },
+        {
+          "name": "Herbarium specimen paper",
+          "prompt": "tileable seamless pixel art texture, herbarium specimen paper, distinctive repeatable motif"
+        },
+        {
+          "name": "Creeper vine brick",
+          "prompt": "tileable seamless pixel art texture, creeper vine brick, distinctive repeatable motif"
+        },
+        {
+          "name": "Ivy rootlets",
+          "prompt": "tileable seamless pixel art texture, ivy rootlets, distinctive repeatable motif"
+        },
+        {
+          "name": "Bonsai moss soil",
+          "prompt": "tileable seamless pixel art texture, bonsai moss soil, distinctive repeatable motif"
+        },
+        {
+          "name": "Mangrove salt leaves",
+          "prompt": "tileable seamless pixel art texture, mangrove salt leaves, distinctive repeatable motif"
         }
       ]
     }
