@@ -5,9 +5,10 @@ This archive preserves **1096 named texture recipes** across **29 categories**.
 - `texture-library.json` stores category, display name, and generator prompt.
 - `index.html` embeds the searchable library and offline procedural generator.
 - No API key or cloud generation endpoint is required.
-- Each preset has a stable prompt-derived seed, so selecting the same recipe reproduces its result.
-- Duplicate prompt strings found during audit were disambiguated with preset-specific descriptors. Related entries may still share a broad material family, but no two entries have the exact same prompt.
-- Tileable/seamless recipes are intended for repeated game materials. Validate edges in your target engine before production.
+- Selecting the same preset reproduces its result because the preset prompt determines its seed.
+- The generator now uses **40 specialized drawing-family routes** (including contour lines, branching circuits, offset masonry, woven fibers, floral repeats, leaf venation, scales, faceted crystals, lava fissures, fluid currents, cloud masses, corrosion, fractures, paper fibers, encoded print marks, hard-surface plating, cables, surface wear, bubbles, spirals, technical grids, and more) instead of routing almost every recipe through the same generic 16-pixel tile/noise pattern.
+- The preset prompt controls both its material-specific renderer and its deterministic layout. Related presets can still share a broad family, but they no longer all share the same underlying pattern template.
+- Some recipes are decorative surface patterns rather than seamless game-engine textures. Check edge continuity in your target engine before using a texture as a repeating tile.
 - This is a procedural texture recipe catalog, not a trained AI model or a folder of pre-rendered PNGs.
 
 ## Categories
