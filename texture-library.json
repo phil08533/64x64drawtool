@@ -1,0 +1,1251 @@
+{
+  "title": "Pixel64 Procedural Texture Library",
+  "version": "1.0",
+  "updated": "2026-10-17",
+  "description": "Named local procedural texture presets used by Pixel64. Each entry contains its display name, category, and generator prompt. The prompts are interpreted by the procedural JavaScript generator in index.html; they are not standalone image files or AI model outputs.",
+  "generation": "Offline, procedural JavaScript; no API key or cloud service required.",
+  "count": 294,
+  "categories": [
+    {
+      "group": "SHIP & STATION",
+      "items": [
+        {
+          "name": "Ship hull · blue steel",
+          "prompt": "sci fi hull blue"
+        },
+        {
+          "name": "Ship hull · red trim",
+          "prompt": "sci fi hull red"
+        },
+        {
+          "name": "Stealth hull",
+          "prompt": "stealth armor black"
+        },
+        {
+          "name": "Heavy armor plates",
+          "prompt": "armored plating"
+        },
+        {
+          "name": "Hex armor · teal",
+          "prompt": "hex armor green"
+        },
+        {
+          "name": "Hex armor · amber",
+          "prompt": "hex armor amber"
+        },
+        {
+          "name": "Riveted metal",
+          "prompt": "metal panels riveted"
+        },
+        {
+          "name": "Worn hull",
+          "prompt": "rusted spaceship metal"
+        },
+        {
+          "name": "Airlock door",
+          "prompt": "airlock door"
+        },
+        {
+          "name": "Blast door",
+          "prompt": "spaceship bulkhead"
+        },
+        {
+          "name": "Corridor bulkhead",
+          "prompt": "spaceship bulkhead"
+        },
+        {
+          "name": "Viewport windows",
+          "prompt": "space station window"
+        },
+        {
+          "name": "Cargo bay wall",
+          "prompt": "cargo crate"
+        },
+        {
+          "name": "Maintenance hatch",
+          "prompt": "airlock door framed"
+        },
+        {
+          "name": "Escape pod shell",
+          "prompt": "armored plating red"
+        },
+        {
+          "name": "Landing pad",
+          "prompt": "landing pad"
+        },
+        {
+          "name": "Hangar floor",
+          "prompt": "industrial floor"
+        },
+        {
+          "name": "White station panels",
+          "prompt": "white lab wall"
+        },
+        {
+          "name": "Dark station panels",
+          "prompt": "spaceship bulkhead stealth"
+        },
+        {
+          "name": "Pressure door",
+          "prompt": "airlock door amber"
+        },
+        {
+          "name": "Ship interior wall",
+          "prompt": "spaceship bulkhead"
+        },
+        {
+          "name": "Titanium hull",
+          "prompt": "metal panels blue"
+        },
+        {
+          "name": "Reinforced hull",
+          "prompt": "armored plating green"
+        }
+      ]
+    },
+    {
+      "group": "MACHINERY & TECH",
+      "items": [
+        {
+          "name": "Vent grille · narrow",
+          "prompt": "vent grille"
+        },
+        {
+          "name": "Engine vents · heavy",
+          "prompt": "engine vents"
+        },
+        {
+          "name": "Server racks · blue",
+          "prompt": "server racks"
+        },
+        {
+          "name": "Server racks · red",
+          "prompt": "server racks red"
+        },
+        {
+          "name": "Circuit board · teal",
+          "prompt": "circuit board"
+        },
+        {
+          "name": "Circuit board · amber",
+          "prompt": "circuit board amber"
+        },
+        {
+          "name": "Cable conduits",
+          "prompt": "cable conduits"
+        },
+        {
+          "name": "Coolant pipes",
+          "prompt": "coolant pipes"
+        },
+        {
+          "name": "Reactor core",
+          "prompt": "reactor core"
+        },
+        {
+          "name": "Reactor core · warning",
+          "prompt": "reactor core amber"
+        },
+        {
+          "name": "Energy conduits",
+          "prompt": "energy conduit"
+        },
+        {
+          "name": "Control panel",
+          "prompt": "control panel"
+        },
+        {
+          "name": "Emergency console",
+          "prompt": "red emergency panels"
+        },
+        {
+          "name": "Medical console",
+          "prompt": "medical bay"
+        },
+        {
+          "name": "Security scanner",
+          "prompt": "security scanner"
+        },
+        {
+          "name": "Data terminal",
+          "prompt": "data terminal"
+        },
+        {
+          "name": "Force field grid",
+          "prompt": "force field grid blue"
+        },
+        {
+          "name": "Blueprint grid",
+          "prompt": "blueprint grid"
+        },
+        {
+          "name": "Robot factory",
+          "prompt": "robot factory floor"
+        },
+        {
+          "name": "Engine exhaust panel",
+          "prompt": "engine vents red"
+        },
+        {
+          "name": "Power transformer",
+          "prompt": "energy conduit amber"
+        },
+        {
+          "name": "Battery bank",
+          "prompt": "server racks green"
+        },
+        {
+          "name": "Laser array",
+          "prompt": "reactor core red"
+        },
+        {
+          "name": "Holographic interface",
+          "prompt": "data terminal green"
+        },
+        {
+          "name": "Radar display",
+          "prompt": "security scanner green"
+        },
+        {
+          "name": "Cooling radiator",
+          "prompt": "vent grille blue"
+        },
+        {
+          "name": "Computer motherboard",
+          "prompt": "circuit board green"
+        },
+        {
+          "name": "Fiber optic cables",
+          "prompt": "cable conduits purple"
+        },
+        {
+          "name": "Industrial machinery",
+          "prompt": "metal panels green"
+        }
+      ]
+    },
+    {
+      "group": "FLOORS & INDUSTRIAL",
+      "items": [
+        {
+          "name": "Hazard stripes · yellow",
+          "prompt": "hazard stripes"
+        },
+        {
+          "name": "Hazard stripes · red",
+          "prompt": "hazard stripes red"
+        },
+        {
+          "name": "Warning chevrons",
+          "prompt": "warning chevrons"
+        },
+        {
+          "name": "Checker deck",
+          "prompt": "checker tile"
+        },
+        {
+          "name": "Metal floor plates",
+          "prompt": "industrial floor"
+        },
+        {
+          "name": "Grated catwalk",
+          "prompt": "vent grille"
+        },
+        {
+          "name": "Cargo floor",
+          "prompt": "industrial floor amber"
+        },
+        {
+          "name": "Hex floor",
+          "prompt": "hex armor"
+        },
+        {
+          "name": "Service tunnel floor",
+          "prompt": "industrial floor green"
+        },
+        {
+          "name": "Elevator floor",
+          "prompt": "checker tile metal"
+        },
+        {
+          "name": "Pipe trench",
+          "prompt": "coolant pipes"
+        },
+        {
+          "name": "Reactor chamber floor",
+          "prompt": "reactor core"
+        },
+        {
+          "name": "Industrial wall panels",
+          "prompt": "metal panels"
+        },
+        {
+          "name": "Factory safety floor",
+          "prompt": "robot factory floor"
+        },
+        {
+          "name": "Docking bay markings",
+          "prompt": "landing pad"
+        },
+        {
+          "name": "Bulkhead hazard door",
+          "prompt": "airlock door amber"
+        },
+        {
+          "name": "Concrete station floor",
+          "prompt": "stone concrete"
+        },
+        {
+          "name": "Scratched metal floor",
+          "prompt": "rusted spaceship metal"
+        },
+        {
+          "name": "Dark steel panels",
+          "prompt": "stealth armor"
+        },
+        {
+          "name": "Sterile floor tiles",
+          "prompt": "checker tile white"
+        },
+        {
+          "name": "Yellow maintenance walkway",
+          "prompt": "hazard stripes yellow"
+        },
+        {
+          "name": "Red danger floor",
+          "prompt": "industrial floor red"
+        },
+        {
+          "name": "Steel grating",
+          "prompt": "vent grille metal"
+        }
+      ]
+    },
+    {
+      "group": "ALIEN WORLDS",
+      "items": [
+        {
+          "name": "Alien biomechanical wall",
+          "prompt": "alien biomechanical wall"
+        },
+        {
+          "name": "Alien hive membrane",
+          "prompt": "alien hive wall"
+        },
+        {
+          "name": "Alien hive armor",
+          "prompt": "alien biomechanical wall green"
+        },
+        {
+          "name": "Alien stone · violet",
+          "prompt": "purple alien stone"
+        },
+        {
+          "name": "Alien stone · teal",
+          "prompt": "purple alien stone green"
+        },
+        {
+          "name": "Crystal cave",
+          "prompt": "crystal alien surface"
+        },
+        {
+          "name": "Ice planet ground",
+          "prompt": "ice planet ground"
+        },
+        {
+          "name": "Frozen hull ice",
+          "prompt": "ice planet ground blue"
+        },
+        {
+          "name": "Lava planet rock",
+          "prompt": "lava planet rock"
+        },
+        {
+          "name": "Magma cracks",
+          "prompt": "lava planet rock red"
+        },
+        {
+          "name": "Moon dust ground",
+          "prompt": "moon dust ground"
+        },
+        {
+          "name": "Red desert ground",
+          "prompt": "sand red"
+        },
+        {
+          "name": "Alien moss",
+          "prompt": "mossy stone green"
+        },
+        {
+          "name": "Toxic swamp",
+          "prompt": "alien biomechanical wall green"
+        },
+        {
+          "name": "Organic tendrils",
+          "prompt": "alien hive wall"
+        },
+        {
+          "name": "Bio-tech panels",
+          "prompt": "green biotech panels"
+        },
+        {
+          "name": "Crystal floor",
+          "prompt": "crystal alien surface"
+        },
+        {
+          "name": "Black alien stone",
+          "prompt": "purple alien stone black"
+        },
+        {
+          "name": "Meteor rock",
+          "prompt": "stone concrete"
+        },
+        {
+          "name": "Frozen cave wall",
+          "prompt": "ice planet ground"
+        },
+        {
+          "name": "Mossy ruins",
+          "prompt": "mossy stone green"
+        },
+        {
+          "name": "Sand dunes",
+          "prompt": "sand dunes"
+        },
+        {
+          "name": "Wet alien rock",
+          "prompt": "water alien stone"
+        },
+        {
+          "name": "Bioluminescent cave",
+          "prompt": "alien biomechanical wall green"
+        },
+        {
+          "name": "Purple crystal cluster",
+          "prompt": "crystal alien surface purple"
+        },
+        {
+          "name": "Volcanic crust",
+          "prompt": "lava planet rock"
+        },
+        {
+          "name": "Ice cracks",
+          "prompt": "ice planet ground blue"
+        },
+        {
+          "name": "Alien coral",
+          "prompt": "alien coral"
+        },
+        {
+          "name": "Spore wall",
+          "prompt": "alien hive wall green"
+        }
+      ]
+    },
+    {
+      "group": "SCREENS & ENERGY",
+      "items": [
+        {
+          "name": "Starfield · sparse",
+          "prompt": "starfield"
+        },
+        {
+          "name": "Starfield · bright",
+          "prompt": "starfield blue"
+        },
+        {
+          "name": "Starfield · amber",
+          "prompt": "starfield amber"
+        },
+        {
+          "name": "Planet horizon",
+          "prompt": "starfield planet"
+        },
+        {
+          "name": "Force field · blue",
+          "prompt": "force field grid blue"
+        },
+        {
+          "name": "Force field · red",
+          "prompt": "force field grid red"
+        },
+        {
+          "name": "Hologram grid",
+          "prompt": "blueprint grid"
+        },
+        {
+          "name": "Radar screen",
+          "prompt": "security scanner green"
+        },
+        {
+          "name": "Map terminal",
+          "prompt": "data terminal green"
+        },
+        {
+          "name": "Power display",
+          "prompt": "control panel green"
+        },
+        {
+          "name": "Reactor warning screen",
+          "prompt": "reactor core red"
+        },
+        {
+          "name": "Energy coil",
+          "prompt": "energy conduit blue"
+        },
+        {
+          "name": "Laser emitter",
+          "prompt": "reactor core red"
+        },
+        {
+          "name": "Shield generator",
+          "prompt": "force field grid green"
+        },
+        {
+          "name": "Portal surface",
+          "prompt": "reactor core purple"
+        },
+        {
+          "name": "Computer screen · teal",
+          "prompt": "data terminal"
+        },
+        {
+          "name": "Computer screen · amber",
+          "prompt": "data terminal amber"
+        },
+        {
+          "name": "Scanner glass",
+          "prompt": "security scanner blue"
+        },
+        {
+          "name": "Circuit glow · green",
+          "prompt": "circuit board green"
+        },
+        {
+          "name": "Circuit glow · purple",
+          "prompt": "circuit board purple"
+        },
+        {
+          "name": "Glitch screen",
+          "prompt": "data terminal purple"
+        },
+        {
+          "name": "Digital rain",
+          "prompt": "data terminal green"
+        },
+        {
+          "name": "Navigation display",
+          "prompt": "blueprint grid blue"
+        }
+      ]
+    },
+    {
+      "group": "NATURAL MATERIALS",
+      "items": [
+        {
+          "name": "Oak planks",
+          "prompt": "wood panels oak"
+        },
+        {
+          "name": "Dark timber",
+          "prompt": "wood panels dark"
+        },
+        {
+          "name": "Pine boards",
+          "prompt": "wood panels green"
+        },
+        {
+          "name": "Weathered wood",
+          "prompt": "wood panels weathered"
+        },
+        {
+          "name": "Red brick",
+          "prompt": "brick wall red"
+        },
+        {
+          "name": "Old brick",
+          "prompt": "brick wall"
+        },
+        {
+          "name": "Sandstone",
+          "prompt": "stone sandstone"
+        },
+        {
+          "name": "Granite",
+          "prompt": "stone granite"
+        },
+        {
+          "name": "Slate rock",
+          "prompt": "stone slate"
+        },
+        {
+          "name": "Mossy stone",
+          "prompt": "mossy stone green"
+        },
+        {
+          "name": "Polished marble",
+          "prompt": "stone marble"
+        },
+        {
+          "name": "Concrete",
+          "prompt": "stone concrete"
+        },
+        {
+          "name": "Desert sand",
+          "prompt": "sand dunes"
+        },
+        {
+          "name": "Red sand",
+          "prompt": "sand dunes red"
+        },
+        {
+          "name": "Grass ground",
+          "prompt": "grass ground"
+        },
+        {
+          "name": "Moss ground",
+          "prompt": "mossy stone green"
+        },
+        {
+          "name": "Deep water",
+          "prompt": "water deep"
+        },
+        {
+          "name": "Shallow water",
+          "prompt": "water shallow"
+        },
+        {
+          "name": "Ocean waves",
+          "prompt": "water ocean"
+        },
+        {
+          "name": "Ice blocks",
+          "prompt": "ice planet ground"
+        },
+        {
+          "name": "Crystal mineral",
+          "prompt": "crystal alien surface"
+        },
+        {
+          "name": "Lava rock",
+          "prompt": "lava planet rock"
+        },
+        {
+          "name": "Woven fabric",
+          "prompt": "fabric woven"
+        },
+        {
+          "name": "Leather",
+          "prompt": "fabric leather"
+        },
+        {
+          "name": "Camouflage fabric",
+          "prompt": "fabric camouflage"
+        },
+        {
+          "name": "Fish wallpaper",
+          "prompt": "fish wallpaper"
+        },
+        {
+          "name": "Floral wallpaper",
+          "prompt": "floral wallpaper"
+        },
+        {
+          "name": "Geometric wallpaper",
+          "prompt": "geometric wallpaper"
+        },
+        {
+          "name": "Vintage wallpaper",
+          "prompt": "floral wallpaper vintage"
+        }
+      ]
+    },
+    {
+      "group": "INTERIOR DECOR & WALLS",
+      "items": [
+        {
+          "name": "Apartment plaster",
+          "prompt": "plaster wall warm"
+        },
+        {
+          "name": "Painted drywall · blue",
+          "prompt": "plaster wall blue"
+        },
+        {
+          "name": "Painted drywall · green",
+          "prompt": "plaster wall green"
+        },
+        {
+          "name": "Old wallpaper · faded",
+          "prompt": "vintage floral wallpaper faded"
+        },
+        {
+          "name": "Art deco wallpaper",
+          "prompt": "geometric wallpaper gold"
+        },
+        {
+          "name": "Retro star wallpaper",
+          "prompt": "geometric wallpaper stars"
+        },
+        {
+          "name": "Tiny floral wallpaper",
+          "prompt": "floral wallpaper small"
+        },
+        {
+          "name": "Damask wallpaper",
+          "prompt": "floral wallpaper ornate"
+        },
+        {
+          "name": "Wood panel wall · red",
+          "prompt": "wood panels red"
+        },
+        {
+          "name": "Wood panel wall · pale",
+          "prompt": "wood panels white"
+        },
+        {
+          "name": "Acoustic wall panels",
+          "prompt": "fabric woven dark"
+        },
+        {
+          "name": "Padded wall panels",
+          "prompt": "fabric leather padded"
+        },
+        {
+          "name": "Tile wall · cream",
+          "prompt": "checker tile cream"
+        },
+        {
+          "name": "Tile wall · blue",
+          "prompt": "checker tile blue"
+        },
+        {
+          "name": "Bathroom mosaic",
+          "prompt": "geometric wallpaper mosaic"
+        },
+        {
+          "name": "Stone brick interior",
+          "prompt": "brick wall stone"
+        },
+        {
+          "name": "Cracked plaster",
+          "prompt": "plaster wall cracked"
+        },
+        {
+          "name": "Peeling paint",
+          "prompt": "plaster wall weathered"
+        },
+        {
+          "name": "Felt wall covering",
+          "prompt": "fabric felt"
+        }
+      ]
+    },
+    {
+      "group": "URBAN & RUINED",
+      "items": [
+        {
+          "name": "Cracked asphalt",
+          "prompt": "asphalt cracked"
+        },
+        {
+          "name": "Road asphalt · fresh",
+          "prompt": "asphalt dark"
+        },
+        {
+          "name": "Road markings",
+          "prompt": "hazard stripes white"
+        },
+        {
+          "name": "Sidewalk slabs",
+          "prompt": "concrete sidewalk"
+        },
+        {
+          "name": "Curb stones",
+          "prompt": "stone curb"
+        },
+        {
+          "name": "Pavement cobbles",
+          "prompt": "cobblestone street"
+        },
+        {
+          "name": "Old red brickwork",
+          "prompt": "brick wall weathered red"
+        },
+        {
+          "name": "Ruined brick wall",
+          "prompt": "brick wall damaged"
+        },
+        {
+          "name": "Rubble pile",
+          "prompt": "stone rubble"
+        },
+        {
+          "name": "Cracked concrete",
+          "prompt": "stone concrete cracked"
+        },
+        {
+          "name": "Sewer tunnel",
+          "prompt": "concrete sewer damp"
+        },
+        {
+          "name": "Manhole cover",
+          "prompt": "metal manhole"
+        },
+        {
+          "name": "Rusty chain-link",
+          "prompt": "chain link fence rust"
+        },
+        {
+          "name": "Chain-link fence",
+          "prompt": "chain link fence"
+        },
+        {
+          "name": "Corrugated roofing",
+          "prompt": "corrugated metal"
+        },
+        {
+          "name": "Rusted sheet metal",
+          "prompt": "corrugated metal rust"
+        },
+        {
+          "name": "Graffiti wall · color",
+          "prompt": "brick graffiti colorful"
+        },
+        {
+          "name": "Graffiti wall · faded",
+          "prompt": "brick graffiti faded"
+        },
+        {
+          "name": "Broken tile floor",
+          "prompt": "checker tile broken"
+        }
+      ]
+    },
+    {
+      "group": "FANTASY & MAGIC",
+      "items": [
+        {
+          "name": "Enchanted rune stone",
+          "prompt": "rune stone blue"
+        },
+        {
+          "name": "Ancient runes · gold",
+          "prompt": "rune stone gold"
+        },
+        {
+          "name": "Arcane circle",
+          "prompt": "magic circle purple"
+        },
+        {
+          "name": "Mystic sigils",
+          "prompt": "magic symbols blue"
+        },
+        {
+          "name": "Spellbook leather",
+          "prompt": "fabric leather old"
+        },
+        {
+          "name": "Dragon scale armor",
+          "prompt": "dragon scales green"
+        },
+        {
+          "name": "Dragon scale · crimson",
+          "prompt": "dragon scales red"
+        },
+        {
+          "name": "Obsidian armor",
+          "prompt": "stone obsidian black"
+        },
+        {
+          "name": "Moonstone crystal",
+          "prompt": "crystal moonstone"
+        },
+        {
+          "name": "Amethyst crystal",
+          "prompt": "crystal purple"
+        },
+        {
+          "name": "Emerald crystal",
+          "prompt": "crystal green"
+        },
+        {
+          "name": "Sapphire crystal",
+          "prompt": "crystal blue"
+        },
+        {
+          "name": "Magic portal · violet",
+          "prompt": "portal swirl purple"
+        },
+        {
+          "name": "Magic portal · cyan",
+          "prompt": "portal swirl cyan"
+        },
+        {
+          "name": "Glowing runic floor",
+          "prompt": "rune stone glowing"
+        },
+        {
+          "name": "Ancient temple blocks",
+          "prompt": "stone temple ancient"
+        },
+        {
+          "name": "Golden filigree",
+          "prompt": "geometric gold ornate"
+        },
+        {
+          "name": "Potion bubbles",
+          "prompt": "potion bubbles green"
+        },
+        {
+          "name": "Shadow realm surface",
+          "prompt": "stone shadow black"
+        }
+      ]
+    },
+    {
+      "group": "WATER & WEATHER",
+      "items": [
+        {
+          "name": "Rain puddles",
+          "prompt": "water puddles rain"
+        },
+        {
+          "name": "Deep ocean trench",
+          "prompt": "water ocean dark"
+        },
+        {
+          "name": "Tropical sea",
+          "prompt": "water ocean turquoise"
+        },
+        {
+          "name": "River current",
+          "prompt": "water river current"
+        },
+        {
+          "name": "Waterfall foam",
+          "prompt": "water waterfall foam"
+        },
+        {
+          "name": "Frozen lake",
+          "prompt": "ice lake frozen"
+        },
+        {
+          "name": "Glacier face",
+          "prompt": "ice glacier blue"
+        },
+        {
+          "name": "Snowfield",
+          "prompt": "snow ground white"
+        },
+        {
+          "name": "Windblown snow",
+          "prompt": "snow ground wind"
+        },
+        {
+          "name": "Wet stone",
+          "prompt": "stone wet reflective"
+        },
+        {
+          "name": "Rain-soaked asphalt",
+          "prompt": "asphalt wet rain"
+        },
+        {
+          "name": "Storm clouds",
+          "prompt": "clouds storm"
+        },
+        {
+          "name": "Soft cloud layer",
+          "prompt": "clouds soft"
+        },
+        {
+          "name": "Lightning sky",
+          "prompt": "clouds lightning"
+        },
+        {
+          "name": "Foggy glass",
+          "prompt": "glass fogged"
+        },
+        {
+          "name": "Frosted glass",
+          "prompt": "glass frosted"
+        },
+        {
+          "name": "Window rain trails",
+          "prompt": "glass rain streaks"
+        },
+        {
+          "name": "Sea foam",
+          "prompt": "water sea foam"
+        },
+        {
+          "name": "Coral reef",
+          "prompt": "coral reef bright"
+        }
+      ]
+    },
+    {
+      "group": "FOOD, ORGANIC & CREATURES",
+      "items": [
+        {
+          "name": "Mushroom cap · red",
+          "prompt": "mushroom red spotted"
+        },
+        {
+          "name": "Mushroom cap · blue",
+          "prompt": "mushroom blue"
+        },
+        {
+          "name": "Spotted fungus",
+          "prompt": "fungus spotted purple"
+        },
+        {
+          "name": "Alien fungus",
+          "prompt": "fungus alien green"
+        },
+        {
+          "name": "Bark texture",
+          "prompt": "tree bark brown"
+        },
+        {
+          "name": "Pine bark",
+          "prompt": "tree bark pine"
+        },
+        {
+          "name": "Tree leaves · canopy",
+          "prompt": "leaves canopy green"
+        },
+        {
+          "name": "Autumn leaves",
+          "prompt": "leaves autumn orange"
+        },
+        {
+          "name": "Jungle foliage",
+          "prompt": "leaves jungle dense"
+        },
+        {
+          "name": "Cactus skin",
+          "prompt": "cactus skin green"
+        },
+        {
+          "name": "Bone surface",
+          "prompt": "bone texture ivory"
+        },
+        {
+          "name": "Horn plates",
+          "prompt": "horn plates dark"
+        },
+        {
+          "name": "Scales · teal",
+          "prompt": "creature scales teal"
+        },
+        {
+          "name": "Scales · red",
+          "prompt": "creature scales red"
+        },
+        {
+          "name": "Insect chitin",
+          "prompt": "insect chitin black"
+        },
+        {
+          "name": "Hive wax",
+          "prompt": "hive wax amber"
+        },
+        {
+          "name": "Organic membrane",
+          "prompt": "organic membrane pink"
+        },
+        {
+          "name": "Veined flesh",
+          "prompt": "organic flesh veined"
+        },
+        {
+          "name": "Tentacle skin",
+          "prompt": "tentacle skin purple"
+        }
+      ]
+    },
+    {
+      "group": "PIXEL PATTERNS & UI",
+      "items": [
+        {
+          "name": "Dither · checker",
+          "prompt": "dither checker monochrome"
+        },
+        {
+          "name": "Dither · diagonal",
+          "prompt": "dither diagonal gray"
+        },
+        {
+          "name": "Dither · noise",
+          "prompt": "dither noise monochrome"
+        },
+        {
+          "name": "Halftone dots",
+          "prompt": "halftone dots black"
+        },
+        {
+          "name": "Halftone · cyan",
+          "prompt": "halftone dots cyan"
+        },
+        {
+          "name": "Scanlines",
+          "prompt": "screen scanlines"
+        },
+        {
+          "name": "CRT phosphor",
+          "prompt": "screen crt green"
+        },
+        {
+          "name": "Glitch blocks",
+          "prompt": "screen glitch blocks"
+        },
+        {
+          "name": "Pixel camouflage",
+          "prompt": "camouflage pixel green"
+        },
+        {
+          "name": "Digital grid · fine",
+          "prompt": "digital grid fine blue"
+        },
+        {
+          "name": "Digital grid · bold",
+          "prompt": "digital grid bold cyan"
+        },
+        {
+          "name": "Circuit traces · dense",
+          "prompt": "circuit traces dense"
+        },
+        {
+          "name": "Circuit traces · sparse",
+          "prompt": "circuit traces sparse"
+        },
+        {
+          "name": "Microchip pins",
+          "prompt": "microchip pins silver"
+        },
+        {
+          "name": "Barcode stripes",
+          "prompt": "barcode stripes black"
+        },
+        {
+          "name": "QR-like blocks",
+          "prompt": "pixel blocks random black"
+        },
+        {
+          "name": "Diagonal weave",
+          "prompt": "pattern diagonal weave"
+        },
+        {
+          "name": "Diamond lattice",
+          "prompt": "pattern diamond lattice"
+        },
+        {
+          "name": "Tiny hex mesh",
+          "prompt": "pattern hex mesh"
+        }
+      ]
+    },
+    {
+      "group": "COLOR & FINISH VARIANTS",
+      "items": [
+        {
+          "name": "Brushed alloy",
+          "prompt": "metal panels"
+        },
+        {
+          "name": "Gold alloy",
+          "prompt": "metal panels amber"
+        },
+        {
+          "name": "Copper alloy",
+          "prompt": "rusted spaceship metal red"
+        },
+        {
+          "name": "Black carbon armor",
+          "prompt": "stealth armor"
+        },
+        {
+          "name": "Blue carbon armor",
+          "prompt": "stealth armor blue"
+        },
+        {
+          "name": "Red carbon armor",
+          "prompt": "stealth armor red"
+        },
+        {
+          "name": "Caution labels",
+          "prompt": "hazard stripes amber"
+        },
+        {
+          "name": "Warning panel · red",
+          "prompt": "red emergency panels"
+        },
+        {
+          "name": "Warning panel · green",
+          "prompt": "green biotech panels"
+        },
+        {
+          "name": "Medical wall tiles",
+          "prompt": "medical bay"
+        },
+        {
+          "name": "Lab wall · blue",
+          "prompt": "white lab wall blue"
+        },
+        {
+          "name": "Lab wall · green",
+          "prompt": "white lab wall green"
+        },
+        {
+          "name": "Cargo crate · orange",
+          "prompt": "cargo crate amber"
+        },
+        {
+          "name": "Cargo crate · military",
+          "prompt": "cargo crate green"
+        },
+        {
+          "name": "Worn paint",
+          "prompt": "rusted spaceship metal"
+        },
+        {
+          "name": "Scratched hull",
+          "prompt": "rusted spaceship metal"
+        },
+        {
+          "name": "Panel bolts",
+          "prompt": "armored plating"
+        },
+        {
+          "name": "Ceramic armor",
+          "prompt": "white lab wall"
+        },
+        {
+          "name": "Soundproof wall",
+          "prompt": "spaceship bulkhead"
+        },
+        {
+          "name": "Checker tile · dark",
+          "prompt": "checker tile dark"
+        },
+        {
+          "name": "Neon purple panels",
+          "prompt": "metal panels purple"
+        },
+        {
+          "name": "Cold blue panels",
+          "prompt": "metal panels blue"
+        },
+        {
+          "name": "Toxic green panels",
+          "prompt": "metal panels green"
+        },
+        {
+          "name": "Emergency red metal",
+          "prompt": "metal panels red"
+        }
+      ]
+    }
+  ]
+}
