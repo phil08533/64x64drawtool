@@ -3,36 +3,50 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#171923">
+<meta name="theme-color" content="#e8dfcb">
 <title>Pixel64 · Pixel Art</title>
 <style>
-:root{color-scheme:dark;--bg:#171923;--panel:#222533;--line:#3a4053;--text:#f4f5fb;--muted:#aeb5c8;--accent:#8b9cff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
-header{text-align:center;padding:14px 12px 8px}h1{font-size:21px;margin:0 0 3px}header p{margin:0;color:var(--muted);font-size:12px}
-main{width:min(100%,850px);margin:auto;padding:8px 12px 24px;display:grid;gap:12px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
-.canvas-wrap{width:100%;max-width:560px;margin:0 auto;aspect-ratio:1;touch-action:none;overflow:hidden;border:2px solid #59617b;border-radius:4px;background:white}
+:root{color-scheme:light;--paper:#e8dfcb;--ink:#191914;--muted:#655f50;--rule:#191914;--panel:#f3ecdc;--accent:#c65332;--olive:#72794c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:14px ui-monospace,SFMono-Regular,Consolas,monospace;min-height:100vh;background-image:radial-gradient(#1919140c .7px,transparent .7px);background-size:4px 4px}
+header{padding:15px 14px 11px;border-bottom:3px solid var(--ink);display:flex;align-items:baseline;justify-content:space-between;gap:10px;text-align:left;max-width:1120px;margin:auto}
+h1{font:italic 700 30px/1 Georgia,'Times New Roman',serif;letter-spacing:-1.5px;margin:0}
+header p{margin:0;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+main{width:min(100%,1120px);margin:0 auto;padding:14px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);align-items:start;gap:14px}
+.panel{background:var(--panel);border:2px solid var(--ink);border-radius:0;padding:12px;box-shadow:4px 4px 0 var(--ink);min-width:0}
+.drawing{grid-row:span 3}
+.canvas-wrap{width:100%;max-width:560px;margin:0 auto;aspect-ratio:1;touch-action:none;overflow:hidden;border:3px solid var(--ink);border-radius:0;background:#fff;box-shadow:inset 0 0 0 1px #fff}
 canvas{display:block;width:100%;height:100%;image-rendering:pixelated;touch-action:none}
-.tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:11px}
-button,.file-label{border:1px solid var(--line);background:#303548;color:var(--text);border-radius:10px;padding:10px 5px;font:inherit;font-size:13px;min-height:42px;display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;touch-action:manipulation}
-button.active{border-color:var(--accent);background:#3b4260;box-shadow:inset 0 0 0 1px var(--accent)}button:disabled{opacity:.4}
-.row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.section-title{font-weight:650;margin:0 0 10px;font-size:14px}
-.color-row{display:flex;align-items:center;gap:9px}input[type=color]{width:54px;height:46px;padding:3px;border:1px solid var(--line);border-radius:10px;background:#303548}
-#hex{flex:1;min-width:100px;background:#171923;border:1px solid var(--line);border-radius:9px;padding:11px;color:var(--text);font:inherit;text-transform:uppercase}
-label.small{display:block;color:var(--muted);font-size:12px;margin-bottom:7px}.swatches{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-.swatch{width:29px;height:29px;min-height:29px;border-radius:7px;border:2px solid #ffffff40;padding:0}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.primary{background:#6477e8;border-color:#8492ff;color:white;font-weight:650}.danger{color:#ffc5c5}
-.hint{color:var(--muted);font-size:12px;line-height:1.45;margin:10px 1px 0}input[type=file]{display:none}
-@media(min-width:720px){main{grid-template-columns:minmax(0,1.2fr) minmax(250px,.8fr);align-items:start}.drawing{grid-row:span 2}.canvas-wrap{max-width:560px}}
-.texture-preview{width:100%;max-width:256px;aspect-ratio:1;margin:10px auto;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:repeating-conic-gradient(#343849 0% 25%,#252a38 0% 50%) 0/16px 16px}
+.tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:12px}
+button,.file-label{border:2px solid var(--ink);background:#e4d8bd;color:var(--ink);border-radius:0;padding:9px 5px;font:inherit;font-size:11px;min-height:42px;display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;touch-action:manipulation;box-shadow:2px 2px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+button:active,.file-label:active{transform:translate(2px,2px);box-shadow:none}
+button.active{background:var(--ink);color:var(--paper);border-color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
+button:disabled{opacity:.35;box-shadow:none}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.section-title{font:700 17px/1.1 Georgia,'Times New Roman',serif;letter-spacing:-.3px;margin:0 0 12px}
+.section-title:before{content:'// ';color:var(--accent);font:700 12px ui-monospace,monospace}
+.color-row{display:flex;align-items:center;gap:8px}
+input[type=color]{width:50px;height:43px;padding:2px;border:2px solid var(--ink);border-radius:0;background:var(--panel)}
+#hex{flex:1;min-width:100px;background:#fffaf0;border:2px solid var(--ink);border-radius:0;padding:10px;color:var(--ink);font:inherit;text-transform:uppercase}
+label.small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
+.swatches{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+.swatch{width:28px;height:28px;min-height:28px;border-radius:0;border:2px solid var(--ink);padding:0;box-shadow:2px 2px 0 var(--ink)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.primary{background:var(--accent);border-color:var(--ink);color:#fff8e8;font-weight:700}
+.danger{color:#9e2e21}
+.hint{color:var(--muted);font-size:11px;line-height:1.55;margin:10px 1px 0}
+input[type=file]{display:none}
+@media(max-width:719px){main{grid-template-columns:minmax(0,1fr);padding:11px;gap:12px}header{padding:13px 12px 10px}h1{font-size:27px}header p{font-size:9px;text-align:right;max-width:150px}.drawing{grid-row:auto}.panel{padding:10px}}
+@media(min-width:720px){.canvas-wrap{max-width:560px}}
+.texture-preview{width:100%;max-width:256px;aspect-ratio:1;margin:10px auto;border:2px solid var(--ink);border-radius:0;overflow:hidden;background:repeating-conic-gradient(#d1c6af 0% 25%,#f3ecdc 0% 50%) 0/12px 12px;box-shadow:3px 3px 0 var(--ink)}
 #texturePreview{display:block;width:100%;height:100%;image-rendering:pixelated}
-#texturePrompt{width:100%;min-height:76px;resize:vertical;background:#171923;border:1px solid var(--line);border-radius:9px;padding:10px;color:var(--text);font:inherit}
+#texturePrompt{width:100%;min-height:76px;resize:vertical;background:#fffaf0;border:2px solid var(--ink);border-radius:0;padding:10px;color:var(--ink);font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}
 .texture-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.texture-note{font-size:12px;line-height:1.45;color:var(--muted);margin:9px 0 0}
+.texture-note{font-size:10px;line-height:1.5;color:var(--muted);margin:10px 0 0}
 </style>
 </head>
 <body>
-<header><h1>Pixel64</h1><p>Simple 64 × 64 pixel art for your game</p></header>
+<header><h1>Pixel64 <span style="font:10px ui-monospace,monospace;letter-spacing:0">v0.4 / TOOL</span></h1><p>64×64 texture workbench · no cloud · no nonsense</p></header>
 <main>
 <section class="panel drawing">
  <div class="row"><p class="section-title">Canvas · 64 × 64</p><span id="status" style="font-size:12px;color:var(--muted)">Grid on</span></div>
@@ -45,7 +59,7 @@ label.small{display:block;color:var(--muted);font-size:12px;margin-bottom:7px}.s
 </section>
 <section class="panel">
  <p class="section-title">Color</p><label class="small" for="color">Choose any color</label>
- <div class="color-row"><input id="color" type="color" value="#24243a" aria-label="Choose color"><input id="hex" value="#24243A" maxlength="7" aria-label="Hex color"></div>
+ <div class="color-row"><input id="color" type="color" value="#262820" aria-label="Choose color"><input id="hex" value="#262820" maxlength="7" aria-label="Hex color"></div>
  <div class="swatches" id="swatches"></div>
 </section>
 <section class="panel">
@@ -96,7 +110,7 @@ label.small{display:block;color:var(--muted);font-size:12px;margin-bottom:7px}.s
  document.getElementById('imageInput').onchange=e=>{let f=e.target.files[0];if(!f)return;let im=new Image();im.onload=()=>{snapshot();let c=document.createElement('canvas');c.width=c.height=64;let x=c.getContext('2d');x.clearRect(0,0,64,64);x.imageSmoothingEnabled=false;x.drawImage(im,0,0,64,64);let d=x.getImageData(0,0,64,64).data;pixels=blank();for(let i=0;i<4096;i++){if(d[i*4+3])pixels[i]='#'+[d[i*4],d[i*4+1],d[i*4+2]].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();}render();URL.revokeObjectURL(im.src);e.target.value='';};im.src=URL.createObjectURL(f);};
  document.getElementById('saveProject').onclick=()=>{let b=new Blob([JSON.stringify({width:64,height:64,pixels})],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='pixel64-project.json';a.click();URL.revokeObjectURL(u);};
  document.getElementById('projectInput').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let o=JSON.parse(r.result);if(o.width!==64||o.height!==64||!Array.isArray(o.pixels)||o.pixels.length!==4096)throw Error();snapshot();pixels=o.pixels.map(v=>typeof v==='string'&&/^#[0-9a-f]{6}$/i.test(v)?v.toUpperCase():null);render();}catch{alert('That is not a valid Pixel64 project file.');}e.target.value='';};r.readAsText(f);};
- ['#000000','#FFFFFF','#24243A','#D7263D','#F46036','#F9C80E','#2E933C','#00A6FB','#235789','#7B2CBF','#F72585','#8D99AE','#795548','#FFD6A5','#B8F2E6','#C0FDFF'].forEach(c=>{let b=document.createElement('button');b.className='swatch';b.style.background=c;b.title=c;b.setAttribute('aria-label','Use '+c);b.onclick=()=>setColor(c);document.getElementById('swatches').appendChild(b);});
+ ['#191914','#F3ECDC','#262820','#9E3025','#C65332','#D5A63C','#72794C','#9AA06B','#5C4938','#B8753B','#D8C8A5','#77756B','#795548','#E7B7A0','#A9B7A0','#B8A68A'].forEach(c=>{let b=document.createElement('button');b.className='swatch';b.style.background=c;b.title=c;b.setAttribute('aria-label','Use '+c);b.onclick=()=>setColor(c);document.getElementById('swatches').appendChild(b);});
 
  // Lightweight offline procedural texture generator. It is not a cloud/LLM model.
  const textureCanvas=document.getElementById('texturePreview'), tctx=textureCanvas.getContext('2d');
