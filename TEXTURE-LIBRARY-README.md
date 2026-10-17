@@ -1,325 +1,43 @@
 # Pixel64 Texture Library Archive
 
-A preserved catalog of **815 named procedural texture recipes** across **22 categories**.
+This archive preserves **1096 named texture recipes** across **29 categories**.
 
-- `texture-library.json` stores every display name, category and prompt.
-- `index.html` contains the offline procedural generator and interactive library.
-- No API key or remote generation service is needed.
-- Selecting the same recipe uses a stable seed for repeatable results.
-- Seamless/tileable recipes are intended for repeated use as game materials. Always inspect tile edges in the target engine before shipping.
+- `texture-library.json` stores category, display name, and generator prompt.
+- `index.html` embeds the searchable library and offline procedural generator.
+- No API key or cloud generation endpoint is required.
+- Each preset has a stable prompt-derived seed, so selecting the same recipe reproduces its result.
+- Duplicate prompt strings found during audit were disambiguated with preset-specific descriptors. Related entries may still share a broad material family, but no two entries have the exact same prompt.
+- Tileable/seamless recipes are intended for repeated game materials. Validate edges in your target engine before production.
+- This is a procedural texture recipe catalog, not a trained AI model or a folder of pre-rendered PNGs.
 
-These are recipe definitions for procedural pixel-art generation, not a collection of pre-rendered images and not a remote AI model. The JSON archive is the durable catalog backup.
+## Categories
 
-## Added in this expansion
-
-### BIOLOGICAL MICROSTRUCTURES
-- Cell membrane lipid mosaic
-- Mitochondria cristae
-- Red blood cell field
-- Microscope pollen grains
-- Diatom silica shells
-- Bacterial colony agar
-- Virus capsid geometry
-- Neural tissue fibers
-- Muscle striation
-- Cartilage matrix
-- Honeycomb bone trabeculae
-- Spider silk web
-- Silkworm cocoon fibers
-- Moth wing scales
-- Butterfly eye spots
-- Feather barb structure
-- Bird nest woven twigs
-- Porcupine quills
-- Sharkskin denticles
-- Whale barnacle skin
-- Crocodile osteoderms
-- Turtle shell scutes
-- Coral polyp colony
-- Sea urchin test
-- Starfish tube feet
-- Kelp air bladders
-- Moss sporophytes
-- Fern sori
-- Lichen fractal crust
-- Mycelium branching network
-- Mushroom pore underside
-- Slime mold veins
-- Petrified wood
-- Amber insect inclusions
-- Fossil shell bed
-- Eggshell pores
-- Horn keratin ridges
-- Hoof keratin layers
-- Scabbed healing tissue
-- Alien spore sacs
-- Synthetic organ gel
-- Biofilm on glass
-- Microbial mat bands
-- Plankton bloom
-- Cilia carpet
-- Cellulose plant fibers
-- Leaf stomata
-- Seed pod lattice
-- Pinecone scales
-- Bamboo node rings
-
-### SCI-FI HARD SURFACE & ENGINEERING
-- Vacuum insulation foil
-- Radiator honeycomb core
-- Thermal blanket quilting
-- Rocket nozzle ceramic
-- Reentry heat shield tiles
-- Space elevator cable weave
-- Magnetic containment coils
-- Fusion reactor ceramic
-- Cryogenic frost piping
-- Coolant manifold channels
-- Hydraulic hose braids
-- Pneumatic panel labels
-- Pressure vessel welds
-- Laser-cut vent slots
-- Machined aluminum tool marks
-- CNC spiral milling
-- Anodized rainbow titanium
-- Electroplated gold contacts
-- Solder mask traces
-- Flexible printed circuit
-- Ribbon cable conductors
-- Fiber optic connector field
-- Optical bench mounts
-- Lidar lens array
-- Radar absorber foam
-- Stealth faceted coating
-- Ship hull ablative coating
-- Micrometeorite pitting
-- Docking port gasket
-- Airlock seal ridges
-- Cargo container corrugation
-- Industrial cable trays
-- Cable bundle loom
-- Robot joint bellows
-- Servo motor windings
-- Gearbox oil channels
-- Bearing race grooves
-- Magnetic tape head wear
-- Vacuum chamber scratches
-- Cleanroom wall panels
-- Antistatic floor tiles
-- Reactor warning stencil
-- Hazard chevrons worn
-- Radiation trefoil tiles
-- Pressure suit fabric
-- Space suit thermal patches
-- Exoskeleton joint plates
-- Drone carbon shell
-- Synthetic muscle bundles
-- Transparent OLED matrix
-
-### URBAN DECAY & EVERYDAY FORENSICS
-- Sun-faded vinyl siding
-- Cracked linoleum
-- Peeling bathroom paint
-- Moldy ceiling stipple
-- Water damaged drywall
-- Plaster hairline cracks
-- Old wallpaper seam
-- Nicotine stained ceiling
-- Rusty chainlink fence
-- Galvanized fence weave
-- Concrete formwork marks
-- Cinderblock painted wall
-- Broken sidewalk aggregate
-- Chewed gum pavement
-- Oil stained parking bay
-- Tire scuff on concrete
-- Warehouse epoxy floor
-- Loading dock rubber bumpers
-- Elevator brushed steel
-- Escalator comb plate
-- Subway tactile tiles
-- Train seat fabric
-- Bus floor rubber
-- Parking garage stains
-- Fire escape grating
-- Roll-up shutter ribs
-- Dumpster scratched plastic
-- Bottle glass cullet
-- Cracked phone screen
-- Old keyboard keycaps
-- Mousepad cloth grain
-- Printer toner streaks
-- Thermal receipt paper
-- Photocopier drum bands
-- Cassette shell plastic
-- Floppy disk label
-- CD rainbow scratches
-- CRT screen burn-in
-- Dusty fan grille
-- Vent filter lint
-- Radiator paint chips
-- Window putty cracks
-- Condensation on brick
-- Bird droppings on ledge
-- Lichen on roof tile
-- Roofing felt granules
-- Shingle weathering
-- Tar patch pavement
-- Drain pipe mineral scale
-- Abandoned pool plaster
-
-### FANTASY, MYTH & IMPOSSIBLE SUBSTANCES
-- Moonstone shimmer
-- Dragon glass obsidian
-- Phoenix ash embers
-- Unicorn horn rings
-- Golem clay glyphs
-- Living spell parchment
-- Enchanted bark runes
-- Fairy mushroom rings
-- Troll cave mineral
-- Dwarven hammered bronze
-- Elven silver filigree
-- Orc warpaint leather
-- Mermaid scale shimmer
-- Kraken sucker skin
-- Leviathan hide plates
-- Ghost frost patterns
-- Shadow cloth folds
-- Dream crystal facets
-- Memory glass swirls
-- Timeworn portal stone
-- Dimensional seam
-- Gravity well distortion
-- Void matter speckles
-- Antimatter containment glow
-- Starlight woven fabric
-- Solar sail foil
-- Lunar temple mosaic
-- Comet ice dust
-- Meteor crater glass
-- Cosmic dust nebula
-- Astral map lines
-- Celestial clockwork
-- Runestone circuitry
-- Magic circle chalk
-- Alchemy salt crystals
-- Potion residue rings
-- Witch cauldron enamel
-- Cursed wax seal
-- Haunted portrait canvas
-- Spectral handprints
-- Ectoplasm bubbles
-- Bone cathedral relief
-- Vampire velvet damask
-- Werewolf clawed timber
-- Goblin patchwork armor
-- Fey bark lattice
-- Crystal dragon scales
-- Infernal basalt cracks
-- Heavenly marble gold
-- Dreamscape checker fog
-
-### SURFACE OPTICS & RENDERING DEBUG
-- Pixel normal map preview
-- Pixel height map ridges
-- Pixel ambient occlusion dots
-- Pixel metallic roughness split
-- Pixel emission mask
-- Pixel alpha cutout leaves
-- Pixel alpha dither glass
-- Pixel palette ramp test
-- Pixel hue gradient bands
-- Pixel value checker
-- Pixel contrast ladder
-- Pixel 1-bit stipple
-- Pixel 2-bit ordered dither
-- Pixel blue noise field
-- Pixel Bayer 4x4 matrix
-- Pixel Bayer 8x8 matrix
-- Pixel subpixel RGB mask
-- Pixel chromatic aberration
-- Pixel lens dirt specks
-- Pixel bloom threshold test
-- Pixel shadow acne test
-- Pixel UV checker labeled
-- Pixel UV seam marker
-- Pixel mip bleed test
-- Pixel texture atlas gutters
-- Pixel sprite outline sample
-- Pixel silhouette density grid
-- Pixel tiling seam detector
-- Pixel frequency test bars
-- Pixel moire test
-- Pixel scanline density test
-- Pixel CRT mask triads
-- Pixel palette cycling bands
-- Pixel transparency fringe test
-- Pixel color quantization
-- Pixel gamma ramp
-- Pixel specular highlight test
-- Pixel roughness swatches
-- Pixel world-space grid
-- Pixel triplanar blend test
-- Pixel tangent direction arrows
-- Pixel voxel face normals
-- Pixel distance field contour
-- Pixel signed distance rings
-- Pixel compression artifacts
-- Pixel palette index chart
-- Pixel alpha checker mask
-- Pixel repeat offset markers
-- Pixel rotation symmetry test
-- Pixel procedural seed chart
-
-### FOOD, KITCHEN & DOMESTIC MATERIALS
-- Orange peel pores
-- Lemon rind dimples
-- Lime skin speckles
-- Kiwi cross section
-- Watermelon rind stripes
-- Cantaloupe netting
-- Pineapple diamond skin
-- Banana peel freckles
-- Apple skin blush
-- Pear skin dots
-- Strawberry seeds
-- Blueberry bloom
-- Grape wax bloom
-- Coconut husk fibers
-- Peanut shell ridges
-- Walnut shell grooves
-- Cracked eggshell
-- Toast crumb surface
-- Bread crust scoring
-- Sourdough bubbles
-- Waffle grid
-- Pancake browned spots
-- Chocolate temper sheen
-- Chocolate wafer grid
-- Candy cane stripes
-- Hard candy swirls
-- Gummy candy translucence
-- Jelly surface wobble
-- Rice grain field
-- Dry pasta ridges
-- Instant noodle curls
-- Coffee grounds
-- Tea leaf fragments
-- Spice powder scatter
-- Salt crystals
-- Sugar crystals
-- Flour dust on wood
-- Cutting board knife marks
-- Cast iron seasoning
-- Enamel pot chips
-- Stainless sink scratches
-- Ceramic mug glaze
-- Paper towel emboss
-- Dish sponge pores
-- Steel wool curls
-- Dishcloth weave
-- Kitchen tile grout
-- Freezer frost
-- Oven carbon deposits
-- Copper pan patina
+- **SHIP & STATION** — 23 presets
+- **MACHINERY & TECH** — 29 presets
+- **FLOORS & INDUSTRIAL** — 23 presets
+- **ALIEN WORLDS** — 29 presets
+- **SCREENS & ENERGY** — 23 presets
+- **NATURAL MATERIALS** — 29 presets
+- **INTERIOR DECOR & WALLS** — 19 presets
+- **URBAN & RUINED** — 19 presets
+- **FANTASY & MAGIC** — 19 presets
+- **WATER & WEATHER** — 19 presets
+- **FOOD, ORGANIC & CREATURES** — 19 presets
+- **PIXEL PATTERNS & UI** — 19 presets
+- **COLOR & FINISH VARIANTS** — 24 presets
+- **SEAMLESS TILEABLE MATERIALS** — 77 presets
+- **ODD MATERIALS & WORLD DETAILS** — 67 presets
+- **ENVIRONMENTAL SURFACES & GRAPHICS** — 77 presets
+- **BIOLOGICAL MICROSTRUCTURES** — 50 presets
+- **SCI-FI HARD SURFACE & ENGINEERING** — 50 presets
+- **URBAN DECAY & EVERYDAY FORENSICS** — 50 presets
+- **FANTASY, MYTH & IMPOSSIBLE SUBSTANCES** — 50 presets
+- **SURFACE OPTICS & RENDERING DEBUG** — 50 presets
+- **FOOD, KITCHEN & DOMESTIC MATERIALS** — 50 presets
+- **ARCHITECTURAL & BUILDING DETAIL** — 40 presets
+- **TOOLS, WORKSHOPS & MAKER MATERIALS** — 40 presets
+- **SPACE, PLANET & EXTREME WEATHER** — 40 presets
+- **ABSTRACT, GRAPHIC & UI BACKGROUNDS** — 40 presets
+- **SMALL DETAILS FOR GAME SPRITES** — 40 presets
+- **WATER, LIQUIDS & DEPOSITS** — 41 presets
+- **PLANTS, BIOMES & BOTANICAL SURFACES** — 40 presets
