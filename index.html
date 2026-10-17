@@ -205,42 +205,6 @@ input[type=file]{display:none}
  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
  function hash(x,y){let n=(x*374761393+y*668265263+textureSeed*1442695041)|0;n=(n^(n>>>13))*1274126177;return ((n^(n>>>16))>>>0)/4294967295;}
  function noise(x,y){let ix=Math.floor(x),iy=Math.floor(y),fx=x-ix,fy=y-iy;fx=fx*fx*(3-2*fx);fy=fy*fy*(3-2*fy);let a=hash(ix,iy),b=hash(ix+1,iy),c=hash(ix,iy+1),d=hash(ix+1,iy+1);return (a+(b-a)*fx)*(1-fy)+(c+(d-c)*fx)*fy;}
- function generateTexture(){
-  const prompt=document.getElementById('texturePrompt').value.toLowerCase();
-  let kind='stone';for(const k of Object.keys(palettes)){if(prompt.includes(k)){kind=k;break;}}
-  if(prompt.includes('rock')||prompt.includes('concrete'))kind='stone';
-  if(prompt.includes('leaf')||prompt.includes('moss'))kind='grass';
-  if(prompt.includes('ocean')||prompt.includes('river'))kind='water';
-  if(prompt.includes('rust'))kind='metal';
-  if(prompt.includes('brick'))kind='brick';
-  if(prompt.includes('crystal')||prompt.includes('snow'))kind='ice';
-  if(prompt.includes('dirt')||prompt.includes('desert'))kind='sand';
-  if(prompt.includes('flesh')||prompt.includes('skin')||prompt.includes('organic'))kind='alien';
-  if(prompt.includes('cloth')||prompt.includes('leather'))kind='fabric';
-  let pal=palettes[kind].slice();
-  // Allow simple color hints in the prompt.
-  const colorHints={red:'#b83232',orange:'#d87532',yellow:'#d9bd45',green:'#3b9656',blue:'#3979c4',purple:'#8653ad',pink:'#d875a5',black:'#171923',white:'#eeeeee',gold:'#c49a36'};
-  for(const [word,col] of Object.entries(colorHints)){if(prompt.includes(word)){const base=parseInt(col.slice(1),16);const rr=(base>>16)&255,gg=(base>>8)&255,bb=base&255;pal=[0.45,0.65,0.82,1,1.12].map(f=>'#'+[rr,gg,bb].map(v=>clamp(Math.round(v*f),0,255).toString(16).padStart(2,'0')).join(''));break;}}
-  const out=tctx.createImageData(64,64), vals=[];
-  for(let y=0;y<64;y++)for(let x=0;x<64;x++){
-   let n=noise(x/13,y/13)*.45+noise(x/5,y/5)*.32+noise(x/1.8,y/1.8)*.23;
-   if(kind==='wood')n=noise(x/4,y/18)*.62+noise(x/2,y/5)*.25+rand()*.13;
-   if(kind==='water')n=noise(x/12,y/3)*.52+noise(x/5,y/8)*.35+rand()*.13;
-   if(kind==='metal')n=noise(x/9,y/9)*.6+rand()*.4;
-   if(kind==='lava')n=noise(x/7,y/7)*.6+noise(x/2,y/2)*.4;
-   if(kind==='brick'){let row=Math.floor(y/8),xx=(x+(row%2)*8)%16;n=(xx<1||y%8<1)?0.05:0.4+noise(x/5,y/5)*.6;}
-   if(kind==='fabric')n=(Math.floor(x/2)%2===Math.floor(y/2)%2?0.62:0.38)+noise(x/7,y/7)*.25;
-   if(kind==='ice'&&prompt.includes('crystal'))n=(Math.abs(Math.sin(x*.33+y*.18))*.5+noise(x/7,y/7)*.5);
-   if(prompt.includes('pixel')||prompt.includes('blocky'))n=Math.round(n*4)/4;
-   let idx=clamp(Math.floor(n*pal.length),0,pal.length-1);
-   if(kind==='lava'&&n>.62)idx=clamp(idx+1,0,pal.length-1);
-   let col=pal[idx],hexv=parseInt(col.slice(1),16),p=(y*64+x)*4;
-   out.data[p]=(hexv>>16)&255;out.data[p+1]=(hexv>>8)&255;out.data[p+2]=hexv&255;out.data[p+3]=255;
-   vals[y*64+x]=col.toUpperCase();
-  }
-  tctx.putImageData(out,0,0);texturePixels=vals;
-  document.getElementById('textureStatus').textContent='Generated 64 × 64 '+kind+' texture. Edit the prompt and generate again for variations.';
- }
  document.getElementById('generateTexture').onclick=()=>{textureSeed=seedFromText(document.getElementById('texturePrompt').value);generateTexture();};
  document.getElementById('randomTexture').onclick=()=>{const prompts=['mossy stone','rusty metal','alien skin','blue water','dark wood','lava rock','ice crystal','desert sand','red brick','woven fabric'];document.getElementById('texturePrompt').value=prompts[Math.floor(Math.random()*prompts.length)];textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
  document.getElementById('useTexture').onclick=()=>{snapshot();pixels=texturePixels.slice();active().pixels=pixels;render();document.getElementById('textureStatus').textContent='Texture copied to '+active().name+'. Add another layer for details.';};
