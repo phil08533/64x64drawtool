@@ -2,9 +2,9 @@
   "title": "Pixel64 Procedural Texture Library",
   "version": "1.0",
   "updated": "2026-10-17",
-  "description": "Complete named local procedural texture preset catalog. Entries include display name, category, and prompt. Tileable/seamless entries are designed for repeating game surfaces; the generator uses deterministic seeded recipes.",
+  "description": "Expanded named texture recipe archive. Includes original presets plus additional niche material families. Repeatable presets use stable recipe seeds in the site generator; tileable output is designed for repeating game surfaces.",
   "generation": "Offline, procedural JavaScript; no API key or cloud service required.",
-  "count": 515,
+  "count": 815,
   "categories": [
     {
       "group": "SHIP & STATION",
@@ -2143,6 +2143,1236 @@
         {
           "name": "Pixel seamless foliage",
           "prompt": "tileable seamless pixel seamless foliage"
+        }
+      ]
+    },
+    {
+      "group": "BIOLOGICAL MICROSTRUCTURES",
+      "items": [
+        {
+          "name": "Cell membrane lipid mosaic",
+          "prompt": "seamless tileable pixel art texture, cell membrane lipid mosaic"
+        },
+        {
+          "name": "Mitochondria cristae",
+          "prompt": "seamless tileable pixel art texture, mitochondria cristae"
+        },
+        {
+          "name": "Red blood cell field",
+          "prompt": "seamless tileable pixel art texture, red blood cell field"
+        },
+        {
+          "name": "Microscope pollen grains",
+          "prompt": "seamless tileable pixel art texture, microscope pollen grains"
+        },
+        {
+          "name": "Diatom silica shells",
+          "prompt": "seamless tileable pixel art texture, diatom silica shells"
+        },
+        {
+          "name": "Bacterial colony agar",
+          "prompt": "seamless tileable pixel art texture, bacterial colony agar"
+        },
+        {
+          "name": "Virus capsid geometry",
+          "prompt": "seamless tileable pixel art texture, virus capsid geometry"
+        },
+        {
+          "name": "Neural tissue fibers",
+          "prompt": "seamless tileable pixel art texture, neural tissue fibers"
+        },
+        {
+          "name": "Muscle striation",
+          "prompt": "seamless tileable pixel art texture, muscle striation"
+        },
+        {
+          "name": "Cartilage matrix",
+          "prompt": "seamless tileable pixel art texture, cartilage matrix"
+        },
+        {
+          "name": "Honeycomb bone trabeculae",
+          "prompt": "seamless tileable pixel art texture, honeycomb bone trabeculae"
+        },
+        {
+          "name": "Spider silk web",
+          "prompt": "seamless tileable pixel art texture, spider silk web"
+        },
+        {
+          "name": "Silkworm cocoon fibers",
+          "prompt": "seamless tileable pixel art texture, silkworm cocoon fibers"
+        },
+        {
+          "name": "Moth wing scales",
+          "prompt": "seamless tileable pixel art texture, moth wing scales"
+        },
+        {
+          "name": "Butterfly eye spots",
+          "prompt": "seamless tileable pixel art texture, butterfly eye spots"
+        },
+        {
+          "name": "Feather barb structure",
+          "prompt": "seamless tileable pixel art texture, feather barb structure"
+        },
+        {
+          "name": "Bird nest woven twigs",
+          "prompt": "seamless tileable pixel art texture, bird nest woven twigs"
+        },
+        {
+          "name": "Porcupine quills",
+          "prompt": "seamless tileable pixel art texture, porcupine quills"
+        },
+        {
+          "name": "Sharkskin denticles",
+          "prompt": "seamless tileable pixel art texture, sharkskin denticles"
+        },
+        {
+          "name": "Whale barnacle skin",
+          "prompt": "seamless tileable pixel art texture, whale barnacle skin"
+        },
+        {
+          "name": "Crocodile osteoderms",
+          "prompt": "seamless tileable pixel art texture, crocodile osteoderms"
+        },
+        {
+          "name": "Turtle shell scutes",
+          "prompt": "seamless tileable pixel art texture, turtle shell scutes"
+        },
+        {
+          "name": "Coral polyp colony",
+          "prompt": "seamless tileable pixel art texture, coral polyp colony"
+        },
+        {
+          "name": "Sea urchin test",
+          "prompt": "seamless tileable pixel art texture, sea urchin test"
+        },
+        {
+          "name": "Starfish tube feet",
+          "prompt": "seamless tileable pixel art texture, starfish tube feet"
+        },
+        {
+          "name": "Kelp air bladders",
+          "prompt": "seamless tileable pixel art texture, kelp air bladders"
+        },
+        {
+          "name": "Moss sporophytes",
+          "prompt": "seamless tileable pixel art texture, moss sporophytes"
+        },
+        {
+          "name": "Fern sori",
+          "prompt": "seamless tileable pixel art texture, fern sori"
+        },
+        {
+          "name": "Lichen fractal crust",
+          "prompt": "seamless tileable pixel art texture, lichen fractal crust"
+        },
+        {
+          "name": "Mycelium branching network",
+          "prompt": "seamless tileable pixel art texture, mycelium branching network"
+        },
+        {
+          "name": "Mushroom pore underside",
+          "prompt": "seamless tileable pixel art texture, mushroom pore underside"
+        },
+        {
+          "name": "Slime mold veins",
+          "prompt": "seamless tileable pixel art texture, slime mold veins"
+        },
+        {
+          "name": "Petrified wood",
+          "prompt": "seamless tileable pixel art texture, petrified wood"
+        },
+        {
+          "name": "Amber insect inclusions",
+          "prompt": "seamless tileable pixel art texture, amber insect inclusions"
+        },
+        {
+          "name": "Fossil shell bed",
+          "prompt": "seamless tileable pixel art texture, fossil shell bed"
+        },
+        {
+          "name": "Eggshell pores",
+          "prompt": "seamless tileable pixel art texture, eggshell pores"
+        },
+        {
+          "name": "Horn keratin ridges",
+          "prompt": "seamless tileable pixel art texture, horn keratin ridges"
+        },
+        {
+          "name": "Hoof keratin layers",
+          "prompt": "seamless tileable pixel art texture, hoof keratin layers"
+        },
+        {
+          "name": "Scabbed healing tissue",
+          "prompt": "seamless tileable pixel art texture, scabbed healing tissue"
+        },
+        {
+          "name": "Alien spore sacs",
+          "prompt": "seamless tileable pixel art texture, alien spore sacs"
+        },
+        {
+          "name": "Synthetic organ gel",
+          "prompt": "seamless tileable pixel art texture, synthetic organ gel"
+        },
+        {
+          "name": "Biofilm on glass",
+          "prompt": "seamless tileable pixel art texture, biofilm on glass"
+        },
+        {
+          "name": "Microbial mat bands",
+          "prompt": "seamless tileable pixel art texture, microbial mat bands"
+        },
+        {
+          "name": "Plankton bloom",
+          "prompt": "seamless tileable pixel art texture, plankton bloom"
+        },
+        {
+          "name": "Cilia carpet",
+          "prompt": "seamless tileable pixel art texture, cilia carpet"
+        },
+        {
+          "name": "Cellulose plant fibers",
+          "prompt": "seamless tileable pixel art texture, cellulose plant fibers"
+        },
+        {
+          "name": "Leaf stomata",
+          "prompt": "seamless tileable pixel art texture, leaf stomata"
+        },
+        {
+          "name": "Seed pod lattice",
+          "prompt": "seamless tileable pixel art texture, seed pod lattice"
+        },
+        {
+          "name": "Pinecone scales",
+          "prompt": "seamless tileable pixel art texture, pinecone scales"
+        },
+        {
+          "name": "Bamboo node rings",
+          "prompt": "seamless tileable pixel art texture, bamboo node rings"
+        }
+      ]
+    },
+    {
+      "group": "SCI-FI HARD SURFACE & ENGINEERING",
+      "items": [
+        {
+          "name": "Vacuum insulation foil",
+          "prompt": "seamless tileable pixel art texture, vacuum insulation foil"
+        },
+        {
+          "name": "Radiator honeycomb core",
+          "prompt": "seamless tileable pixel art texture, radiator honeycomb core"
+        },
+        {
+          "name": "Thermal blanket quilting",
+          "prompt": "seamless tileable pixel art texture, thermal blanket quilting"
+        },
+        {
+          "name": "Rocket nozzle ceramic",
+          "prompt": "seamless tileable pixel art texture, rocket nozzle ceramic"
+        },
+        {
+          "name": "Reentry heat shield tiles",
+          "prompt": "seamless tileable pixel art texture, reentry heat shield tiles"
+        },
+        {
+          "name": "Space elevator cable weave",
+          "prompt": "seamless tileable pixel art texture, space elevator cable weave"
+        },
+        {
+          "name": "Magnetic containment coils",
+          "prompt": "seamless tileable pixel art texture, magnetic containment coils"
+        },
+        {
+          "name": "Fusion reactor ceramic",
+          "prompt": "seamless tileable pixel art texture, fusion reactor ceramic"
+        },
+        {
+          "name": "Cryogenic frost piping",
+          "prompt": "seamless tileable pixel art texture, cryogenic frost piping"
+        },
+        {
+          "name": "Coolant manifold channels",
+          "prompt": "seamless tileable pixel art texture, coolant manifold channels"
+        },
+        {
+          "name": "Hydraulic hose braids",
+          "prompt": "seamless tileable pixel art texture, hydraulic hose braids"
+        },
+        {
+          "name": "Pneumatic panel labels",
+          "prompt": "seamless tileable pixel art texture, pneumatic panel labels"
+        },
+        {
+          "name": "Pressure vessel welds",
+          "prompt": "seamless tileable pixel art texture, pressure vessel welds"
+        },
+        {
+          "name": "Laser-cut vent slots",
+          "prompt": "seamless tileable pixel art texture, laser-cut vent slots"
+        },
+        {
+          "name": "Machined aluminum tool marks",
+          "prompt": "seamless tileable pixel art texture, machined aluminum tool marks"
+        },
+        {
+          "name": "CNC spiral milling",
+          "prompt": "seamless tileable pixel art texture, cnc spiral milling"
+        },
+        {
+          "name": "Anodized rainbow titanium",
+          "prompt": "seamless tileable pixel art texture, anodized rainbow titanium"
+        },
+        {
+          "name": "Electroplated gold contacts",
+          "prompt": "seamless tileable pixel art texture, electroplated gold contacts"
+        },
+        {
+          "name": "Solder mask traces",
+          "prompt": "seamless tileable pixel art texture, solder mask traces"
+        },
+        {
+          "name": "Flexible printed circuit",
+          "prompt": "seamless tileable pixel art texture, flexible printed circuit"
+        },
+        {
+          "name": "Ribbon cable conductors",
+          "prompt": "seamless tileable pixel art texture, ribbon cable conductors"
+        },
+        {
+          "name": "Fiber optic connector field",
+          "prompt": "seamless tileable pixel art texture, fiber optic connector field"
+        },
+        {
+          "name": "Optical bench mounts",
+          "prompt": "seamless tileable pixel art texture, optical bench mounts"
+        },
+        {
+          "name": "Lidar lens array",
+          "prompt": "seamless tileable pixel art texture, lidar lens array"
+        },
+        {
+          "name": "Radar absorber foam",
+          "prompt": "seamless tileable pixel art texture, radar absorber foam"
+        },
+        {
+          "name": "Stealth faceted coating",
+          "prompt": "seamless tileable pixel art texture, stealth faceted coating"
+        },
+        {
+          "name": "Ship hull ablative coating",
+          "prompt": "seamless tileable pixel art texture, ship hull ablative coating"
+        },
+        {
+          "name": "Micrometeorite pitting",
+          "prompt": "seamless tileable pixel art texture, micrometeorite pitting"
+        },
+        {
+          "name": "Docking port gasket",
+          "prompt": "seamless tileable pixel art texture, docking port gasket"
+        },
+        {
+          "name": "Airlock seal ridges",
+          "prompt": "seamless tileable pixel art texture, airlock seal ridges"
+        },
+        {
+          "name": "Cargo container corrugation",
+          "prompt": "seamless tileable pixel art texture, cargo container corrugation"
+        },
+        {
+          "name": "Industrial cable trays",
+          "prompt": "seamless tileable pixel art texture, industrial cable trays"
+        },
+        {
+          "name": "Cable bundle loom",
+          "prompt": "seamless tileable pixel art texture, cable bundle loom"
+        },
+        {
+          "name": "Robot joint bellows",
+          "prompt": "seamless tileable pixel art texture, robot joint bellows"
+        },
+        {
+          "name": "Servo motor windings",
+          "prompt": "seamless tileable pixel art texture, servo motor windings"
+        },
+        {
+          "name": "Gearbox oil channels",
+          "prompt": "seamless tileable pixel art texture, gearbox oil channels"
+        },
+        {
+          "name": "Bearing race grooves",
+          "prompt": "seamless tileable pixel art texture, bearing race grooves"
+        },
+        {
+          "name": "Magnetic tape head wear",
+          "prompt": "seamless tileable pixel art texture, magnetic tape head wear"
+        },
+        {
+          "name": "Vacuum chamber scratches",
+          "prompt": "seamless tileable pixel art texture, vacuum chamber scratches"
+        },
+        {
+          "name": "Cleanroom wall panels",
+          "prompt": "seamless tileable pixel art texture, cleanroom wall panels"
+        },
+        {
+          "name": "Antistatic floor tiles",
+          "prompt": "seamless tileable pixel art texture, antistatic floor tiles"
+        },
+        {
+          "name": "Reactor warning stencil",
+          "prompt": "seamless tileable pixel art texture, reactor warning stencil"
+        },
+        {
+          "name": "Hazard chevrons worn",
+          "prompt": "seamless tileable pixel art texture, hazard chevrons worn"
+        },
+        {
+          "name": "Radiation trefoil tiles",
+          "prompt": "seamless tileable pixel art texture, radiation trefoil tiles"
+        },
+        {
+          "name": "Pressure suit fabric",
+          "prompt": "seamless tileable pixel art texture, pressure suit fabric"
+        },
+        {
+          "name": "Space suit thermal patches",
+          "prompt": "seamless tileable pixel art texture, space suit thermal patches"
+        },
+        {
+          "name": "Exoskeleton joint plates",
+          "prompt": "seamless tileable pixel art texture, exoskeleton joint plates"
+        },
+        {
+          "name": "Drone carbon shell",
+          "prompt": "seamless tileable pixel art texture, drone carbon shell"
+        },
+        {
+          "name": "Synthetic muscle bundles",
+          "prompt": "seamless tileable pixel art texture, synthetic muscle bundles"
+        },
+        {
+          "name": "Transparent OLED matrix",
+          "prompt": "seamless tileable pixel art texture, transparent oled matrix"
+        }
+      ]
+    },
+    {
+      "group": "URBAN DECAY & EVERYDAY FORENSICS",
+      "items": [
+        {
+          "name": "Sun-faded vinyl siding",
+          "prompt": "seamless tileable pixel art texture, sun-faded vinyl siding"
+        },
+        {
+          "name": "Cracked linoleum",
+          "prompt": "seamless tileable pixel art texture, cracked linoleum"
+        },
+        {
+          "name": "Peeling bathroom paint",
+          "prompt": "seamless tileable pixel art texture, peeling bathroom paint"
+        },
+        {
+          "name": "Moldy ceiling stipple",
+          "prompt": "seamless tileable pixel art texture, moldy ceiling stipple"
+        },
+        {
+          "name": "Water damaged drywall",
+          "prompt": "seamless tileable pixel art texture, water damaged drywall"
+        },
+        {
+          "name": "Plaster hairline cracks",
+          "prompt": "seamless tileable pixel art texture, plaster hairline cracks"
+        },
+        {
+          "name": "Old wallpaper seam",
+          "prompt": "seamless tileable pixel art texture, old wallpaper seam"
+        },
+        {
+          "name": "Nicotine stained ceiling",
+          "prompt": "seamless tileable pixel art texture, nicotine stained ceiling"
+        },
+        {
+          "name": "Rusty chainlink fence",
+          "prompt": "seamless tileable pixel art texture, rusty chainlink fence"
+        },
+        {
+          "name": "Galvanized fence weave",
+          "prompt": "seamless tileable pixel art texture, galvanized fence weave"
+        },
+        {
+          "name": "Concrete formwork marks",
+          "prompt": "seamless tileable pixel art texture, concrete formwork marks"
+        },
+        {
+          "name": "Cinderblock painted wall",
+          "prompt": "seamless tileable pixel art texture, cinderblock painted wall"
+        },
+        {
+          "name": "Broken sidewalk aggregate",
+          "prompt": "seamless tileable pixel art texture, broken sidewalk aggregate"
+        },
+        {
+          "name": "Chewed gum pavement",
+          "prompt": "seamless tileable pixel art texture, chewed gum pavement"
+        },
+        {
+          "name": "Oil stained parking bay",
+          "prompt": "seamless tileable pixel art texture, oil stained parking bay"
+        },
+        {
+          "name": "Tire scuff on concrete",
+          "prompt": "seamless tileable pixel art texture, tire scuff on concrete"
+        },
+        {
+          "name": "Warehouse epoxy floor",
+          "prompt": "seamless tileable pixel art texture, warehouse epoxy floor"
+        },
+        {
+          "name": "Loading dock rubber bumpers",
+          "prompt": "seamless tileable pixel art texture, loading dock rubber bumpers"
+        },
+        {
+          "name": "Elevator brushed steel",
+          "prompt": "seamless tileable pixel art texture, elevator brushed steel"
+        },
+        {
+          "name": "Escalator comb plate",
+          "prompt": "seamless tileable pixel art texture, escalator comb plate"
+        },
+        {
+          "name": "Subway tactile tiles",
+          "prompt": "seamless tileable pixel art texture, subway tactile tiles"
+        },
+        {
+          "name": "Train seat fabric",
+          "prompt": "seamless tileable pixel art texture, train seat fabric"
+        },
+        {
+          "name": "Bus floor rubber",
+          "prompt": "seamless tileable pixel art texture, bus floor rubber"
+        },
+        {
+          "name": "Parking garage stains",
+          "prompt": "seamless tileable pixel art texture, parking garage stains"
+        },
+        {
+          "name": "Fire escape grating",
+          "prompt": "seamless tileable pixel art texture, fire escape grating"
+        },
+        {
+          "name": "Roll-up shutter ribs",
+          "prompt": "seamless tileable pixel art texture, roll-up shutter ribs"
+        },
+        {
+          "name": "Dumpster scratched plastic",
+          "prompt": "seamless tileable pixel art texture, dumpster scratched plastic"
+        },
+        {
+          "name": "Bottle glass cullet",
+          "prompt": "seamless tileable pixel art texture, bottle glass cullet"
+        },
+        {
+          "name": "Cracked phone screen",
+          "prompt": "seamless tileable pixel art texture, cracked phone screen"
+        },
+        {
+          "name": "Old keyboard keycaps",
+          "prompt": "seamless tileable pixel art texture, old keyboard keycaps"
+        },
+        {
+          "name": "Mousepad cloth grain",
+          "prompt": "seamless tileable pixel art texture, mousepad cloth grain"
+        },
+        {
+          "name": "Printer toner streaks",
+          "prompt": "seamless tileable pixel art texture, printer toner streaks"
+        },
+        {
+          "name": "Thermal receipt paper",
+          "prompt": "seamless tileable pixel art texture, thermal receipt paper"
+        },
+        {
+          "name": "Photocopier drum bands",
+          "prompt": "seamless tileable pixel art texture, photocopier drum bands"
+        },
+        {
+          "name": "Cassette shell plastic",
+          "prompt": "seamless tileable pixel art texture, cassette shell plastic"
+        },
+        {
+          "name": "Floppy disk label",
+          "prompt": "seamless tileable pixel art texture, floppy disk label"
+        },
+        {
+          "name": "CD rainbow scratches",
+          "prompt": "seamless tileable pixel art texture, cd rainbow scratches"
+        },
+        {
+          "name": "CRT screen burn-in",
+          "prompt": "seamless tileable pixel art texture, crt screen burn-in"
+        },
+        {
+          "name": "Dusty fan grille",
+          "prompt": "seamless tileable pixel art texture, dusty fan grille"
+        },
+        {
+          "name": "Vent filter lint",
+          "prompt": "seamless tileable pixel art texture, vent filter lint"
+        },
+        {
+          "name": "Radiator paint chips",
+          "prompt": "seamless tileable pixel art texture, radiator paint chips"
+        },
+        {
+          "name": "Window putty cracks",
+          "prompt": "seamless tileable pixel art texture, window putty cracks"
+        },
+        {
+          "name": "Condensation on brick",
+          "prompt": "seamless tileable pixel art texture, condensation on brick"
+        },
+        {
+          "name": "Bird droppings on ledge",
+          "prompt": "seamless tileable pixel art texture, bird droppings on ledge"
+        },
+        {
+          "name": "Lichen on roof tile",
+          "prompt": "seamless tileable pixel art texture, lichen on roof tile"
+        },
+        {
+          "name": "Roofing felt granules",
+          "prompt": "seamless tileable pixel art texture, roofing felt granules"
+        },
+        {
+          "name": "Shingle weathering",
+          "prompt": "seamless tileable pixel art texture, shingle weathering"
+        },
+        {
+          "name": "Tar patch pavement",
+          "prompt": "seamless tileable pixel art texture, tar patch pavement"
+        },
+        {
+          "name": "Drain pipe mineral scale",
+          "prompt": "seamless tileable pixel art texture, drain pipe mineral scale"
+        },
+        {
+          "name": "Abandoned pool plaster",
+          "prompt": "seamless tileable pixel art texture, abandoned pool plaster"
+        }
+      ]
+    },
+    {
+      "group": "FANTASY, MYTH & IMPOSSIBLE SUBSTANCES",
+      "items": [
+        {
+          "name": "Moonstone shimmer",
+          "prompt": "seamless tileable pixel art texture, moonstone shimmer"
+        },
+        {
+          "name": "Dragon glass obsidian",
+          "prompt": "seamless tileable pixel art texture, dragon glass obsidian"
+        },
+        {
+          "name": "Phoenix ash embers",
+          "prompt": "seamless tileable pixel art texture, phoenix ash embers"
+        },
+        {
+          "name": "Unicorn horn rings",
+          "prompt": "seamless tileable pixel art texture, unicorn horn rings"
+        },
+        {
+          "name": "Golem clay glyphs",
+          "prompt": "seamless tileable pixel art texture, golem clay glyphs"
+        },
+        {
+          "name": "Living spell parchment",
+          "prompt": "seamless tileable pixel art texture, living spell parchment"
+        },
+        {
+          "name": "Enchanted bark runes",
+          "prompt": "seamless tileable pixel art texture, enchanted bark runes"
+        },
+        {
+          "name": "Fairy mushroom rings",
+          "prompt": "seamless tileable pixel art texture, fairy mushroom rings"
+        },
+        {
+          "name": "Troll cave mineral",
+          "prompt": "seamless tileable pixel art texture, troll cave mineral"
+        },
+        {
+          "name": "Dwarven hammered bronze",
+          "prompt": "seamless tileable pixel art texture, dwarven hammered bronze"
+        },
+        {
+          "name": "Elven silver filigree",
+          "prompt": "seamless tileable pixel art texture, elven silver filigree"
+        },
+        {
+          "name": "Orc warpaint leather",
+          "prompt": "seamless tileable pixel art texture, orc warpaint leather"
+        },
+        {
+          "name": "Mermaid scale shimmer",
+          "prompt": "seamless tileable pixel art texture, mermaid scale shimmer"
+        },
+        {
+          "name": "Kraken sucker skin",
+          "prompt": "seamless tileable pixel art texture, kraken sucker skin"
+        },
+        {
+          "name": "Leviathan hide plates",
+          "prompt": "seamless tileable pixel art texture, leviathan hide plates"
+        },
+        {
+          "name": "Ghost frost patterns",
+          "prompt": "seamless tileable pixel art texture, ghost frost patterns"
+        },
+        {
+          "name": "Shadow cloth folds",
+          "prompt": "seamless tileable pixel art texture, shadow cloth folds"
+        },
+        {
+          "name": "Dream crystal facets",
+          "prompt": "seamless tileable pixel art texture, dream crystal facets"
+        },
+        {
+          "name": "Memory glass swirls",
+          "prompt": "seamless tileable pixel art texture, memory glass swirls"
+        },
+        {
+          "name": "Timeworn portal stone",
+          "prompt": "seamless tileable pixel art texture, timeworn portal stone"
+        },
+        {
+          "name": "Dimensional seam",
+          "prompt": "seamless tileable pixel art texture, dimensional seam"
+        },
+        {
+          "name": "Gravity well distortion",
+          "prompt": "seamless tileable pixel art texture, gravity well distortion"
+        },
+        {
+          "name": "Void matter speckles",
+          "prompt": "seamless tileable pixel art texture, void matter speckles"
+        },
+        {
+          "name": "Antimatter containment glow",
+          "prompt": "seamless tileable pixel art texture, antimatter containment glow"
+        },
+        {
+          "name": "Starlight woven fabric",
+          "prompt": "seamless tileable pixel art texture, starlight woven fabric"
+        },
+        {
+          "name": "Solar sail foil",
+          "prompt": "seamless tileable pixel art texture, solar sail foil"
+        },
+        {
+          "name": "Lunar temple mosaic",
+          "prompt": "seamless tileable pixel art texture, lunar temple mosaic"
+        },
+        {
+          "name": "Comet ice dust",
+          "prompt": "seamless tileable pixel art texture, comet ice dust"
+        },
+        {
+          "name": "Meteor crater glass",
+          "prompt": "seamless tileable pixel art texture, meteor crater glass"
+        },
+        {
+          "name": "Cosmic dust nebula",
+          "prompt": "seamless tileable pixel art texture, cosmic dust nebula"
+        },
+        {
+          "name": "Astral map lines",
+          "prompt": "seamless tileable pixel art texture, astral map lines"
+        },
+        {
+          "name": "Celestial clockwork",
+          "prompt": "seamless tileable pixel art texture, celestial clockwork"
+        },
+        {
+          "name": "Runestone circuitry",
+          "prompt": "seamless tileable pixel art texture, runestone circuitry"
+        },
+        {
+          "name": "Magic circle chalk",
+          "prompt": "seamless tileable pixel art texture, magic circle chalk"
+        },
+        {
+          "name": "Alchemy salt crystals",
+          "prompt": "seamless tileable pixel art texture, alchemy salt crystals"
+        },
+        {
+          "name": "Potion residue rings",
+          "prompt": "seamless tileable pixel art texture, potion residue rings"
+        },
+        {
+          "name": "Witch cauldron enamel",
+          "prompt": "seamless tileable pixel art texture, witch cauldron enamel"
+        },
+        {
+          "name": "Cursed wax seal",
+          "prompt": "seamless tileable pixel art texture, cursed wax seal"
+        },
+        {
+          "name": "Haunted portrait canvas",
+          "prompt": "seamless tileable pixel art texture, haunted portrait canvas"
+        },
+        {
+          "name": "Spectral handprints",
+          "prompt": "seamless tileable pixel art texture, spectral handprints"
+        },
+        {
+          "name": "Ectoplasm bubbles",
+          "prompt": "seamless tileable pixel art texture, ectoplasm bubbles"
+        },
+        {
+          "name": "Bone cathedral relief",
+          "prompt": "seamless tileable pixel art texture, bone cathedral relief"
+        },
+        {
+          "name": "Vampire velvet damask",
+          "prompt": "seamless tileable pixel art texture, vampire velvet damask"
+        },
+        {
+          "name": "Werewolf clawed timber",
+          "prompt": "seamless tileable pixel art texture, werewolf clawed timber"
+        },
+        {
+          "name": "Goblin patchwork armor",
+          "prompt": "seamless tileable pixel art texture, goblin patchwork armor"
+        },
+        {
+          "name": "Fey bark lattice",
+          "prompt": "seamless tileable pixel art texture, fey bark lattice"
+        },
+        {
+          "name": "Crystal dragon scales",
+          "prompt": "seamless tileable pixel art texture, crystal dragon scales"
+        },
+        {
+          "name": "Infernal basalt cracks",
+          "prompt": "seamless tileable pixel art texture, infernal basalt cracks"
+        },
+        {
+          "name": "Heavenly marble gold",
+          "prompt": "seamless tileable pixel art texture, heavenly marble gold"
+        },
+        {
+          "name": "Dreamscape checker fog",
+          "prompt": "seamless tileable pixel art texture, dreamscape checker fog"
+        }
+      ]
+    },
+    {
+      "group": "SURFACE OPTICS & RENDERING DEBUG",
+      "items": [
+        {
+          "name": "Pixel normal map preview",
+          "prompt": "seamless tileable pixel art texture, pixel normal map preview"
+        },
+        {
+          "name": "Pixel height map ridges",
+          "prompt": "seamless tileable pixel art texture, pixel height map ridges"
+        },
+        {
+          "name": "Pixel ambient occlusion dots",
+          "prompt": "seamless tileable pixel art texture, pixel ambient occlusion dots"
+        },
+        {
+          "name": "Pixel metallic roughness split",
+          "prompt": "seamless tileable pixel art texture, pixel metallic roughness split"
+        },
+        {
+          "name": "Pixel emission mask",
+          "prompt": "seamless tileable pixel art texture, pixel emission mask"
+        },
+        {
+          "name": "Pixel alpha cutout leaves",
+          "prompt": "seamless tileable pixel art texture, pixel alpha cutout leaves"
+        },
+        {
+          "name": "Pixel alpha dither glass",
+          "prompt": "seamless tileable pixel art texture, pixel alpha dither glass"
+        },
+        {
+          "name": "Pixel palette ramp test",
+          "prompt": "seamless tileable pixel art texture, pixel palette ramp test"
+        },
+        {
+          "name": "Pixel hue gradient bands",
+          "prompt": "seamless tileable pixel art texture, pixel hue gradient bands"
+        },
+        {
+          "name": "Pixel value checker",
+          "prompt": "seamless tileable pixel art texture, pixel value checker"
+        },
+        {
+          "name": "Pixel contrast ladder",
+          "prompt": "seamless tileable pixel art texture, pixel contrast ladder"
+        },
+        {
+          "name": "Pixel 1-bit stipple",
+          "prompt": "seamless tileable pixel art texture, pixel 1-bit stipple"
+        },
+        {
+          "name": "Pixel 2-bit ordered dither",
+          "prompt": "seamless tileable pixel art texture, pixel 2-bit ordered dither"
+        },
+        {
+          "name": "Pixel blue noise field",
+          "prompt": "seamless tileable pixel art texture, pixel blue noise field"
+        },
+        {
+          "name": "Pixel Bayer 4x4 matrix",
+          "prompt": "seamless tileable pixel art texture, pixel bayer 4x4 matrix"
+        },
+        {
+          "name": "Pixel Bayer 8x8 matrix",
+          "prompt": "seamless tileable pixel art texture, pixel bayer 8x8 matrix"
+        },
+        {
+          "name": "Pixel subpixel RGB mask",
+          "prompt": "seamless tileable pixel art texture, pixel subpixel rgb mask"
+        },
+        {
+          "name": "Pixel chromatic aberration",
+          "prompt": "seamless tileable pixel art texture, pixel chromatic aberration"
+        },
+        {
+          "name": "Pixel lens dirt specks",
+          "prompt": "seamless tileable pixel art texture, pixel lens dirt specks"
+        },
+        {
+          "name": "Pixel bloom threshold test",
+          "prompt": "seamless tileable pixel art texture, pixel bloom threshold test"
+        },
+        {
+          "name": "Pixel shadow acne test",
+          "prompt": "seamless tileable pixel art texture, pixel shadow acne test"
+        },
+        {
+          "name": "Pixel UV checker labeled",
+          "prompt": "seamless tileable pixel art texture, pixel uv checker labeled"
+        },
+        {
+          "name": "Pixel UV seam marker",
+          "prompt": "seamless tileable pixel art texture, pixel uv seam marker"
+        },
+        {
+          "name": "Pixel mip bleed test",
+          "prompt": "seamless tileable pixel art texture, pixel mip bleed test"
+        },
+        {
+          "name": "Pixel texture atlas gutters",
+          "prompt": "seamless tileable pixel art texture, pixel texture atlas gutters"
+        },
+        {
+          "name": "Pixel sprite outline sample",
+          "prompt": "seamless tileable pixel art texture, pixel sprite outline sample"
+        },
+        {
+          "name": "Pixel silhouette density grid",
+          "prompt": "seamless tileable pixel art texture, pixel silhouette density grid"
+        },
+        {
+          "name": "Pixel tiling seam detector",
+          "prompt": "seamless tileable pixel art texture, pixel tiling seam detector"
+        },
+        {
+          "name": "Pixel frequency test bars",
+          "prompt": "seamless tileable pixel art texture, pixel frequency test bars"
+        },
+        {
+          "name": "Pixel moire test",
+          "prompt": "seamless tileable pixel art texture, pixel moire test"
+        },
+        {
+          "name": "Pixel scanline density test",
+          "prompt": "seamless tileable pixel art texture, pixel scanline density test"
+        },
+        {
+          "name": "Pixel CRT mask triads",
+          "prompt": "seamless tileable pixel art texture, pixel crt mask triads"
+        },
+        {
+          "name": "Pixel palette cycling bands",
+          "prompt": "seamless tileable pixel art texture, pixel palette cycling bands"
+        },
+        {
+          "name": "Pixel transparency fringe test",
+          "prompt": "seamless tileable pixel art texture, pixel transparency fringe test"
+        },
+        {
+          "name": "Pixel color quantization",
+          "prompt": "seamless tileable pixel art texture, pixel color quantization"
+        },
+        {
+          "name": "Pixel gamma ramp",
+          "prompt": "seamless tileable pixel art texture, pixel gamma ramp"
+        },
+        {
+          "name": "Pixel specular highlight test",
+          "prompt": "seamless tileable pixel art texture, pixel specular highlight test"
+        },
+        {
+          "name": "Pixel roughness swatches",
+          "prompt": "seamless tileable pixel art texture, pixel roughness swatches"
+        },
+        {
+          "name": "Pixel world-space grid",
+          "prompt": "seamless tileable pixel art texture, pixel world-space grid"
+        },
+        {
+          "name": "Pixel triplanar blend test",
+          "prompt": "seamless tileable pixel art texture, pixel triplanar blend test"
+        },
+        {
+          "name": "Pixel tangent direction arrows",
+          "prompt": "seamless tileable pixel art texture, pixel tangent direction arrows"
+        },
+        {
+          "name": "Pixel voxel face normals",
+          "prompt": "seamless tileable pixel art texture, pixel voxel face normals"
+        },
+        {
+          "name": "Pixel distance field contour",
+          "prompt": "seamless tileable pixel art texture, pixel distance field contour"
+        },
+        {
+          "name": "Pixel signed distance rings",
+          "prompt": "seamless tileable pixel art texture, pixel signed distance rings"
+        },
+        {
+          "name": "Pixel compression artifacts",
+          "prompt": "seamless tileable pixel art texture, pixel compression artifacts"
+        },
+        {
+          "name": "Pixel palette index chart",
+          "prompt": "seamless tileable pixel art texture, pixel palette index chart"
+        },
+        {
+          "name": "Pixel alpha checker mask",
+          "prompt": "seamless tileable pixel art texture, pixel alpha checker mask"
+        },
+        {
+          "name": "Pixel repeat offset markers",
+          "prompt": "seamless tileable pixel art texture, pixel repeat offset markers"
+        },
+        {
+          "name": "Pixel rotation symmetry test",
+          "prompt": "seamless tileable pixel art texture, pixel rotation symmetry test"
+        },
+        {
+          "name": "Pixel procedural seed chart",
+          "prompt": "seamless tileable pixel art texture, pixel procedural seed chart"
+        }
+      ]
+    },
+    {
+      "group": "FOOD, KITCHEN & DOMESTIC MATERIALS",
+      "items": [
+        {
+          "name": "Orange peel pores",
+          "prompt": "seamless tileable pixel art texture, orange peel pores"
+        },
+        {
+          "name": "Lemon rind dimples",
+          "prompt": "seamless tileable pixel art texture, lemon rind dimples"
+        },
+        {
+          "name": "Lime skin speckles",
+          "prompt": "seamless tileable pixel art texture, lime skin speckles"
+        },
+        {
+          "name": "Kiwi cross section",
+          "prompt": "seamless tileable pixel art texture, kiwi cross section"
+        },
+        {
+          "name": "Watermelon rind stripes",
+          "prompt": "seamless tileable pixel art texture, watermelon rind stripes"
+        },
+        {
+          "name": "Cantaloupe netting",
+          "prompt": "seamless tileable pixel art texture, cantaloupe netting"
+        },
+        {
+          "name": "Pineapple diamond skin",
+          "prompt": "seamless tileable pixel art texture, pineapple diamond skin"
+        },
+        {
+          "name": "Banana peel freckles",
+          "prompt": "seamless tileable pixel art texture, banana peel freckles"
+        },
+        {
+          "name": "Apple skin blush",
+          "prompt": "seamless tileable pixel art texture, apple skin blush"
+        },
+        {
+          "name": "Pear skin dots",
+          "prompt": "seamless tileable pixel art texture, pear skin dots"
+        },
+        {
+          "name": "Strawberry seeds",
+          "prompt": "seamless tileable pixel art texture, strawberry seeds"
+        },
+        {
+          "name": "Blueberry bloom",
+          "prompt": "seamless tileable pixel art texture, blueberry bloom"
+        },
+        {
+          "name": "Grape wax bloom",
+          "prompt": "seamless tileable pixel art texture, grape wax bloom"
+        },
+        {
+          "name": "Coconut husk fibers",
+          "prompt": "seamless tileable pixel art texture, coconut husk fibers"
+        },
+        {
+          "name": "Peanut shell ridges",
+          "prompt": "seamless tileable pixel art texture, peanut shell ridges"
+        },
+        {
+          "name": "Walnut shell grooves",
+          "prompt": "seamless tileable pixel art texture, walnut shell grooves"
+        },
+        {
+          "name": "Cracked eggshell",
+          "prompt": "seamless tileable pixel art texture, cracked eggshell"
+        },
+        {
+          "name": "Toast crumb surface",
+          "prompt": "seamless tileable pixel art texture, toast crumb surface"
+        },
+        {
+          "name": "Bread crust scoring",
+          "prompt": "seamless tileable pixel art texture, bread crust scoring"
+        },
+        {
+          "name": "Sourdough bubbles",
+          "prompt": "seamless tileable pixel art texture, sourdough bubbles"
+        },
+        {
+          "name": "Waffle grid",
+          "prompt": "seamless tileable pixel art texture, waffle grid"
+        },
+        {
+          "name": "Pancake browned spots",
+          "prompt": "seamless tileable pixel art texture, pancake browned spots"
+        },
+        {
+          "name": "Chocolate temper sheen",
+          "prompt": "seamless tileable pixel art texture, chocolate temper sheen"
+        },
+        {
+          "name": "Chocolate wafer grid",
+          "prompt": "seamless tileable pixel art texture, chocolate wafer grid"
+        },
+        {
+          "name": "Candy cane stripes",
+          "prompt": "seamless tileable pixel art texture, candy cane stripes"
+        },
+        {
+          "name": "Hard candy swirls",
+          "prompt": "seamless tileable pixel art texture, hard candy swirls"
+        },
+        {
+          "name": "Gummy candy translucence",
+          "prompt": "seamless tileable pixel art texture, gummy candy translucence"
+        },
+        {
+          "name": "Jelly surface wobble",
+          "prompt": "seamless tileable pixel art texture, jelly surface wobble"
+        },
+        {
+          "name": "Rice grain field",
+          "prompt": "seamless tileable pixel art texture, rice grain field"
+        },
+        {
+          "name": "Dry pasta ridges",
+          "prompt": "seamless tileable pixel art texture, dry pasta ridges"
+        },
+        {
+          "name": "Instant noodle curls",
+          "prompt": "seamless tileable pixel art texture, instant noodle curls"
+        },
+        {
+          "name": "Coffee grounds",
+          "prompt": "seamless tileable pixel art texture, coffee grounds"
+        },
+        {
+          "name": "Tea leaf fragments",
+          "prompt": "seamless tileable pixel art texture, tea leaf fragments"
+        },
+        {
+          "name": "Spice powder scatter",
+          "prompt": "seamless tileable pixel art texture, spice powder scatter"
+        },
+        {
+          "name": "Salt crystals",
+          "prompt": "seamless tileable pixel art texture, salt crystals"
+        },
+        {
+          "name": "Sugar crystals",
+          "prompt": "seamless tileable pixel art texture, sugar crystals"
+        },
+        {
+          "name": "Flour dust on wood",
+          "prompt": "seamless tileable pixel art texture, flour dust on wood"
+        },
+        {
+          "name": "Cutting board knife marks",
+          "prompt": "seamless tileable pixel art texture, cutting board knife marks"
+        },
+        {
+          "name": "Cast iron seasoning",
+          "prompt": "seamless tileable pixel art texture, cast iron seasoning"
+        },
+        {
+          "name": "Enamel pot chips",
+          "prompt": "seamless tileable pixel art texture, enamel pot chips"
+        },
+        {
+          "name": "Stainless sink scratches",
+          "prompt": "seamless tileable pixel art texture, stainless sink scratches"
+        },
+        {
+          "name": "Ceramic mug glaze",
+          "prompt": "seamless tileable pixel art texture, ceramic mug glaze"
+        },
+        {
+          "name": "Paper towel emboss",
+          "prompt": "seamless tileable pixel art texture, paper towel emboss"
+        },
+        {
+          "name": "Dish sponge pores",
+          "prompt": "seamless tileable pixel art texture, dish sponge pores"
+        },
+        {
+          "name": "Steel wool curls",
+          "prompt": "seamless tileable pixel art texture, steel wool curls"
+        },
+        {
+          "name": "Dishcloth weave",
+          "prompt": "seamless tileable pixel art texture, dishcloth weave"
+        },
+        {
+          "name": "Kitchen tile grout",
+          "prompt": "seamless tileable pixel art texture, kitchen tile grout"
+        },
+        {
+          "name": "Freezer frost",
+          "prompt": "seamless tileable pixel art texture, freezer frost"
+        },
+        {
+          "name": "Oven carbon deposits",
+          "prompt": "seamless tileable pixel art texture, oven carbon deposits"
+        },
+        {
+          "name": "Copper pan patina",
+          "prompt": "seamless tileable pixel art texture, copper pan patina"
         }
       ]
     }
