@@ -94,7 +94,19 @@ input[type=file]{display:none}
 <section class="panel">
  <p class="section-title">Local texture generator</p>
  <p class="hint" style="margin-top:-4px">Describe a tiny game texture. Runs entirely in your browser with procedural generation—no account, server, or downloads.</p>
- <div class="pattern-presets"><button data-pattern="wood panels">Wood panels</button><button data-pattern="fish wallpaper">Fish wallpaper</button><button data-pattern="brick wall">Brick wall</button><button data-pattern="checker tile">Floor tiles</button><button data-pattern="floral wallpaper">Floral wallpaper</button><button data-pattern="metal panels">Metal panels</button></div>
+ <div class="pattern-presets">
+  <button data-pattern="wood panels">Wood panels</button><button data-pattern="fish wallpaper">Fish wallpaper</button><button data-pattern="brick wall">Brick wall</button><button data-pattern="checker tile">Floor tiles</button><button data-pattern="floral wallpaper">Floral wallpaper</button><button data-pattern="metal panels">Metal panels</button>
+  <button data-pattern="sci fi hull">01 · Ship hull</button><button data-pattern="armored plating">02 · Armor plates</button><button data-pattern="spaceship bulkhead">03 · Bulkhead</button><button data-pattern="airlock door">04 · Airlock</button>
+  <button data-pattern="vent grille">05 · Vent grille</button><button data-pattern="server racks">06 · Server rack</button><button data-pattern="circuit board">07 · Circuit board</button><button data-pattern="cable conduits">08 · Cable conduits</button>
+  <button data-pattern="hazard stripes">09 · Hazard stripes</button><button data-pattern="warning chevrons">10 · Warning chevrons</button><button data-pattern="hex armor">11 · Hex armor</button><button data-pattern="cargo crate">12 · Cargo crate</button>
+  <button data-pattern="reactor core">13 · Reactor core</button><button data-pattern="energy conduit">14 · Energy conduit</button><button data-pattern="control panel">15 · Control panel</button><button data-pattern="data terminal">16 · Data terminal</button>
+  <button data-pattern="industrial floor">17 · Industrial floor</button><button data-pattern="landing pad">18 · Landing pad</button><button data-pattern="white lab wall">19 · Lab wall</button><button data-pattern="medical bay">20 · Medical bay</button>
+  <button data-pattern="stealth armor">21 · Stealth armor</button><button data-pattern="rusted spaceship metal">22 · Rusted hull</button><button data-pattern="alien biomechanical wall">23 · Alien biomech</button><button data-pattern="alien hive wall">24 · Alien hive</button>
+  <button data-pattern="crystal alien surface">25 · Crystal surface</button><button data-pattern="ice planet ground">26 · Ice planet</button><button data-pattern="lava planet rock">27 · Lava planet</button><button data-pattern="moon dust ground">28 · Moon dust</button>
+  <button data-pattern="starfield">29 · Starfield</button><button data-pattern="force field grid">30 · Force field</button><button data-pattern="space station window">31 · Viewports</button><button data-pattern="robot factory floor">32 · Robot factory</button>
+  <button data-pattern="coolant pipes">33 · Coolant pipes</button><button data-pattern="engine vents">34 · Engine vents</button><button data-pattern="security scanner">35 · Scanner</button><button data-pattern="blueprint grid">36 · Blueprint</button>
+  <button data-pattern="red emergency panels">37 · Emergency red</button><button data-pattern="amber warning panels">38 · Amber warning</button><button data-pattern="green biotech panels">39 · Green biotech</button><button data-pattern="purple alien stone">40 · Alien stone</button>
+</div>
  <textarea id="texturePrompt" placeholder="Choose a pattern above or describe one">wood panels</textarea>
  <div class="texture-preview"><canvas id="texturePreview" width="64" height="64" aria-label="Generated 64 by 64 texture preview"></canvas></div>
  <div class="texture-actions"><button id="generateTexture" class="primary">✦ Generate</button><button id="useTexture">Use on canvas</button><button id="downloadTexture">↓ Texture PNG</button><button id="randomTexture">Randomize</button></div>
@@ -237,87 +249,52 @@ input[type=file]{display:none}
  document.getElementById('randomTexture').onclick=()=>{const prompts=['mossy stone','rusty metal','alien skin','blue water','dark wood','lava rock','ice crystal','desert sand','red brick','woven fabric'];document.getElementById('texturePrompt').value=prompts[Math.floor(Math.random()*prompts.length)];textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
  document.getElementById('useTexture').onclick=()=>{snapshot();pixels=texturePixels.slice();active().pixels=pixels;render();document.getElementById('textureStatus').textContent='Texture copied to '+active().name+'. Add another layer for details.';};
  document.getElementById('downloadTexture').onclick=()=>{const a=document.createElement('a');a.download='game-texture-64x64.png';a.href=textureCanvas.toDataURL('image/png');a.click();};
- // Pattern-oriented generator: deliberately structured repeatable tiles, not random noise.
+ // Structured 64x64 pixel-art patterns. Every preset is drawn locally in the browser.
  function generateTexture(){
   const prompt=document.getElementById('texturePrompt').value.toLowerCase();
   const out=tctx.createImageData(64,64), vals=Array(4096).fill('#000000');
-  const wood=['#38231A','#583321','#75472B','#99623A','#B9814A','#D1A16A'];
-  const paper=['#E8DDBF','#D7C7A2','#C3B58F','#F3EAD5'];
-  const ink=['#233C3A','#315D55','#C05C42','#E3B85D','#F4E8C8'];
-  const fish=['#C05C42','#DDAA43','#477B78','#7C91A5'];
-  const mortar='#6B6458',brick=['#783D32','#9C4F3D','#B86A50','#D18B68'];
   const put=(x,y,c)=>{if(x>=0&&x<64&&y>=0&&y<64)vals[y*64+x]=c;};
   const rect=(x,y,w,h,c)=>{for(let yy=y;yy<y+h;yy++)for(let xx=x;xx<x+w;xx++)put(xx,yy,c);};
   const line=(x0,y0,x1,y1,c)=>{let dx=Math.abs(x1-x0),sx=x0<x1?1:-1,dy=-Math.abs(y1-y0),sy=y0<y1?1:-1,e=dx+dy;while(true){put(x0,y0,c);if(x0===x1&&y0===y1)break;let q=2*e;if(q>=dy){e+=dy;x0+=sx;}if(q<=dx){e+=dx;y0+=sy;}}};
   const ellipse=(cx,cy,rx,ry,c)=>{for(let y=-ry;y<=ry;y++)for(let x=-rx;x<=rx;x++)if(x*x/(rx*rx)+y*y/(ry*ry)<=1)put(cx+x,cy+y,c);};
-  // Background base with a paper/wood palette.
-  vals.fill(paper[0]);
-  const isFish=/fish|underwater|sea life|ocean wallpaper/.test(prompt);
-  const isFloral=/flower|floral|botanical|leaf wallpaper/.test(prompt);
-  const isBrick=/brick|masonry/.test(prompt);
-  const isTile=/tile|checker|floor/.test(prompt);
-  const isMetal=/metal panel|steel panel|sci.?fi panel/.test(prompt);
-  const isWallpaper=/wallpaper|repeat|pattern/.test(prompt);
-  const isWood=/wood|panel|plank|timber/.test(prompt);
-  if(isFish){
-   vals.fill(paper[0]);
-   // Repeating staggered fish motif, with scale texture and little eyes.
-   for(let row=-1;row<5;row++)for(let col=-1;col<4;col++){
-    const cx=col*22+(row%2?11:0)+4,cy=row*16+6;
-    const fc=fish[(Math.abs(row*3+col*5))%fish.length];
-    ellipse(cx,cy,6,4,fc);line(cx-2,cy-1,cx+3,cy-1,'#F0D7A6');
-    line(cx-2,cy+1,cx+2,cy+1,'#F0D7A6');
-    // tail
-    put(cx-7,cy,fc);put(cx-8,cy-1,fc);put(cx-8,cy+1,fc);
-    put(cx+3,cy-1,'#F6EBD2');put(cx+4,cy-1,'#25251F');
-    // fins
-    put(cx,cy-4,fc);put(cx-1,cy-5,fc);put(cx,cy+4,fc);
-    if(isWallpaper){put(cx+10,cy+7,'#C9B994');put(cx+11,cy+8,'#C9B994');}
-   }
-  }else if(isFloral){
-   vals.fill('#E8DDBF');
-   for(let y=4;y<70;y+=16)for(let x=4+(Math.floor(y/16)%2)*8;x<70;x+=16){
-    const p=['#C05C42','#477B78','#D5A84F'][Math.abs(x+y)%3];
-    for(const [dx,dy] of [[0,-3],[3,0],[0,3],[-3,0]])ellipse(x+dx,y+dy,2,3,p);
-    put(x,y,'#E3B85D');line(x,y+4,x-1,y+8,'#52724A');put(x-2,y+6,'#52724A');put(x+1,y+7,'#52724A');
-   }
-  }else if(isBrick){
-   vals.fill(mortar);
-   for(let y=0;y<64;y+=8)for(let x=-(Math.floor(y/8)%2)*8;x<64;x+=16){
-    const col=brick[Math.abs(Math.floor(x/16)+Math.floor(y/8))%brick.length];rect(x+1,y+1,14,6,col);line(x+2,y+2,x+12,y+2,'#D89A77');
-   }
-  }else if(isTile){
-   vals.fill('#332F2A');
-   for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=16){const col=((x/16+y/16)%2)?'#D6C6A5':'#87917A';rect(x+1,y+1,14,14,col);line(x+2,y+2,x+13,y+2,'#F1E4C9');}
-  }else if(isMetal){
-   vals.fill('#343B3D');
-   for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=32){rect(x+1,y+1,30,14,'#687477');line(x+2,y+2,x+29,y+2,'#C1C8BE');for(const [dx,dy] of [[4,4],[27,4],[4,11],[27,11]])put(x+dx,y+dy,'#D9D4C3');}
-  }else if(isWood){
-   vals.fill(wood[1]);
-   for(let y=0;y<64;y+=16){
-    rect(0,y,64,16,wood[(Math.floor(y/16)+1)%wood.length]);
-    line(0,y,63,y,'#2C1B15');line(0,y+1,63,y+1,wood[4]);
-    // staggered board joins and hand-drawn grain
-    const seam=(Math.floor(y/16)%2)*19+25;line(seam,y,seam,y+15,'#2C1B15');line(seam+1,y,seam+1,y+15,wood[2]);
-    for(let k=0;k<4;k++){let gx=(k*17+Math.floor(y/16)*7)%60,gy=y+3+(k*3)%10;line(gx,gy,Math.min(63,gx+3+(k%4)),gy,wood[(k+2)%wood.length]);}
-    if(y===16||y===48){ellipse(seam-5,y+8,2,1,'#2C1B15');put(seam-5,y+8,wood[4]);}
-   }
-  }else{
-   // Material mode: blocky grain and broad bands, avoiding generic cloudy noise.
-   const isStone=/stone|rock|concrete/.test(prompt),isGrass=/grass|moss|leaf/.test(prompt),isWater=/water|ocean|river/.test(prompt),isSand=/sand|dirt|desert/.test(prompt),isLava=/lava/.test(prompt);
-   const pal=isStone?['#33363A','#555A5B','#74766F','#A5A08B']:isGrass?['#203F2B','#38613A','#6F8240','#A3A65C']:isWater?['#14364A','#1E6274','#31949A','#91C5B5']:isSand?['#8A6A42','#B08B56','#D0B77B','#E4D5A5']:isLava?['#321D28','#8C3029','#D64C27','#F2A43B']:wood;
-   for(let y=0;y<64;y++)for(let x=0;x<64;x++){let v=(Math.floor(x/4)*3+Math.floor(y/3)*5+Math.floor(rand()*4))%pal.length;put(x,y,pal[v]);}
-  }
-  // Add a restrained, repeating border when the prompt asks for framed panels.
-  if(/border|framed/.test(prompt)){for(let i=0;i<64;i++){put(i,0,'#26251F');put(i,63,'#26251F');put(0,i,'#26251F');put(63,i,'#26251F');}}
-  for(let i=0;i<4096;i++){const col=vals[i],v=parseInt(col.slice(1),16),p=i*4;out.data[p]=(v>>16)&255;out.data[p+1]=(v>>8)&255;out.data[p+2]=v&255;out.data[p+3]=255;}
+  const base='#18232B',dark='#0B1118',metal='#52616A',light='#A6B4B5',cream='#D8D6C6',cyan='#55C8C4',amber='#DCA64B',red='#C95045',green='#6CBA83',violet='#8875A9';
+  vals.fill(base);
+  const has=(...words)=>words.some(w=>prompt.includes(w));
+  let label='sci-fi texture';
+  if(has('fish','underwater','sea life')){label='fish wallpaper';vals.fill('#E8DDBF');for(let row=-1;row<5;row++)for(let col=-1;col<4;col++){let x=col*22+(row%2?11:0)+4,y=row*16+6,c=[red,amber,'#477B78','#7C91A5'][Math.abs(row*3+col*5)%4];ellipse(x,y,6,4,c);line(x-7,y,x-10,y-3,c);line(x-7,y,x-10,y+3,c);put(x+3,y-1,'#F6EBD2');put(x+4,y-1,dark);}}
+  else if(has('wood','plank','timber')){label='wood panels';vals.fill('#583321');for(let y=0;y<64;y+=16){rect(0,y,64,16,['#583321','#75472B','#99623A','#603821'][y/16]);line(0,y,63,y,dark);line(0,y+1,63,y+1,'#D1A16A');let seam=(Math.floor(y/16)%2)*19+25;line(seam,y,seam,y+15,dark);line(seam+1,y,seam+1,y+15,'#99623A');for(let k=0;k<5;k++)line((k*13+y)%60,y+3+k%9,Math.min(63,(k*13+y)%60+3),y+3+k%9,'#B9814A');}}
+  else if(has('floral','flower','botanical')){label='floral wallpaper';vals.fill('#E8DDBF');for(let y=4;y<70;y+=16)for(let x=4+(Math.floor(y/16)%2)*8;x<70;x+=16){for(const [dx,dy] of [[0,-3],[3,0],[0,3],[-3,0]])ellipse(x+dx,y+dy,2,3,[red,cyan,amber][Math.abs(x+y)%3]);put(x,y,amber);line(x,y+4,x-1,y+8,green);}}
+  else if(has('brick','masonry')){label='brick wall';vals.fill('#6B6458');for(let y=0;y<64;y+=8)for(let x=-(Math.floor(y/8)%2)*8;x<64;x+=16){rect(x+1,y+1,14,6,['#783D32','#9C4F3D','#B86A50','#D18B68'][Math.abs(Math.floor(x/16)+Math.floor(y/8))%4]);line(x+2,y+2,x+12,y+2,'#D89A77');}}
+  else if(has('checker','floor tile','tile')){vals.fill(dark);for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=16){rect(x+1,y+1,14,14,((x/16+y/16)%2)?metal:'#A6A49A');line(x+2,y+2,x+13,y+2,cream);}}
+  else if(has('hazard','chevron','warning stripes')){vals.fill('#272D31');for(let x=-32;x<96;x+=16)for(let y=0;y<64;y++)if(((x+y)%32+32)%32<9)put(x+y%16,y,amber);for(let y=0;y<64;y+=16)line(0,y,63,y,'#0A0D10');}
+  else if(has('vent','grille','engine vents')){vals.fill('#303C43');for(let y=4;y<64;y+=8){rect(3,y,58,4,dark);line(4,y,59,y,light);line(4,y+1,59,y+1,metal);}for(let x=2;x<64;x+=8){put(x,2,amber);put(x,61,amber);}}
+  else if(has('server','rack')){vals.fill('#111820');for(let y=2;y<64;y+=15){rect(3,y,58,12,'#46535A');rect(6,y+2,23,8,dark);for(let x=8;x<28;x+=4)put(x,y+4,cyan);rect(33,y+2,23,8,'#27343C');line(35,y+4,52,y+4,light);put(54,y+8,green);}}
+  else if(has('circuit','blueprint','data terminal')){vals.fill('#0B252C');for(let y=4;y<64;y+=12){line(0,y,63,y,has('blueprint')?'#436B92':'#236B69');}for(let x=4;x<64;x+=12){line(x,0,x,63,has('blueprint')?'#436B92':'#236B69');}for(let y=8;y<64;y+=16)for(let x=8;x<64;x+=16){rect(x-2,y-2,5,5,cyan);line(x,y,x+5,y,amber);line(x+5,y,x+5,y+4,amber);}if(has('terminal')){rect(7,8,50,40,'#112E36');for(let y=14;y<43;y+=7)line(12,y,12+(y*7)%38,y,green);}}
+  else if(has('cable','conduit','coolant pipe')){vals.fill('#222A30');for(let y=8;y<64;y+=20){rect(0,y,64,7,'#53636A');line(0,y,63,y,light);line(0,y+6,63,y+6,dark);for(let x=6;x<64;x+=16)rect(x,y-2,3,11,amber);}for(let x=12;x<64;x+=24){rect(x,0,6,64,'#34454D');line(x,0,x,63,light);}}
+  else if(has('hex')){vals.fill('#27343B');for(let y=-4;y<68;y+=12)for(let x=-5;x<68;x+=14){let xx=x+((Math.floor(y/12)%2)*7);line(xx,y-4,xx+4,y-2,metal);line(xx+4,y-2,xx+4,y+3,metal);line(xx+4,y+3,xx,y+5,metal);line(xx,y+5,xx-4,y+3,metal);line(xx-4,y+3,xx-4,y-2,metal);line(xx-4,y-2,xx,y-4,metal);put(xx,y,has('stealth')?dark:cyan);}}
+  else if(has('cargo','crate')){vals.fill('#182027');rect(4,4,56,56,'#8A774D');rect(7,7,50,50,'#B49B62');rect(10,10,44,44,'#6D6043');rect(13,13,38,38,'#B49B62');for(let i=0;i<4;i++){line(8,12+i*13,55,12+i*13,'#D0BB7D');line(12+i*13,8,12+i*13,55,'#5D523A');}rect(25,24,14,16,dark);rect(28,27,8,10,amber);line(5,5,58,5,cream);}
+  else if(has('reactor','core','energy conduit','force field')){vals.fill('#101D2A');for(let r=27;r>4;r-=6){for(let a=0;a<360;a+=2){let rad=a*Math.PI/180;put(Math.round(32+Math.cos(rad)*r),Math.round(32+Math.sin(rad)*r),r<12?amber:cyan);}}ellipse(32,32,5,5,cream);for(let a=0;a<360;a+=45){let r=a*Math.PI/180;line(32+Math.round(Math.cos(r)*12),32+Math.round(Math.sin(r)*12),32+Math.round(Math.cos(r)*27),32+Math.round(Math.sin(r)*27),metal);}if(has('force'))for(let i=0;i<64;i+=8)line(i,0,0,i,'#317A9B');}
+  else if(has('control panel','emergency','medical bay','scanner')){vals.fill('#303B42');rect(3,3,58,58,'#58656B');rect(6,6,52,23,dark);for(let x=9;x<56;x+=6){rect(x,10,3,14,has('emergency')?red:has('medical')?green:cyan);}rect(6,33,52,24,'#263239');for(let y=37;y<55;y+=6){line(10,y,32,y,light);rect(38,y,14,3,has('emergency')?red:amber);}for(const [x,y] of [[7,7],[56,7],[7,56],[56,56]])put(x,y,cream);}
+  else if(has('airlock','bulkhead','space station','viewport','window')){vals.fill('#202C34');rect(5,2,54,60,'#69767A');rect(10,5,44,54,'#252E35');rect(15,8,34,48,dark);if(has('window','viewport')){rect(12,10,40,28,'#153F5C');for(let i=0;i<18;i++)put((i*17+3)%64,(i*29+4)%27+10,cream);}else{rect(20,12,24,38,'#47565C');line(32,13,32,49,light);rect(24,28,16,5,amber);}for(let y=7;y<58;y+=10){put(8,y,amber);put(55,y,amber);}}
+  else if(has('alien','biomech','hive','organic')){vals.fill('#172A28');for(let y=0;y<64;y+=8)for(let x=0;x<64;x+=8){let c=((x+y)%3===0)?'#35645A':'#24483F';rect(x+1,y+1,6,6,c);ellipse(x+4,y+4,2,3,'#152B2B');}for(let i=0;i<8;i++){let x=(i*23+5)%64,y=(i*17+9)%64;ellipse(x,y,4,5,i%2?'#76A67B':'#447F6B');put(x,y,amber);}}
+  else if(has('crystal','ice planet','frozen')){vals.fill('#172D42');for(let i=0;i<13;i++){let x=(i*19+3)%64,y=(i*29+5)%64;line(x,y,x+4,y-10,'#4B88A8');line(x+4,y-10,x+8,y,'#A4D9E4');line(x+8,y,x,y,'#6BAEC4');line(x+4,y-10,x+4,y+7,cream);}}
+  else if(has('lava')){vals.fill('#241C28');for(let y=0;y<64;y+=8)for(let x=0;x<64;x+=8){let c=hash(x,y)>.6?'#D95427':hash(x,y)>.35?'#78332D':'#392B32';rect(x,y,8,8,c);if(c==='#D95427'){put(x+3,y+2,amber);put(x+4,y+3,'#FFD16A');}}}
+  else if(has('starfield','star field','space')){vals.fill('#070D1D');for(let i=0;i<90;i++){let x=Math.floor(hash(i,2)*64),y=Math.floor(hash(3,i)*64);put(x,y,i%9===0?cyan:cream);if(i%13===0)put(x+1,y,cream);}if(has('planet'))ellipse(43,24,10,10,'#8D675B');}
+  else if(has('landing pad','industrial floor','robot factory')){vals.fill('#252D31');for(let y=0;y<64;y+=16){line(0,y,63,y,metal);for(let x=0;x<64;x+=16){rect(x+2,y+2,12,12,'#3B484E');put(x+3,y+3,light);}}for(let x=-16;x<80;x+=24){line(x,0,x+16,16,amber);line(x+16,16,x,32,amber);line(x,32,x+16,48,amber);line(x+16,48,x,64,amber);}}
+  else if(has('rust')){vals.fill('#343A3C');for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=16){rect(x+1,y+1,14,14,'#596166');for(let i=0;i<9;i++)put(x+Math.floor(hash(x+i,y)*14),y+Math.floor(hash(y+i,x)*14),i%2?'#A34F32':'#75412F');put(x+2,y+2,light);}}
+  else {label='metal panels';vals.fill('#303B42');for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=32){rect(x+1,y+1,30,14,'#58666D');line(x+2,y+2,x+29,y+2,'#B8C2C3');for(const [dx,dy] of [[4,4],[27,4],[4,11],[27,11]]){put(x+dx,y+dy,cream);put(x+dx+1,y+dy,dark);}}}
+  if(has('red')){for(let y=0;y<64;y+=16)rect(0,y,3,8,red);}
+  if(has('amber','yellow')){for(let x=0;x<64;x+=12)rect(x,0,3,3,amber);}
+  if(has('green')){for(let y=0;y<64;y+=16)rect(60,y,4,8,green);}
+  if(has('purple')){for(let x=0;x<64;x+=8)put(x,63,violet);}
+  if(has('border','framed'))for(let i=0;i<64;i++){put(i,0,cream);put(i,63,cream);put(0,i,cream);put(63,i,cream);}
+  for(let i=0;i<4096;i++){const v=parseInt(vals[i].slice(1),16),p=i*4;out.data[p]=(v>>16)&255;out.data[p+1]=(v>>8)&255;out.data[p+2]=v&255;out.data[p+3]=255;}
   tctx.putImageData(out,0,0);texturePixels=vals;
-  const label=isFish?'fish wallpaper':isFloral?'floral wallpaper':isBrick?'brick wall':isTile?'floor tile':isMetal?'metal panels':isWood?'wood panels':'material pattern';
-  document.getElementById('textureStatus').textContent='Built a 64 × 64 repeating '+label+'. This is a pattern tool, not a text-to-image AI.';
+  document.getElementById('textureStatus').textContent='Generated 64 × 64 '+label+' texture locally. Choose another labeled preset for a different sci-fi material.';
  }
  document.querySelectorAll('[data-pattern]').forEach(b=>b.onclick=()=>{document.getElementById('texturePrompt').value=b.dataset.pattern;textureSeed=(Math.random()*4294967295)>>>0;generateTexture();});
  document.getElementById('generateTexture').onclick=()=>{textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
- document.getElementById('randomTexture').onclick=()=>{const prompts=['wood panels','fish wallpaper','brick wall','checker tile','floral wallpaper','metal panels','mossy stone','sand texture'];document.getElementById('texturePrompt').value=prompts[Math.floor(Math.random()*prompts.length)];textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
+ document.getElementById('randomTexture').onclick=()=>{const prompts=['sci fi hull','armored plating','spaceship bulkhead','airlock door','vent grille','server racks','circuit board','cable conduits','hazard stripes','warning chevrons','hex armor','cargo crate','reactor core','energy conduit','control panel','data terminal','industrial floor','landing pad','white lab wall','medical bay','stealth armor','rusted spaceship metal','alien biomechanical wall','alien hive wall','crystal alien surface','ice planet ground','lava planet rock','moon dust ground','starfield','force field grid','space station window','robot factory floor','coolant pipes','engine vents','security scanner','blueprint grid','red emergency panels','amber warning panels','green biotech panels','purple alien stone'];document.getElementById('texturePrompt').value=prompts[Math.floor(Math.random()*prompts.length)];textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
  generateTexture();
 
  render();syncLayerUI();
