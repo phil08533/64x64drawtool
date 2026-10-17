@@ -2,9 +2,9 @@
   "title": "Pixel64 Procedural Texture Library",
   "version": "1.0",
   "updated": "2026-10-17",
-  "description": "Named local procedural texture presets used by Pixel64. Each entry contains its display name, category, and generator prompt. The prompts are interpreted by the procedural JavaScript generator in index.html; they are not standalone image files or AI model outputs.",
+  "description": "Complete named local procedural texture preset catalog. Entries include display name, category, and prompt. Tileable/seamless entries are designed for repeating game surfaces; the generator uses deterministic seeded recipes.",
   "generation": "Offline, procedural JavaScript; no API key or cloud service required.",
-  "count": 294,
+  "count": 515,
   "categories": [
     {
       "group": "SHIP & STATION",
@@ -1244,6 +1244,905 @@
         {
           "name": "Emergency red metal",
           "prompt": "metal panels red"
+        }
+      ]
+    },
+    {
+      "group": "SEAMLESS TILEABLE MATERIALS",
+      "items": [
+        {
+          "name": "Basalt columns",
+          "prompt": "tileable seamless basalt stone"
+        },
+        {
+          "name": "Cracked clay",
+          "prompt": "tileable seamless cracked clay"
+        },
+        {
+          "name": "Sandstone strata",
+          "prompt": "tileable seamless sandstone layers"
+        },
+        {
+          "name": "Marble veins",
+          "prompt": "tileable seamless marble veins"
+        },
+        {
+          "name": "Granite speckle",
+          "prompt": "tileable seamless granite speckle"
+        },
+        {
+          "name": "Mossy cobble",
+          "prompt": "tileable seamless moss cobblestone"
+        },
+        {
+          "name": "Cave limestone",
+          "prompt": "tileable seamless cave limestone"
+        },
+        {
+          "name": "Obsidian",
+          "prompt": "tileable seamless obsidian black"
+        },
+        {
+          "name": "Ice crystals",
+          "prompt": "tileable seamless ice crystal blue"
+        },
+        {
+          "name": "Packed snow",
+          "prompt": "tileable seamless packed snow"
+        },
+        {
+          "name": "Red desert",
+          "prompt": "tileable seamless red desert sand"
+        },
+        {
+          "name": "Dune ripples",
+          "prompt": "tileable seamless sand dune ripples"
+        },
+        {
+          "name": "Soil strata",
+          "prompt": "tileable seamless soil layers"
+        },
+        {
+          "name": "Gravel",
+          "prompt": "tileable seamless gravel gray"
+        },
+        {
+          "name": "Asphalt",
+          "prompt": "tileable seamless asphalt road"
+        },
+        {
+          "name": "Wet pavement",
+          "prompt": "tileable seamless wet asphalt"
+        },
+        {
+          "name": "Rust flakes",
+          "prompt": "tileable seamless rust metal"
+        },
+        {
+          "name": "Brushed titanium",
+          "prompt": "tileable seamless brushed titanium"
+        },
+        {
+          "name": "Carbon fiber",
+          "prompt": "tileable seamless carbon fiber"
+        },
+        {
+          "name": "Ceramic panels",
+          "prompt": "tileable seamless ceramic tile"
+        },
+        {
+          "name": "Rubber tread",
+          "prompt": "tileable seamless rubber tread"
+        },
+        {
+          "name": "Diamond plate",
+          "prompt": "tileable seamless metal diamond plate"
+        },
+        {
+          "name": "Rivet field",
+          "prompt": "tileable seamless metal rivets"
+        },
+        {
+          "name": "Corrugated steel",
+          "prompt": "tileable seamless corrugated steel"
+        },
+        {
+          "name": "Copper patina",
+          "prompt": "tileable seamless copper patina green"
+        },
+        {
+          "name": "Circuit traces",
+          "prompt": "tileable seamless circuit traces teal"
+        },
+        {
+          "name": "Microchip grid",
+          "prompt": "tileable seamless microchip grid"
+        },
+        {
+          "name": "Fiber optics",
+          "prompt": "tileable seamless fiber optic strands"
+        },
+        {
+          "name": "Scanline screen",
+          "prompt": "tileable seamless scanline screen"
+        },
+        {
+          "name": "Hex armor",
+          "prompt": "tileable seamless hex armor green"
+        },
+        {
+          "name": "Scale armor",
+          "prompt": "tileable seamless dragon scales red"
+        },
+        {
+          "name": "Alien membrane",
+          "prompt": "tileable seamless alien membrane purple"
+        },
+        {
+          "name": "Hive cells",
+          "prompt": "tileable seamless alien hive cells"
+        },
+        {
+          "name": "Bioluminescent spores",
+          "prompt": "tileable seamless glowing spores cyan"
+        },
+        {
+          "name": "Tentacle tissue",
+          "prompt": "tileable seamless tentacle tissue"
+        },
+        {
+          "name": "Dragon hide",
+          "prompt": "tileable seamless dragon hide green"
+        },
+        {
+          "name": "Woven canvas",
+          "prompt": "tileable seamless woven canvas"
+        },
+        {
+          "name": "Denim",
+          "prompt": "tileable seamless denim blue"
+        },
+        {
+          "name": "Burlap",
+          "prompt": "tileable seamless burlap tan"
+        },
+        {
+          "name": "Leather grain",
+          "prompt": "tileable seamless leather grain brown"
+        },
+        {
+          "name": "Carbon cloth",
+          "prompt": "tileable seamless carbon cloth black"
+        },
+        {
+          "name": "Camouflage",
+          "prompt": "tileable seamless pixel camouflage green"
+        },
+        {
+          "name": "Bark",
+          "prompt": "tileable seamless tree bark brown"
+        },
+        {
+          "name": "Leaf litter",
+          "prompt": "tileable seamless autumn leaves"
+        },
+        {
+          "name": "Jungle canopy",
+          "prompt": "tileable seamless jungle foliage green"
+        },
+        {
+          "name": "Mushroom ground",
+          "prompt": "tileable seamless mushroom forest floor"
+        },
+        {
+          "name": "Sea floor",
+          "prompt": "tileable seamless ocean floor"
+        },
+        {
+          "name": "Lava crust",
+          "prompt": "tileable seamless lava crust orange"
+        },
+        {
+          "name": "Glowing runes",
+          "prompt": "tileable seamless magic runes violet"
+        },
+        {
+          "name": "Arcane mosaic",
+          "prompt": "tileable seamless arcane mosaic gold"
+        },
+        {
+          "name": "Temple blocks",
+          "prompt": "tileable seamless ancient temple stone"
+        },
+        {
+          "name": "Stained glass",
+          "prompt": "tileable seamless stained glass jewel"
+        },
+        {
+          "name": "Terrazzo",
+          "prompt": "tileable seamless terrazzo chips"
+        },
+        {
+          "name": "Ceramic mosaic",
+          "prompt": "tileable seamless ceramic mosaic"
+        },
+        {
+          "name": "Star wallpaper",
+          "prompt": "tileable seamless star wallpaper navy"
+        },
+        {
+          "name": "Art deco",
+          "prompt": "tileable seamless art deco gold"
+        },
+        {
+          "name": "Floral print",
+          "prompt": "tileable seamless floral print"
+        },
+        {
+          "name": "Checker weave",
+          "prompt": "tileable seamless checker weave"
+        },
+        {
+          "name": "Pixel dithering",
+          "prompt": "tileable seamless pixel dithering monochrome"
+        },
+        {
+          "name": "Diagonal hatch",
+          "prompt": "tileable seamless diagonal hatch gray"
+        },
+        {
+          "name": "Honeycomb",
+          "prompt": "tileable seamless honeycomb amber"
+        },
+        {
+          "name": "Warning stripes",
+          "prompt": "tileable seamless warning stripes yellow black"
+        },
+        {
+          "name": "Perforated metal",
+          "prompt": "tileable seamless perforated metal"
+        },
+        {
+          "name": "Ventilation mesh",
+          "prompt": "tileable seamless ventilation mesh"
+        },
+        {
+          "name": "Spaceship plating",
+          "prompt": "tileable seamless spaceship plating blue"
+        },
+        {
+          "name": "Starship carpet",
+          "prompt": "tileable seamless starship carpet purple"
+        },
+        {
+          "name": "Industrial floor",
+          "prompt": "tileable seamless industrial floor"
+        },
+        {
+          "name": "Alien sand",
+          "prompt": "tileable seamless alien sand purple"
+        },
+        {
+          "name": "Frozen ground",
+          "prompt": "tileable seamless frozen ground cyan"
+        },
+        {
+          "name": "Toxic sludge",
+          "prompt": "tileable seamless toxic sludge green"
+        },
+        {
+          "name": "Crystal lattice",
+          "prompt": "tileable seamless crystal lattice cyan"
+        },
+        {
+          "name": "Nebula cloud",
+          "prompt": "tileable seamless nebula cloud purple"
+        },
+        {
+          "name": "Starfield",
+          "prompt": "tileable seamless starfield navy"
+        },
+        {
+          "name": "Energy field",
+          "prompt": "tileable seamless energy field blue"
+        },
+        {
+          "name": "Glowing grid",
+          "prompt": "tileable seamless glowing grid green"
+        },
+        {
+          "name": "Retro pixels",
+          "prompt": "tileable seamless retro pixel pattern orange"
+        },
+        {
+          "name": "Micro pattern",
+          "prompt": "tileable seamless micro pattern grayscale"
+        }
+      ]
+    },
+    {
+      "group": "ODD MATERIALS & WORLD DETAILS",
+      "items": [
+        {
+          "name": "Waxed cardboard",
+          "prompt": "tileable seamless waxed cardboard tan"
+        },
+        {
+          "name": "Packing foam",
+          "prompt": "tileable seamless packing foam gray"
+        },
+        {
+          "name": "Bubble wrap",
+          "prompt": "tileable seamless bubble wrap clear blue"
+        },
+        {
+          "name": "Fiberglass mat",
+          "prompt": "tileable seamless fiberglass woven yellow"
+        },
+        {
+          "name": "Graphite smear",
+          "prompt": "tileable seamless graphite smear gray"
+        },
+        {
+          "name": "Chalkboard",
+          "prompt": "tileable seamless chalkboard dark green"
+        },
+        {
+          "name": "Peeling enamel",
+          "prompt": "tileable seamless peeling enamel red"
+        },
+        {
+          "name": "Scuffed plastic",
+          "prompt": "tileable seamless scuffed plastic gray"
+        },
+        {
+          "name": "Translucent plastic",
+          "prompt": "tileable seamless translucent plastic teal"
+        },
+        {
+          "name": "Frosted acrylic",
+          "prompt": "tileable seamless frosted acrylic white"
+        },
+        {
+          "name": "Mirror fragments",
+          "prompt": "tileable seamless mirror fragments silver"
+        },
+        {
+          "name": "Porcelain glaze",
+          "prompt": "tileable seamless porcelain glaze cream"
+        },
+        {
+          "name": "Speckled ceramic",
+          "prompt": "tileable seamless speckled ceramic cream"
+        },
+        {
+          "name": "Charred timber",
+          "prompt": "tileable seamless charred wood black"
+        },
+        {
+          "name": "Ash layer",
+          "prompt": "tileable seamless ash ground gray"
+        },
+        {
+          "name": "Pumice stone",
+          "prompt": "tileable seamless pumice stone gray"
+        },
+        {
+          "name": "Salt crust",
+          "prompt": "tileable seamless salt crust white"
+        },
+        {
+          "name": "Mineral deposits",
+          "prompt": "tileable seamless mineral deposits ochre"
+        },
+        {
+          "name": "Oxidized silver",
+          "prompt": "tileable seamless oxidized silver gray"
+        },
+        {
+          "name": "Brass tarnish",
+          "prompt": "tileable seamless tarnished brass gold"
+        },
+        {
+          "name": "Oil slick",
+          "prompt": "tileable seamless oil slick iridescent"
+        },
+        {
+          "name": "Grease smear",
+          "prompt": "tileable seamless grease smear black"
+        },
+        {
+          "name": "Dried mud",
+          "prompt": "tileable seamless dried mud brown"
+        },
+        {
+          "name": "Peat soil",
+          "prompt": "tileable seamless peat soil dark"
+        },
+        {
+          "name": "Fossil rock",
+          "prompt": "tileable seamless fossil rock beige"
+        },
+        {
+          "name": "Shell fragments",
+          "prompt": "tileable seamless shell fragments ivory"
+        },
+        {
+          "name": "Pearl surface",
+          "prompt": "tileable seamless pearl surface iridescent"
+        },
+        {
+          "name": "Sea glass",
+          "prompt": "tileable seamless sea glass turquoise"
+        },
+        {
+          "name": "Driftwood",
+          "prompt": "tileable seamless driftwood gray"
+        },
+        {
+          "name": "Worn tire rubber",
+          "prompt": "tileable seamless worn tire rubber black"
+        },
+        {
+          "name": "Kevlar weave",
+          "prompt": "tileable seamless kevlar weave tan"
+        },
+        {
+          "name": "Velvet pile",
+          "prompt": "tileable seamless velvet pile purple"
+        },
+        {
+          "name": "Satin fabric",
+          "prompt": "tileable seamless satin fabric teal"
+        },
+        {
+          "name": "Wool knit",
+          "prompt": "tileable seamless wool knit cream"
+        },
+        {
+          "name": "Chainmail",
+          "prompt": "tileable seamless chainmail steel"
+        },
+        {
+          "name": "Scale mail",
+          "prompt": "tileable seamless scale mail bronze"
+        },
+        {
+          "name": "Quilted armor",
+          "prompt": "tileable seamless quilted armor dark"
+        },
+        {
+          "name": "Bone inlay",
+          "prompt": "tileable seamless bone inlay dark wood"
+        },
+        {
+          "name": "Scarab shell",
+          "prompt": "tileable seamless scarab shell emerald"
+        },
+        {
+          "name": "Beetle wing",
+          "prompt": "tileable seamless beetle wing iridescent"
+        },
+        {
+          "name": "Snake scales",
+          "prompt": "tileable seamless snake scales ochre"
+        },
+        {
+          "name": "Frog skin",
+          "prompt": "tileable seamless frog skin green"
+        },
+        {
+          "name": "Octopus skin",
+          "prompt": "tileable seamless octopus skin violet"
+        },
+        {
+          "name": "Jellyfish tissue",
+          "prompt": "tileable seamless jellyfish tissue cyan"
+        },
+        {
+          "name": "Reef sponge",
+          "prompt": "tileable seamless reef sponge orange"
+        },
+        {
+          "name": "Lichen on stone",
+          "prompt": "tileable seamless lichen stone green"
+        },
+        {
+          "name": "Fungal gills",
+          "prompt": "tileable seamless fungal gills mauve"
+        },
+        {
+          "name": "Alien egg shell",
+          "prompt": "tileable seamless alien egg shell purple"
+        },
+        {
+          "name": "Crystalline flesh",
+          "prompt": "tileable seamless crystalline flesh magenta"
+        },
+        {
+          "name": "Meteorite iron",
+          "prompt": "tileable seamless meteorite iron dark"
+        },
+        {
+          "name": "Lunar regolith",
+          "prompt": "tileable seamless lunar regolith gray"
+        },
+        {
+          "name": "Mars dust",
+          "prompt": "tileable seamless mars dust red"
+        },
+        {
+          "name": "Europa ice",
+          "prompt": "tileable seamless europa ice blue"
+        },
+        {
+          "name": "Sulfur vents",
+          "prompt": "tileable seamless sulfur vents yellow"
+        },
+        {
+          "name": "Radioactive glass",
+          "prompt": "tileable seamless radioactive glass green"
+        },
+        {
+          "name": "Reactor slag",
+          "prompt": "tileable seamless reactor slag black orange"
+        },
+        {
+          "name": "Plasma scorch",
+          "prompt": "tileable seamless plasma scorch violet"
+        },
+        {
+          "name": "Ancient parchment",
+          "prompt": "tileable seamless ancient parchment sepia"
+        },
+        {
+          "name": "Magnetic tape",
+          "prompt": "tileable seamless magnetic tape brown"
+        },
+        {
+          "name": "Vinyl record grooves",
+          "prompt": "tileable seamless vinyl record grooves black"
+        },
+        {
+          "name": "Speaker grille cloth",
+          "prompt": "tileable seamless speaker grille cloth black"
+        },
+        {
+          "name": "Burned circuit board",
+          "prompt": "tileable seamless burned circuit board black"
+        },
+        {
+          "name": "Server dust filter",
+          "prompt": "tileable seamless server dust filter gray"
+        },
+        {
+          "name": "Radiator fins",
+          "prompt": "tileable seamless radiator fins aluminum"
+        },
+        {
+          "name": "Heat sink",
+          "prompt": "tileable seamless heat sink black"
+        },
+        {
+          "name": "PCB vias",
+          "prompt": "tileable seamless pcb vias gold"
+        },
+        {
+          "name": "Micro-solder pads",
+          "prompt": "tileable seamless micro solder pads gold"
+        }
+      ]
+    },
+    {
+      "group": "ENVIRONMENTAL SURFACES & GRAPHICS",
+      "items": [
+        {
+          "name": "Rain-streaked brick",
+          "prompt": "tileable seamless rain streaked brick"
+        },
+        {
+          "name": "Mildew plaster",
+          "prompt": "tileable seamless mildew plaster green"
+        },
+        {
+          "name": "Efflorescence wall",
+          "prompt": "tileable seamless efflorescence wall white"
+        },
+        {
+          "name": "Paint drips",
+          "prompt": "tileable seamless paint drips colorful"
+        },
+        {
+          "name": "Sticker-bombed metal",
+          "prompt": "tileable seamless sticker bomb metal"
+        },
+        {
+          "name": "Faded road paint",
+          "prompt": "tileable seamless faded road paint white"
+        },
+        {
+          "name": "Tactile paving",
+          "prompt": "tileable seamless tactile paving yellow"
+        },
+        {
+          "name": "Drain grate",
+          "prompt": "tileable seamless drain grate metal"
+        },
+        {
+          "name": "Sewer slime",
+          "prompt": "tileable seamless sewer slime green"
+        },
+        {
+          "name": "Flood mark on wall",
+          "prompt": "tileable seamless flood mark wall"
+        },
+        {
+          "name": "Scorched ceiling",
+          "prompt": "tileable seamless scorched ceiling black"
+        },
+        {
+          "name": "Office carpet squares",
+          "prompt": "tileable seamless office carpet squares"
+        },
+        {
+          "name": "Hospital linoleum",
+          "prompt": "tileable seamless hospital linoleum blue"
+        },
+        {
+          "name": "Workshop pegboard",
+          "prompt": "tileable seamless workshop pegboard"
+        },
+        {
+          "name": "Ship deck nonskid",
+          "prompt": "tileable seamless ship deck nonskid gray"
+        },
+        {
+          "name": "Aircraft riveted skin",
+          "prompt": "tileable seamless aircraft riveted skin"
+        },
+        {
+          "name": "Scorched concrete",
+          "prompt": "tileable seamless scorched concrete"
+        },
+        {
+          "name": "Ancient crypt wall",
+          "prompt": "tileable seamless ancient crypt wall"
+        },
+        {
+          "name": "Dungeon damp stone",
+          "prompt": "tileable seamless dungeon damp stone"
+        },
+        {
+          "name": "Catacomb brick",
+          "prompt": "tileable seamless catacomb brick"
+        },
+        {
+          "name": "Castle mortar",
+          "prompt": "tileable seamless castle mortar gray"
+        },
+        {
+          "name": "Mosaic floor cobalt",
+          "prompt": "tileable seamless mosaic floor cobalt"
+        },
+        {
+          "name": "Geode cross section",
+          "prompt": "tileable seamless geode cross section purple"
+        },
+        {
+          "name": "Cave dripstone",
+          "prompt": "tileable seamless cave dripstone"
+        },
+        {
+          "name": "Glacier striation",
+          "prompt": "tileable seamless glacier striation blue"
+        },
+        {
+          "name": "Ice floe",
+          "prompt": "tileable seamless ice floe blue"
+        },
+        {
+          "name": "Volcanic ash",
+          "prompt": "tileable seamless volcanic ash gray"
+        },
+        {
+          "name": "Scoria rock",
+          "prompt": "tileable seamless scoria rock red"
+        },
+        {
+          "name": "Coral sand",
+          "prompt": "tileable seamless coral sand pink"
+        },
+        {
+          "name": "Mangrove mud",
+          "prompt": "tileable seamless mangrove mud brown"
+        },
+        {
+          "name": "Kelp forest floor",
+          "prompt": "tileable seamless kelp forest floor green"
+        },
+        {
+          "name": "Brine pool",
+          "prompt": "tileable seamless brine pool"
+        },
+        {
+          "name": "Condensation on glass",
+          "prompt": "tileable seamless condensation on glass"
+        },
+        {
+          "name": "Dusty monitor",
+          "prompt": "tileable seamless dusty monitor"
+        },
+        {
+          "name": "Fingerprint smears",
+          "prompt": "tileable seamless fingerprint smears glass"
+        },
+        {
+          "name": "CRT phosphor mask",
+          "prompt": "tileable seamless crt phosphor mask"
+        },
+        {
+          "name": "Inventory grid backing",
+          "prompt": "tileable seamless inventory grid backing"
+        },
+        {
+          "name": "Tactical map contour",
+          "prompt": "tileable seamless tactical map contour"
+        },
+        {
+          "name": "Radar sweep backdrop",
+          "prompt": "tileable seamless radar sweep backdrop"
+        },
+        {
+          "name": "Alien language glyphs",
+          "prompt": "tileable seamless alien language glyphs"
+        },
+        {
+          "name": "Runic border tiles",
+          "prompt": "tileable seamless runic border tiles"
+        },
+        {
+          "name": "Haunted wallpaper",
+          "prompt": "tileable seamless haunted wallpaper"
+        },
+        {
+          "name": "Old film grain",
+          "prompt": "tileable seamless old film grain sepia"
+        },
+        {
+          "name": "Pixel snow noise",
+          "prompt": "tileable seamless pixel snow noise"
+        },
+        {
+          "name": "Pixel smoke puffs",
+          "prompt": "tileable seamless pixel smoke puffs"
+        },
+        {
+          "name": "Pixel spark field",
+          "prompt": "tileable seamless pixel spark field"
+        },
+        {
+          "name": "Pixel tire tracks",
+          "prompt": "tileable seamless pixel tire tracks"
+        },
+        {
+          "name": "Pixel slime trail",
+          "prompt": "tileable seamless pixel slime trail"
+        },
+        {
+          "name": "Pixel dimensional rift",
+          "prompt": "tileable seamless pixel dimensional rift"
+        },
+        {
+          "name": "Pixel reality glitch",
+          "prompt": "tileable seamless pixel reality glitch"
+        },
+        {
+          "name": "Pixel office grime",
+          "prompt": "tileable seamless pixel office carpet grime"
+        },
+        {
+          "name": "Pixel motel wallpaper",
+          "prompt": "tileable seamless pixel motel wallpaper"
+        },
+        {
+          "name": "Pixel arcade carpet",
+          "prompt": "tileable seamless pixel arcade carpet"
+        },
+        {
+          "name": "Pixel harbor barnacles",
+          "prompt": "tileable seamless pixel harbor barnacles"
+        },
+        {
+          "name": "Pixel jungle vines",
+          "prompt": "tileable seamless pixel jungle vines"
+        },
+        {
+          "name": "Pixel desert varnish",
+          "prompt": "tileable seamless pixel desert varnish"
+        },
+        {
+          "name": "Pixel frost fern",
+          "prompt": "tileable seamless pixel frost fern"
+        },
+        {
+          "name": "Pixel volcanic glass",
+          "prompt": "tileable seamless pixel volcanic glass"
+        },
+        {
+          "name": "Pixel ancient bone dust",
+          "prompt": "tileable seamless pixel ancient bone dust"
+        },
+        {
+          "name": "Pixel ectoplasm",
+          "prompt": "tileable seamless pixel ectoplasm"
+        },
+        {
+          "name": "Pixel ink blot",
+          "prompt": "tileable seamless pixel ink blot"
+        },
+        {
+          "name": "Pixel ceramic glaze cracks",
+          "prompt": "tileable seamless pixel ceramic glaze cracks"
+        },
+        {
+          "name": "Pixel forge slag",
+          "prompt": "tileable seamless pixel forge slag"
+        },
+        {
+          "name": "Pixel laser engraving",
+          "prompt": "tileable seamless pixel laser engraving"
+        },
+        {
+          "name": "Pixel 3D lattice struts",
+          "prompt": "tileable seamless pixel 3d lattice struts"
+        },
+        {
+          "name": "Pixel normal-map bumps",
+          "prompt": "tileable seamless pixel normal map style bumps"
+        },
+        {
+          "name": "Pixel roughness-map speckle",
+          "prompt": "tileable seamless pixel roughness map speckle"
+        },
+        {
+          "name": "Pixel metallic-map grain",
+          "prompt": "tileable seamless pixel metallic map grain"
+        },
+        {
+          "name": "Pixel atlas padding edge",
+          "prompt": "tileable seamless pixel atlas padding edge"
+        },
+        {
+          "name": "Pixel transparency checker",
+          "prompt": "tileable seamless pixel transparency checker"
+        },
+        {
+          "name": "Pixel mipmap test",
+          "prompt": "tileable seamless pixel mipmap test pattern"
+        },
+        {
+          "name": "Pixel seamless speckle",
+          "prompt": "tileable seamless pixel seamless speckle"
+        },
+        {
+          "name": "Pixel seamless scales",
+          "prompt": "tileable seamless pixel seamless scales"
+        },
+        {
+          "name": "Pixel seamless runes",
+          "prompt": "tileable seamless pixel seamless runes"
+        },
+        {
+          "name": "Pixel seamless energy field",
+          "prompt": "tileable seamless pixel seamless energy field"
+        },
+        {
+          "name": "Pixel seamless glass",
+          "prompt": "tileable seamless pixel seamless glass"
+        },
+        {
+          "name": "Pixel seamless foliage",
+          "prompt": "tileable seamless pixel seamless foliage"
         }
       ]
     }
