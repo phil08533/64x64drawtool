@@ -24,6 +24,11 @@ label.small{display:block;color:var(--muted);font-size:12px;margin-bottom:7px}.s
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.primary{background:#6477e8;border-color:#8492ff;color:white;font-weight:650}.danger{color:#ffc5c5}
 .hint{color:var(--muted);font-size:12px;line-height:1.45;margin:10px 1px 0}input[type=file]{display:none}
 @media(min-width:720px){main{grid-template-columns:minmax(0,1.2fr) minmax(250px,.8fr);align-items:start}.drawing{grid-row:span 2}.canvas-wrap{max-width:560px}}
+.texture-preview{width:100%;max-width:256px;aspect-ratio:1;margin:10px auto;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:repeating-conic-gradient(#343849 0% 25%,#252a38 0% 50%) 0/16px 16px}
+#texturePreview{display:block;width:100%;height:100%;image-rendering:pixelated}
+#texturePrompt{width:100%;min-height:76px;resize:vertical;background:#171923;border:1px solid var(--line);border-radius:9px;padding:10px;color:var(--text);font:inherit}
+.texture-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.texture-note{font-size:12px;line-height:1.45;color:var(--muted);margin:9px 0 0}
 </style>
 </head>
 <body>
@@ -42,6 +47,14 @@ label.small{display:block;color:var(--muted);font-size:12px;margin-bottom:7px}.s
  <p class="section-title">Color</p><label class="small" for="color">Choose any color</label>
  <div class="color-row"><input id="color" type="color" value="#24243a" aria-label="Choose color"><input id="hex" value="#24243A" maxlength="7" aria-label="Hex color"></div>
  <div class="swatches" id="swatches"></div>
+</section>
+<section class="panel">
+ <p class="section-title">Local texture generator</p>
+ <p class="hint" style="margin-top:-4px">Describe a tiny game texture. Runs entirely in your browser with procedural generation—no account, server, or downloads.</p>
+ <textarea id="texturePrompt" placeholder="e.g. mossy stone, rusty metal, blue alien skin, dark wood, sand">mossy stone</textarea>
+ <div class="texture-preview"><canvas id="texturePreview" width="64" height="64" aria-label="Generated 64 by 64 texture preview"></canvas></div>
+ <div class="texture-actions"><button id="generateTexture" class="primary">✦ Generate</button><button id="useTexture">Use on canvas</button><button id="downloadTexture">↓ Texture PNG</button><button id="randomTexture">Randomize</button></div>
+ <p class="texture-note" id="textureStatus">Enter a material or style, then generate. Try: stone, grass, water, wood, metal, lava, ice, sand, brick, alien, fabric.</p>
 </section>
 <section class="panel">
  <p class="section-title">Export / Import</p>
@@ -84,6 +97,69 @@ label.small{display:block;color:var(--muted);font-size:12px;margin-bottom:7px}.s
  document.getElementById('saveProject').onclick=()=>{let b=new Blob([JSON.stringify({width:64,height:64,pixels})],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='pixel64-project.json';a.click();URL.revokeObjectURL(u);};
  document.getElementById('projectInput').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let o=JSON.parse(r.result);if(o.width!==64||o.height!==64||!Array.isArray(o.pixels)||o.pixels.length!==4096)throw Error();snapshot();pixels=o.pixels.map(v=>typeof v==='string'&&/^#[0-9a-f]{6}$/i.test(v)?v.toUpperCase():null);render();}catch{alert('That is not a valid Pixel64 project file.');}e.target.value='';};r.readAsText(f);};
  ['#000000','#FFFFFF','#24243A','#D7263D','#F46036','#F9C80E','#2E933C','#00A6FB','#235789','#7B2CBF','#F72585','#8D99AE','#795548','#FFD6A5','#B8F2E6','#C0FDFF'].forEach(c=>{let b=document.createElement('button');b.className='swatch';b.style.background=c;b.title=c;b.setAttribute('aria-label','Use '+c);b.onclick=()=>setColor(c);document.getElementById('swatches').appendChild(b);});
+
+ // Lightweight offline procedural texture generator. It is not a cloud/LLM model.
+ const textureCanvas=document.getElementById('texturePreview'), tctx=textureCanvas.getContext('2d');
+ let texturePixels=Array(4096).fill('#555555'), textureSeed=741;
+ const palettes={
+  stone:['#24262d','#414650','#69717a','#a0a4a6','#c6c7c4'],
+  grass:['#142f24','#245336','#397342','#6c9b42','#b2b85a'],
+  water:['#071d38','#0b4167','#16799a','#42b8c2','#a1eee0'],
+  wood:['#301c17','#603321','#8b4e2b','#b8753b','#dfaa61'],
+  metal:['#252b32','#4b5864','#788792','#b7c3c9','#e4e8e8'],
+  lava:['#301522','#76252a','#c43b20','#f07825','#ffd15a'],
+  ice:['#264b70','#4f7fa1','#8dbbd0','#c4e7ec','#f2ffff'],
+  sand:['#78603a','#a88a50','#c9ad70','#e2ce96','#f4e7bd'],
+  brick:['#4a2525','#7a3930','#a64e3d','#c77857','#e0a27b'],
+  alien:['#15252d','#26515a','#397b70','#74ae79','#b7df99'],
+  fabric:['#252332','#4d465c','#77758c','#aaa7b9','#ded7d4']
+ };
+ function rand(){textureSeed=(textureSeed*1664525+1013904223)>>>0;return textureSeed/4294967296;}
+ function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+ function hash(x,y){let n=(x*374761393+y*668265263+textureSeed*1442695041)|0;n=(n^(n>>>13))*1274126177;return ((n^(n>>>16))>>>0)/4294967295;}
+ function noise(x,y){let ix=Math.floor(x),iy=Math.floor(y),fx=x-ix,fy=y-iy;fx=fx*fx*(3-2*fx);fy=fy*fy*(3-2*fy);let a=hash(ix,iy),b=hash(ix+1,iy),c=hash(ix,iy+1),d=hash(ix+1,iy+1);return (a+(b-a)*fx)*(1-fy)+(c+(d-c)*fx)*fy;}
+ function generateTexture(){
+  const prompt=document.getElementById('texturePrompt').value.toLowerCase();
+  let kind='stone';for(const k of Object.keys(palettes)){if(prompt.includes(k)){kind=k;break;}}
+  if(prompt.includes('rock')||prompt.includes('concrete'))kind='stone';
+  if(prompt.includes('leaf')||prompt.includes('moss'))kind='grass';
+  if(prompt.includes('ocean')||prompt.includes('river'))kind='water';
+  if(prompt.includes('rust'))kind='metal';
+  if(prompt.includes('brick'))kind='brick';
+  if(prompt.includes('crystal')||prompt.includes('snow'))kind='ice';
+  if(prompt.includes('dirt')||prompt.includes('desert'))kind='sand';
+  if(prompt.includes('flesh')||prompt.includes('skin')||prompt.includes('organic'))kind='alien';
+  if(prompt.includes('cloth')||prompt.includes('leather'))kind='fabric';
+  let pal=palettes[kind].slice();
+  // Allow simple color hints in the prompt.
+  const colorHints={red:'#b83232',orange:'#d87532',yellow:'#d9bd45',green:'#3b9656',blue:'#3979c4',purple:'#8653ad',pink:'#d875a5',black:'#171923',white:'#eeeeee',gold:'#c49a36'};
+  for(const [word,col] of Object.entries(colorHints)){if(prompt.includes(word)){const base=parseInt(col.slice(1),16);const rr=(base>>16)&255,gg=(base>>8)&255,bb=base&255;pal=[0.45,0.65,0.82,1,1.12].map(f=>'#'+[rr,gg,bb].map(v=>clamp(Math.round(v*f),0,255).toString(16).padStart(2,'0')).join(''));break;}}
+  const out=tctx.createImageData(64,64), vals=[];
+  for(let y=0;y<64;y++)for(let x=0;x<64;x++){
+   let n=noise(x/13,y/13)*.45+noise(x/5,y/5)*.32+noise(x/1.8,y/1.8)*.23;
+   if(kind==='wood')n=noise(x/4,y/18)*.62+noise(x/2,y/5)*.25+rand()*.13;
+   if(kind==='water')n=noise(x/12,y/3)*.52+noise(x/5,y/8)*.35+rand()*.13;
+   if(kind==='metal')n=noise(x/9,y/9)*.6+rand()*.4;
+   if(kind==='lava')n=noise(x/7,y/7)*.6+noise(x/2,y/2)*.4;
+   if(kind==='brick'){let row=Math.floor(y/8),xx=(x+(row%2)*8)%16;n=(xx<1||y%8<1)?0.05:0.4+noise(x/5,y/5)*.6;}
+   if(kind==='fabric')n=(Math.floor(x/2)%2===Math.floor(y/2)%2?0.62:0.38)+noise(x/7,y/7)*.25;
+   if(kind==='ice'&&prompt.includes('crystal'))n=(Math.abs(Math.sin(x*.33+y*.18))*.5+noise(x/7,y/7)*.5);
+   if(prompt.includes('pixel')||prompt.includes('blocky'))n=Math.round(n*4)/4;
+   let idx=clamp(Math.floor(n*pal.length),0,pal.length-1);
+   if(kind==='lava'&&n>.62)idx=clamp(idx+1,0,pal.length-1);
+   let col=pal[idx],hexv=parseInt(col.slice(1),16),p=(y*64+x)*4;
+   out.data[p]=(hexv>>16)&255;out.data[p+1]=(hexv>>8)&255;out.data[p+2]=hexv&255;out.data[p+3]=255;
+   vals[y*64+x]=col.toUpperCase();
+  }
+  tctx.putImageData(out,0,0);texturePixels=vals;
+  document.getElementById('textureStatus').textContent='Generated 64 × 64 '+kind+' texture. Edit the prompt and generate again for variations.';
+ }
+ document.getElementById('generateTexture').onclick=()=>{textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
+ document.getElementById('randomTexture').onclick=()=>{const prompts=['mossy stone','rusty metal','alien skin','blue water','dark wood','lava rock','ice crystal','desert sand','red brick','woven fabric'];document.getElementById('texturePrompt').value=prompts[Math.floor(Math.random()*prompts.length)];textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
+ document.getElementById('useTexture').onclick=()=>{snapshot();pixels=texturePixels.slice();render();document.getElementById('textureStatus').textContent='Texture copied to your drawing canvas. You can edit it with the normal tools.';};
+ document.getElementById('downloadTexture').onclick=()=>{const a=document.createElement('a');a.download='game-texture-64x64.png';a.href=textureCanvas.toDataURL('image/png');a.click();};
+ generateTexture();
+
  render();
 })();
 </script>
