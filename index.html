@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#171923">
+<title>Pixel64 · Pixel Art</title>
+<style>
+:root{color-scheme:dark;--bg:#171923;--panel:#222533;--line:#3a4053;--text:#f4f5fb;--muted:#aeb5c8;--accent:#8b9cff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+header{text-align:center;padding:14px 12px 8px}h1{font-size:21px;margin:0 0 3px}header p{margin:0;color:var(--muted);font-size:12px}
+main{width:min(100%,850px);margin:auto;padding:8px 12px 24px;display:grid;gap:12px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+.canvas-wrap{width:100%;max-width:560px;margin:0 auto;aspect-ratio:1;touch-action:none;overflow:hidden;border:2px solid #59617b;border-radius:4px;background:white}
+canvas{display:block;width:100%;height:100%;image-rendering:pixelated;touch-action:none}
+.tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:11px}
+button,.file-label{border:1px solid var(--line);background:#303548;color:var(--text);border-radius:10px;padding:10px 5px;font:inherit;font-size:13px;min-height:42px;display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;touch-action:manipulation}
+button.active{border-color:var(--accent);background:#3b4260;box-shadow:inset 0 0 0 1px var(--accent)}button:disabled{opacity:.4}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.section-title{font-weight:650;margin:0 0 10px;font-size:14px}
+.color-row{display:flex;align-items:center;gap:9px}input[type=color]{width:54px;height:46px;padding:3px;border:1px solid var(--line);border-radius:10px;background:#303548}
+#hex{flex:1;min-width:100px;background:#171923;border:1px solid var(--line);border-radius:9px;padding:11px;color:var(--text);font:inherit;text-transform:uppercase}
+label.small{display:block;color:var(--muted);font-size:12px;margin-bottom:7px}.swatches{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.swatch{width:29px;height:29px;min-height:29px;border-radius:7px;border:2px solid #ffffff40;padding:0}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.primary{background:#6477e8;border-color:#8492ff;color:white;font-weight:650}.danger{color:#ffc5c5}
+.hint{color:var(--muted);font-size:12px;line-height:1.45;margin:10px 1px 0}input[type=file]{display:none}
+@media(min-width:720px){main{grid-template-columns:minmax(0,1.2fr) minmax(250px,.8fr);align-items:start}.drawing{grid-row:span 2}.canvas-wrap{max-width:560px}}
+</style>
+</head>
+<body>
+<header><h1>Pixel64</h1><p>Simple 64 × 64 pixel art for your game</p></header>
+<main>
+<section class="panel drawing">
+ <div class="row"><p class="section-title">Canvas · 64 × 64</p><span id="status" style="font-size:12px;color:var(--muted)">Grid on</span></div>
+ <div class="canvas-wrap"><canvas id="view" width="640" height="640" aria-label="64 by 64 pixel drawing canvas"></canvas></div>
+ <div class="tools">
+  <button id="pencil" class="active">✎ Pencil</button><button id="eraser">⌫ Eraser</button><button id="fill">▧ Fill</button><button id="eyedrop">◉ Pick color</button>
+  <button id="undo">↶ Undo</button><button id="redo">↷ Redo</button><button id="grid" class="active">▦ Grid</button><button id="clear" class="danger">Clear</button>
+ </div>
+ <p class="hint">Draw with your finger or S Pen. Each stroke paints crisp individual pixels. Grid lines are only a guide and never appear in your PNG.</p>
+</section>
+<section class="panel">
+ <p class="section-title">Color</p><label class="small" for="color">Choose any color</label>
+ <div class="color-row"><input id="color" type="color" value="#24243a" aria-label="Choose color"><input id="hex" value="#24243A" maxlength="7" aria-label="Hex color"></div>
+ <div class="swatches" id="swatches"></div>
+</section>
+<section class="panel">
+ <p class="section-title">Export / Import</p>
+ <div class="actions"><button id="export" class="primary">↓ Export PNG</button><label for="imageInput" class="file-label">↑ Import image</label><input id="imageInput" type="file" accept="image/*"><button id="saveProject">Save project</button><label for="projectInput" class="file-label">Open project</label><input id="projectInput" type="file" accept="application/json"></div>
+ <p class="hint">Export PNG always downloads an exact 64 × 64 image without grid lines or smoothing. Save project keeps the editable pixels.</p>
+</section>
+</main>
+<script>
+(()=> {
+ const N=64,S=10,view=document.getElementById('view'),ctx=view.getContext('2d',{alpha:false});
+ const color=document.getElementById('color'),hex=document.getElementById('hex');
+ let pixels=Array(N*N).fill(null),grid=true,tool='pencil',drawing=false,last=-1,undo=[],redo=[];
+ const blank=()=>Array(N*N).fill(null);
+ function render(){
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,640,640);
+  for(let i=0;i<pixels.length;i++){if(pixels[i]){ctx.fillStyle=pixels[i];ctx.fillRect((i%N)*S,Math.floor(i/N)*S,S,S);}}
+  if(grid){ctx.beginPath();ctx.strokeStyle='rgba(30,35,50,.22)';ctx.lineWidth=1;for(let i=0;i<=N;i++){let p=i*S+.5;ctx.moveTo(p,0);ctx.lineTo(p,640);ctx.moveTo(0,p);ctx.lineTo(640,p);}ctx.stroke();}
+  document.getElementById('undo').disabled=!undo.length;document.getElementById('redo').disabled=!redo.length;
+ }
+ function snapshot(){undo.push(pixels.slice());if(undo.length>80)undo.shift();redo=[];}
+ function cell(e){let r=view.getBoundingClientRect();return {x:Math.max(0,Math.min(63,Math.floor((e.clientX-r.left)/r.width*N))),y:Math.max(0,Math.min(63,Math.floor((e.clientY-r.top)/r.height*N)))};}
+ function setColor(c){if(/^#[0-9a-f]{6}$/i.test(c)){color.value=c;hex.value=c.toUpperCase();}}
+ function setTool(t){tool=t;document.querySelectorAll('.tools button').forEach(b=>b.classList.remove('active'));document.getElementById(t).classList.add('active');}
+ function paint(e){let {x,y}=cell(e),i=y*N+x;if(i===last)return;last=i;
+  if(tool==='eyedrop'){if(pixels[i])setColor(pixels[i]);return;}
+  if(tool==='fill'){let old=pixels[i],next=color.value.toUpperCase();if(old===next)return;let stack=[i];while(stack.length){let j=stack.pop();if(j<0||j>=N*N||pixels[j]!==old)continue;pixels[j]=next;let xx=j%N,yy=Math.floor(j/N);if(xx)stack.push(j-1);if(xx<63)stack.push(j+1);if(yy)stack.push(j-N);if(yy<63)stack.push(j+N);}render();setTool('pencil');return;}
+  let next=tool==='eraser'?null:color.value.toUpperCase();if(pixels[i]!==next){pixels[i]=next;render();}
+ }
+ view.addEventListener('pointerdown',e=>{e.preventDefault();view.setPointerCapture(e.pointerId);drawing=true;last=-1;snapshot();paint(e);});
+ view.addEventListener('pointermove',e=>{if(drawing){e.preventDefault();paint(e);}});
+ function stop(){drawing=false;last=-1;}view.addEventListener('pointerup',stop);view.addEventListener('pointercancel',stop);view.addEventListener('lostpointercapture',stop);
+ color.addEventListener('input',()=>setColor(color.value));hex.addEventListener('change',()=>{let v=hex.value.trim();if(!v.startsWith('#'))v='#'+v;if(/^#[0-9a-f]{6}$/i.test(v))setColor(v);else hex.value=color.value.toUpperCase();});
+ document.getElementById('pencil').onclick=()=>setTool('pencil');document.getElementById('eraser').onclick=()=>setTool('eraser');document.getElementById('fill').onclick=()=>setTool('fill');document.getElementById('eyedrop').onclick=()=>setTool('eyedrop');
+ document.getElementById('grid').onclick=()=>{grid=!grid;document.getElementById('grid').classList.toggle('active',grid);document.getElementById('status').textContent=grid?'Grid on':'Grid off';render();};
+ document.getElementById('undo').onclick=()=>{if(undo.length){redo.push(pixels.slice());pixels=undo.pop();render();}};
+ document.getElementById('redo').onclick=()=>{if(redo.length){undo.push(pixels.slice());pixels=redo.pop();render();}};
+ document.getElementById('clear').onclick=()=>{if(confirm('Clear the whole canvas?')){snapshot();pixels=blank();render();}};
+ document.getElementById('export').onclick=()=>{let c=document.createElement('canvas');c.width=c.height=64;let x=c.getContext('2d');x.clearRect(0,0,64,64);for(let i=0;i<pixels.length;i++){if(pixels[i]){x.fillStyle=pixels[i];x.fillRect(i%64,Math.floor(i/64),1,1);}}let a=document.createElement('a');a.download='pixel-art-64x64.png';a.href=c.toDataURL('image/png');a.click();};
+ document.getElementById('imageInput').onchange=e=>{let f=e.target.files[0];if(!f)return;let im=new Image();im.onload=()=>{snapshot();let c=document.createElement('canvas');c.width=c.height=64;let x=c.getContext('2d');x.clearRect(0,0,64,64);x.imageSmoothingEnabled=false;x.drawImage(im,0,0,64,64);let d=x.getImageData(0,0,64,64).data;pixels=blank();for(let i=0;i<4096;i++){if(d[i*4+3])pixels[i]='#'+[d[i*4],d[i*4+1],d[i*4+2]].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();}render();URL.revokeObjectURL(im.src);e.target.value='';};im.src=URL.createObjectURL(f);};
+ document.getElementById('saveProject').onclick=()=>{let b=new Blob([JSON.stringify({width:64,height:64,pixels})],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='pixel64-project.json';a.click();URL.revokeObjectURL(u);};
+ document.getElementById('projectInput').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let o=JSON.parse(r.result);if(o.width!==64||o.height!==64||!Array.isArray(o.pixels)||o.pixels.length!==4096)throw Error();snapshot();pixels=o.pixels.map(v=>typeof v==='string'&&/^#[0-9a-f]{6}$/i.test(v)?v.toUpperCase():null);render();}catch{alert('That is not a valid Pixel64 project file.');}e.target.value='';};r.readAsText(f);};
+ ['#000000','#FFFFFF','#24243A','#D7263D','#F46036','#F9C80E','#2E933C','#00A6FB','#235789','#7B2CBF','#F72585','#8D99AE','#795548','#FFD6A5','#B8F2E6','#C0FDFF'].forEach(c=>{let b=document.createElement('button');b.className='swatch';b.style.background=c;b.title=c;b.setAttribute('aria-label','Use '+c);b.onclick=()=>setColor(c);document.getElementById('swatches').appendChild(b);});
+ render();
+})();
+</script>
+</body>
+</html>
