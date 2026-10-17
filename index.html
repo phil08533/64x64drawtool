@@ -248,75 +248,176 @@ input[type=file]{display:none}
  // Structured 64x64 pixel-art patterns. Every preset is drawn locally in the browser.
  function generateTexture(){
   const prompt=document.getElementById('texturePrompt').value.toLowerCase();
-  const out=tctx.createImageData(64,64), vals=Array(4096).fill('#000000');
-  const put=(x,y,c)=>{if(x>=0&&x<64&&y>=0&&y<64)vals[y*64+x]=c;};
+  const out=tctx.createImageData(64,64), vals=Array(4096).fill('#18232B');
+  const put=(x,y,c)=>{x=Math.floor(x);y=Math.floor(y);if(x>=0&&x<64&&y>=0&&y<64)vals[y*64+x]=c;};
   const rect=(x,y,w,h,c)=>{for(let yy=y;yy<y+h;yy++)for(let xx=x;xx<x+w;xx++)put(xx,yy,c);};
-  const line=(x0,y0,x1,y1,c)=>{let dx=Math.abs(x1-x0),sx=x0<x1?1:-1,dy=-Math.abs(y1-y0),sy=y0<y1?1:-1,e=dx+dy;while(true){put(x0,y0,c);if(x0===x1&&y0===y1)break;let q=2*e;if(q>=dy){e+=dy;x0+=sx;}if(q<=dx){e+=dx;y0+=sy;}}};
-  const ellipse=(cx,cy,rx,ry,c)=>{for(let y=-ry;y<=ry;y++)for(let x=-rx;x<=rx;x++)if(x*x/(rx*rx)+y*y/(ry*ry)<=1)put(cx+x,cy+y,c);};
-  const base='#18232B',dark='#0B1118',metal='#52616A',light='#A6B4B5',cream='#D8D6C6',cyan='#55C8C4',amber='#DCA64B',red='#C95045',green='#6CBA83',violet='#8875A9';
-  vals.fill(base);
+  const line=(x0,y0,x1,y1,c)=>{x0=Math.round(x0);y0=Math.round(y0);x1=Math.round(x1);y1=Math.round(y1);let dx=Math.abs(x1-x0),sx=x0<x1?1:-1,dy=-Math.abs(y1-y0),sy=y0<y1?1:-1,e=dx+dy;while(true){put(x0,y0,c);if(x0===x1&&y0===y1)break;const q=2*e;if(q>=dy){e+=dy;x0+=sx;}if(q<=dx){e+=dx;y0+=sy;}}};
+  const ellipse=(cx,cy,rx,ry,c)=>{rx=Math.max(1,Math.round(rx));ry=Math.max(1,Math.round(ry));for(let y=-ry;y<=ry;y++)for(let x=-rx;x<=rx;x++)if(x*x/(rx*rx)+y*y/(ry*ry)<=1)put(cx+x,cy+y,c);};
   const has=(...words)=>words.some(w=>prompt.includes(w));
-  let label='sci-fi texture';
-  // Tileable material mode uses wrapped lattice noise and repeating 16px motifs.
-  if(has('tileable','seamless')){
-   label='seamless tileable material';
-   const wrap=(n,m)=>((n%m)+m)%m;
-   const pnoise=(x,y,scale=8)=>{const cells=64/scale,gx=x/scale,gy=y/scale,ix=Math.floor(gx),iy=Math.floor(gy),fx=gx-ix,fy=gy-iy,sm=t=>t*t*(3-2*t),a=hash(wrap(ix,cells),wrap(iy,cells)),b=hash(wrap(ix+1,cells),wrap(iy,cells)),c=hash(wrap(ix,cells),wrap(iy+1,cells)),d=hash(wrap(ix+1,cells),wrap(iy+1,cells));return(a+(b-a)*sm(fx))*(1-sm(fy))+(c+(d-c)*sm(fx))*sm(fy);};
-   const kind=has('wood','bark')?'wood':has('water','ocean','coral')?'water':has('grass','moss','foliage','leaves')?'organic':has('ice','snow','glacier')?'ice':has('sand','soil','gravel','clay')?'earth':has('fabric','weave','cloth','canvas','denim','leather','carpet','camouflage','chainmail','carbon fiber')?'fabric':has('hex','honeycomb','scales','chitin','armor','mesh')?'cells':has('brick','tile','mosaic','wallpaper','ceramic','terrazzo','stained glass')?'tiles':has('lava','volcanic','plasma')?'lava':has('rust','metal','steel','titanium','copper','iron','asphalt','concrete','stone','marble','basalt','obsidian','crystal')?'stone':'tech';
-   for(let y=0;y<64;y++)for(let x=0;x<64;x++){const n=pnoise(x,y,8)*.55+pnoise(x,y,4)*.3+pnoise(x,y,2)*.15,u=x%16,v=y%16,cell=((Math.floor(x/16)+Math.floor(y/16))%2)===0;let c=base;
-    if(kind==='wood'){c=n>.68?'#B9814A':n>.4?'#75472B':'#4B2B20';if(v===0||v===15)c=dark;if((u===4||u===12)&&n>.42)c='#99623A';}
-    else if(kind==='water'){c=n>.7?'#42B8C2':n>.45?'#16799A':'#082B4A';if(v%8===2&&u%16<8)c='#7BD6D1';}
-    else if(kind==='organic'){c=n>.75?'#82B65B':n>.48?'#397342':n>.25?'#245336':'#142F24';if((u+v)%11===0)c='#B2B85A';}
-    else if(kind==='ice'){c=n>.72?'#E0F7FF':n>.48?'#8CC9DF':n>.25?'#4B88A8':'#172D42';if((u===v||u===15-v)&&n>.45)c='#C9F3F5';}
-    else if(kind==='earth'){c=n>.76?'#E2C98C':n>.5?'#B79A63':n>.25?'#8C7048':'#594A3C';if((x+y)%17===0)c='#F4E7BD';}
-    else if(kind==='fabric'){c=((x+y)%8===0)?'#AAA7B9':((x-y)%8===0)?'#252332':n>.55?'#77758C':'#4D465C';}
-    else if(kind==='cells'){const d=Math.abs(u-8)+Math.abs(v-8);c=d<5?'#55C8C4':d<7?'#52616A':'#18232B';}
-    else if(kind==='tiles'){c=cell?'#69767A':'#303B42';if(u===0||v===0)c='#0B1118';if(u===1||v===1)c='#A6B4B5';}
-    else if(kind==='lava'){c=n>.68?'#FFD16A':n>.52?'#D95427':n>.32?'#78332D':'#241C28';if((u+v*3)%16<2&&n>.45)c='#FF9B38';}
-    else if(kind==='stone'){c=n>.76?'#A0A4A6':n>.52?'#69717A':n>.27?'#414650':'#24262D';if((u*3+v*5)%23===0)c='#C6C7C4';}
-    else{c=n>.72?'#55C8C4':n>.46?'#236B69':n>.24?'#173D4B':'#0B1825';if(u===0||v===0)c='#102A37';if(u===8||v===8)c='#2D7180';if((u===4&&v===4)||(u===12&&v===12))c='#DCA64B';}
-    if(has('red')){if((x+y)%16<2)c='#C95045';}else if(has('blue')){if((x+y)%16<2)c='#3979C4';}else if(has('purple')){if((x+y)%16<2)c='#8875A9';}else if(has('green')){if((x+y)%16<2)c='#6CBA83';}else if(has('gold','amber','yellow')){if((x+y)%16<2)c='#DCA64B';}
-    if(has('speckle','grain','noise')&&pnoise(x,y,2)>.72)c=light;put(x,y,c);
-   }
+  const H=(x,y)=>hash(x,y);
+  const pick=(arr,n)=>arr[Math.abs(n)%arr.length];
+  const C={ink:'#111820',deep:'#18232B',mid:'#52616A',silver:'#A6B4B5',paper:'#D8D6C6',cyan:'#55C8C4',amber:'#DCA64B',red:'#C95045',green:'#6CBA83',violet:'#8875A9',soil:'#76513A',sand:'#C5A66B',leaf:'#397342',ice:'#8CC9DF'};
+  let label='procedural material',family='';
+  vals.fill(C.deep);
+  // A catalog entry is routed to a real drawing family, not the old shared noise/16px tile.
+  if(has('topographic','bathymetric','contour map','depth lines','isobar','elevation')){
+   family='contour lines';label='contour-map lines';vals.fill(has('bathymetric','depth')?'#082B4A':'#233B35');
+   for(let k=0;k<17;k++){let cx=(H(k,2)*70)-3,cy=(H(3,k)*70)-3,rx=5+(k%5)*3,ry=4+(k%4)*4;for(let a=0;a<360;a+=2){let q=a*Math.PI/180;put(cx+Math.cos(q)*rx,cy+Math.sin(q)*ry,pick(['#6B9B70','#A8B87A','#D0BD80','#456F62'],k));} }
+   for(let y=0;y<64;y++)for(let x=0;x<64;x++)if(H(x,y)>.988)put(x,y,C.paper);
+  } else if(has('circuit','schematic','printed circuit','pcb','motherboard','traces')){
+   family='circuit traces';label='circuit-board traces';vals.fill('#102D2B');
+   for(let i=0;i<15;i++){let x=2+Math.floor(H(i,1)*60),y=2+Math.floor(H(2,i)*60),dir=i%4,steps=8+Math.floor(H(i,3)*22);put(x,y,C.amber);for(let j=0;j<steps;j++){if(dir===0)x++;if(dir===1)x--;if(dir===2)y++;if(dir===3)y--;if(x<1||x>62||y<1||y>62){dir=(dir+1)%4;x=Math.max(1,Math.min(62,x));y=Math.max(1,Math.min(62,y));}line(x,y,x,y,C.cyan);if(j%5===0){rect(x-1,y-1,3,3,C.silver);put(x,y,C.amber);}}}
+  } else if(has('brick','masonry','brickwork','mortar','block wall')){
+   family='offset masonry';label='offset brickwork';vals.fill('#4B3932');
+   for(let y=-1;y<64;y+=8){let row=Math.floor(y/8),off=row%2?8:0;for(let x=-16;x<80;x+=16){let xx=x+off,c=pick(['#783D32','#9C4F3D','#B86A50','#6D5A4B'],Math.floor(H(xx,y)*4));rect(xx+1,y+1,14,6,c);line(xx+2,y+2,xx+12,y+2,'#D18B68');put(xx+3,y+5,'#4B3932');}}
+  } else if(has('tile','ceramic','mosaic','zellige','terrazzo','flooring')){
+   family='geometric tiles';label='ceramic mosaic';vals.fill('#202A32');
+   const size=has('hex','honeycomb')?12:has('small')?8:16;
+   for(let y=-size;y<64+size;y+=size)for(let x=-size;x<64+size;x+=size){let xx=x+(Math.floor(y/size)%2?size/2:0),c=pick(['#315B62','#477E7B','#B9A77D','#C96D52','#D6CFB9'],Math.floor(H(xx,y)*5));if(has('hex','honeycomb')){for(let a=0;a<6;a++){let q=a*Math.PI/3;line(xx+size*.45*Math.cos(q),y+size*.45*Math.sin(q),xx+size*.45*Math.cos((a+1)*Math.PI/3),y+size*.45*Math.sin((a+1)*Math.PI/3),c);}}else{rect(xx+1,y+1,size-2,size-2,c);line(xx+2,y+2,xx+size-3,y+2,'#E4D8B8');put(xx+size-2,y+size-2,'#252A2B');}}
+  } else if(has('wood','plank','timber','bark','grain','veneer')){
+   family='directional grain';label='wood or bark grain';vals.fill(has('bark')?'#4D3528':'#583321');
+   const vertical=has('bark','tree trunk','palm bark'); 
+   for(let i=0;i<19;i++){let pos=Math.floor(H(i,4)*64),tone=pick(['#75472B','#99623A','#B9814A','#3B281F','#D1A16A'],i);if(vertical){let x=pos;for(let y=0;y<64;y++){let xx=x+Math.round(Math.sin((y+i)*.22)*2);line(xx,y,xx+Math.floor(H(i,y)*2),y,tone);}}else{let y=pos;for(let x=0;x<64;x++){let yy=y+Math.round(Math.sin((x+i)*.2)*2);line(x,yy,x,yy+1,tone);}}}
+   for(let i=0;i<5;i++){let x=5+Math.floor(H(i,8)*54),y=5+Math.floor(H(8,i)*54);for(let r=0;r<4;r++)ellipse(x,y,2+r*2,1+r,'#99623A');}
+  } else if(has('fabric','weave','woven','canvas','denim','textile','basket','carpet','chainmail','mesh','nylon','ripstop','gauze')){
+   family='interlaced fibers';label='woven textile';vals.fill('#4D465C');
+   const gap=has('chainmail','mesh','gauze')?4:has('coarse','basket')?8:3;
+   for(let y=0;y<64;y+=gap)for(let x=0;x<64;x+=gap){let a=(Math.floor(x/gap)+Math.floor(y/gap))%2;rect(x,y,gap,gap,pick(a?['#AAA7B9','#7B8790','#6A766F']:['#292D3B','#77758C','#8E715D'],Math.floor(H(x,y)*3)));line(x,y,x+gap-1,y,'#B4A78F');if(has('chainmail'))ellipse(x+gap/2,y+gap/2,1,1,C.silver);}
+   if(has('denim'))for(let i=0;i<90;i++)put(Math.floor(H(i,1)*64),Math.floor(H(2,i)*64),'#9CB9C7');
+  } else if(has('floral','flower','blossom','petal','botanical wallpaper','rose pattern')){
+   family='radial floral repeat';label='floral repeat';vals.fill('#E8DDBF');
+   for(let y=-4;y<72;y+=16)for(let x=-4;x<72;x+=16){let xx=x+(Math.floor(y/16)%2?8:0),cy=y;const colors=['#C95045','#DCA64B','#8875A9','#397C75'];let col=pick(colors,Math.floor(H(xx,cy)*4));for(let a=0;a<8;a++){let q=a*Math.PI/4;ellipse(xx+Math.cos(q)*3,cy+Math.sin(q)*3,2,3,col);}ellipse(xx,cy,2,2,'#E1B44B');line(xx,cy+4,xx-2,cy+9,C.green);}
+  } else if(has('leaf vein','leaf veins','fern','frond','monstera','agave','palm leaf','veined leaf','plant vein')){
+   family='branching leaf venation';label='leaf vein structure';vals.fill('#245336');
+   for(let y=-8;y<72;y+=18){let x0=H(y,1)*20+12;line(x0,y,x0+5,y+16,'#A9B86A');for(let k=0;k<6;k++){let yy=y+k*3;line(x0+Math.floor((yy-y)*.3),yy,x0-8,yy-3,'#6C9B42');line(x0+Math.floor((yy-y)*.3),yy,x0+12,yy-2,'#397342');}}
+   if(has('monstera'))for(let i=0;i<18;i++)ellipse(H(i,9)*64,H(9,i)*64,1,3,C.deep);
+  } else if(has('scale','scales','fish skin','reptile','dragon','chitin','shingle')){
+   family='overlapping scales';label='overlapping scale plates';vals.fill('#24483F');
+   for(let y=-6;y<70;y+=8)for(let x=-8;x<72;x+=10){let xx=x+(Math.floor(y/8)%2?5:0),c=pick(['#35645A','#447F6B','#76A67B','#172A28'],Math.floor(H(xx,y)*4));for(let yy=0;yy<7;yy++){let half=Math.floor(5*Math.sqrt(Math.max(0,1-((yy-1)/7)**2)));line(xx-half,y+yy,xx+half,y+yy,c);}line(xx-4,y+5,xx,y+7,'#172A28');line(xx,y+7,xx+4,y+5,'#172A28');}
+  } else if(has('crystal','geode','quartz','amethyst','gemstone','mineral cluster','ice shard')){
+   family='faceted crystal';label='faceted mineral shards';vals.fill('#172D42');
+   for(let i=0;i<15;i++){let x=Math.floor(H(i,2)*64),y=Math.floor(H(2,i)*64),h=8+Math.floor(H(i,5)*22),w=3+Math.floor(H(5,i)*8),c=pick(['#4B88A8','#8CC9DF','#C9F3F5','#8875A9','#55C8C4'],i);for(let yy=0;yy<h;yy++){let ww=Math.max(1,Math.floor(w*(1-yy/h)));line(x-ww,y-yy,x+ww,y-yy,c);}line(x,y-h,x,y,'#E0F7FF');line(x,y-h,x-w,y-Math.floor(h*.35),'#4B88A8');line(x,y-h,x+w,y- Math.floor(h*.55),'#C9F3F5');}
+  } else if(has('lava','magma','volcanic','molten','fissure')){
+   family='molten crack network';label='molten lava fissures';vals.fill('#241C28');
+   for(let i=0;i<17;i++){let x=Math.floor(H(i,6)*64),y=Math.floor(H(6,i)*64),steps=8+Math.floor(H(i,7)*20);for(let j=0;j<steps;j++){const c=j%4===0?'#FFD16A':j%3===0?'#FF9B38':'#D95427';line(x,y,x+Math.floor(H(i,j)*3)-1,y+1,c);x+=Math.floor(H(j,i)*5)-2;y+=Math.floor(H(i+j,2)*5)-2;}}
+   for(let i=0;i<55;i++)put(H(i,11)*64,H(11,i)*64,pick(['#78332D','#FF9B38','#FFD16A'],i));
+  } else if(has('water','ocean','river','wave','ripple','rain','tidal','current','waterfall','foam')){
+   family='fluid currents';label='water currents and ripples';vals.fill('#082B4A');
+   for(let y=0;y<64;y+=5){let x=0;while(x<64){let len=2+Math.floor(H(x,y)*13),yy=y+Math.round(Math.sin((x+y)*.18)*2),c=pick(['#16799A','#42B8C2','#7BD6D1','#0C537A'],Math.floor(H(x,y+3)*4));line(x,yy,Math.min(63,x+len),yy,c);if(has('ripple','rain','tidal'))ellipse(x,yy,2+(x%5),1,c);x+=len+2;}}
+   if(has('foam','whitewater','waterfall'))for(let i=0;i<90;i++)put(H(i,14)*64,H(14,i)*64,'#D8F0E9');
+  } else if(has('cloud','nebula','smoke','fog','mist','gas giant','cosmic dust')){
+   family='billowing cloud masses';label='cloud and vapor masses';vals.fill(has('nebula')?'#17132D':'#344650');
+   for(let i=0;i<150;i++){let x=Math.floor(H(i,15)*64),y=Math.floor(H(15,i)*64),r=1+Math.floor(H(i,16)*5),c=pick(has('nebula')?['#372A69','#6B4E9B','#B24E83','#236B91']:['#4B606A','#657780','#8C9DA0','#B8C3C2'],Math.floor(H(i,17)*4));ellipse(x,y,r,r,c);}
+  } else if(has('starfield','star field','planet','space','galaxy','meteor','asteroid','cosmos','constellation')){
+   family='celestial scatter';label='stars and celestial bodies';vals.fill('#070D1D');
+   for(let i=0;i<110;i++){let x=Math.floor(H(i,18)*64),y=Math.floor(H(18,i)*64);put(x,y,i%11===0?C.cyan:i%7===0?C.amber:C.paper);if(i%13===0){put(x+1,y,C.paper);put(x,y+1,C.paper);}}
+   if(has('planet','gas giant')){for(let r=15;r>0;r--){let c=pick(['#8D675B','#C49A77','#D7B98B','#5D647E'],r);ellipse(43,27,r,r,c);}for(let y=20;y<36;y+=4)line(30,y,56,y,pick(['#4D465C','#D7B98B','#6B4E69'],y));}
+   if(has('meteor','asteroid'))for(let i=0;i<8;i++)line(H(i,19)*64,H(19,i)*64,H(i,19)*64-5,H(19,i)*64+2,C.silver);
+  } else if(has('rust','corrosion','patina','verdigris','oxidized','tarnish')){
+   family='corrosion blooms';label='oxidation and corrosion';vals.fill('#3B4140');
+   for(let i=0;i<95;i++){let x=Math.floor(H(i,20)*64),y=Math.floor(H(20,i)*64),r=1+Math.floor(H(i,21)*5),c=pick(['#75412F','#A34F32','#C07843','#536D5B','#596166'],Math.floor(H(i,22)*5));ellipse(x,y,r,r,c);}
+   for(let i=0;i<40;i++){let x=Math.floor(H(i,23)*64),y=Math.floor(H(23,i)*64);put(x,y,C.silver);}
+  } else if(has('crack','fracture','kintsugi','dry lake','dried mud','parched')){
+   family='branching fracture';label='branching cracks';vals.fill(has('kintsugi')?'#25212A':'#786C5C');
+   for(let i=0;i<18;i++){let x=Math.floor(H(i,24)*64),y=Math.floor(H(24,i)*64),steps=7+Math.floor(H(i,25)*17);for(let j=0;j<steps;j++){line(x,y,x+1,y,C.ink);if(j%3===0)line(x,y,x+(H(i,j)>.5?2:-2),y-2,C.ink);x+=Math.floor(H(i,j+1)*5)-2;y+=Math.floor(H(j+1,i)*5)-2;} }
+   if(has('kintsugi'))for(let i=0;i<90;i++)if(vals[i*37%4096]===C.ink)vals[i*37%4096]=C.amber;
+  } else if(has('paper','parchment','notebook','ledger','cardboard','document','papyrus','receipt')){
+   family='paper fibers and rules';label='paper fibers';vals.fill(has('blueprint')?'#B9D1DC':'#D8D0B9');
+   for(let i=0;i<220;i++){let x=Math.floor(H(i,26)*64),y=Math.floor(H(26,i)*64);line(x,y,Math.min(63,x+1+Math.floor(H(i,27)*6)),y,pick(['#B8AE98','#C5BBA4','#E8E0CE'],i));}
+   if(has('notebook','ruled','ledger'))for(let y=7;y<64;y+=8)line(0,y,63,y,'#8FA7B4');
+   if(has('graph','grid'))for(let x=0;x<64;x+=8)line(x,0,x,63,'#9AB5C0');
+   if(has('cardboard'))for(let y=0;y<64;y+=3)line(0,y,63,y,'#B69D78');
+  } else if(has('barcode','dot matrix','printer','fax','thermal label','qr-like','pixel mosaic')){
+   family='encoded print marks';label='printed signal pattern';vals.fill('#E3DDC9');
+   if(has('barcode')){for(let x=0;x<64;){let w=1+Math.floor(H(x,28)*4);if(H(x,29)>.35)rect(x,3,w,58,C.ink);x+=w+1;}}
+   else if(has('qr','mosaic')){for(let y=0;y<64;y+=4)for(let x=0;x<64;x+=4)if(H(x,y)>.48)rect(x,y,4,4,C.ink);for(const [x,y] of [[2,2],[46,2],[2,46]]){rect(x,y,16,16,C.ink);rect(x+3,y+3,10,10,'#E3DDC9');rect(x+6,y+6,4,4,C.ink);}}
+   else for(let y=5;y<60;y+=4)for(let x=2;x<62;x+=3)if(H(x,y)>.38)rect(x,y,2,2,C.ink);
+  } else if(has('camo','camouflage','lichen','mold','mildew','mottled','speckle','terrazzo')){
+   family='organic mottling';label='mottled particulate surface';vals.fill('#59634B');
+   for(let i=0;i<120;i++){let x=Math.floor(H(i,30)*64),y=Math.floor(H(30,i)*64),rx=1+Math.floor(H(i,31)*6),ry=1+Math.floor(H(31,i)*4),c=pick(['#273E31','#397342','#8A8B58','#B6A77A','#6B5142'],Math.floor(H(i,32)*5));ellipse(x,y,rx,ry,c);}
+  } else if(has('fur','hair','bristle','fiber','fuzz','felt','brush')){
+   family='short directional fibers';label='fiber field';vals.fill('#3D352F');
+   for(let i=0;i<420;i++){let x=Math.floor(H(i,33)*64),y=Math.floor(H(33,i)*64),len=1+Math.floor(H(i,34)*6),c=pick(['#A78B68','#6C5848','#D0B68A','#2C2927'],Math.floor(H(i,35)*4));line(x,y,x+(has('fur','hair')?Math.floor(H(i,36)*3)-1:0),Math.min(63,y+len),c);}
+  } else if(has('feather','plumage','wing')){
+   family='feather barbs';label='feathered barbs';vals.fill('#263A42');
+   for(let x=3;x<68;x+=9){line(x,0,x+2,63,C.silver);for(let y=3;y<64;y+=5){line(x,y,x-4,y-3,C.cyan);line(x,y,x+5,y-3,C.mid);}}
+  } else if(has('bone','ivory','fossil','teeth','tusk','skeleton')){
+   family='bone striation';label='bone and fossil striation';vals.fill('#594E43');
+   for(let i=0;i<30;i++){let x=Math.floor(H(i,37)*64),y=Math.floor(H(37,i)*64);ellipse(x,y,2+Math.floor(H(i,38)*5),1+Math.floor(H(38,i)*3),pick(['#D8CBAE','#B5A58B','#8B7D68'],i));}
+   for(let i=0;i<16;i++){let x=Math.floor(H(i,39)*64),y=Math.floor(H(39,i)*64);line(x,y,x+5,y-2,'#E6DCC5');line(x+5,y-2,x+8,y+1,'#B5A58B');}
+  } else if(has('honeycomb','hexagonal','hex grid','beehive')){
+   family='hexagonal cells';label='hexagonal cell lattice';vals.fill('#3A3229');
+   for(let y=-5;y<70;y+=12)for(let x=-7;x<72;x+=14){let xx=x+(Math.floor(y/12)%2?7:0);for(let a=0;a<6;a++){let p=a*Math.PI/3,q=(a+1)*Math.PI/3;line(xx+6*Math.cos(p),y+6*Math.sin(p),xx+6*Math.cos(q),y+6*Math.sin(q),pick(['#DCA64B','#8B7047','#5B4C36'],Math.floor(H(xx,y)*3)));}ellipse(xx,y,2,2,'#1D2628');}
+  } else if(has('hazard','chevron','warning stripe','caution','industrial stripe')){
+   family='diagonal hazard bands';label='hazard striping';vals.fill('#252A2C');
+   for(let y=-64;y<128;y+=16)for(let x=-64;x<128;x+=16){for(let k=0;k<10;k++)line(x+k,y,x+k+15,y+15,((x+y+k)%32<16)?C.amber:'#111820');}
+  } else if(has('server','rack','vent','grille','radiator','heat sink','slats','louver')){
+   family='parallel mechanical slats';label='mechanical grille';vals.fill('#303B42');
+   const gap=has('vent','grille','louver')?6:12;
+   for(let y=2;y<64;y+=gap){rect(2,y,60,Math.max(2,gap-2),'#202A32');line(3,y,61,y,C.silver);line(3,y+1,61,y+1,C.mid);for(let x=6;x<60;x+=12)put(x,y+Math.floor(gap/2),has('server','rack')?C.cyan:C.amber);}
+  } else if(has('riveted','bolt','fastener','screw','stud','metal plate','hull','armor','armour','panel','bulkhead','airlock','steel','titanium','gunmetal')){
+   family='hard-surface panels';label='riveted hard-surface plating';vals.fill('#303B42');
+   for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=32){rect(x+1,y+1,30,14,pick(['#46535A','#58666D','#36444D'],Math.floor(H(x,y)*3)));line(x+2,y+2,x+29,y+2,'#B8C2C3');line(x+2,y+13,x+29,y+13,'#202A32');for(const [dx,dy] of [[4,4],[27,4],[4,11],[27,11]]){ellipse(x+dx,y+dy,1,1,C.paper);put(x+dx,y+dy,C.ink);}}
+  } else if(has('cable','wire','conduit','pipe','hose','tube','cord','braid')){
+   family='cable and conduit runs';label='cable bundles';vals.fill('#202A32');
+   for(let i=0;i<8;i++){let y=4+i*8;for(let x=0;x<64;x++){let yy=y+Math.round(Math.sin((x+i*7)*.13)*2);put(x,yy,pick(['#111820','#52616A','#DCA64B','#C95045','#55C8C4'],i));put(x,yy+1,'#111820');}for(let x=5;x<64;x+=19)rect(x,y-2,3,6,C.silver);}
+  } else if(has('crackled paint','paint chips','scratches','scuffed','abrasion','scratch','worn paint','blistered paint')){
+   family='surface wear';label='scratches and paint wear';vals.fill('#53616A');
+   for(let i=0;i<145;i++){let x=Math.floor(H(i,40)*64),y=Math.floor(H(40,i)*64),len=1+Math.floor(H(i,41)*9),c=pick(['#18232B','#A6B4B5','#C95045','#D8D6C6'],Math.floor(H(i,42)*4));line(x,y,Math.min(63,x+len),Math.max(0,Math.min(63,y+Math.floor(H(i,43)*3)-1)),c);}
+  } else if(has('liquid','oil slick','gasoline','iridescent','mercury','puddle','soap bubble','resin','epoxy')){
+   family='iridescent fluid cells';label='iridescent liquid';vals.fill('#18232B');
+   for(let y=0;y<64;y++)for(let x=0;x<64;x++){let n=(Math.sin(x*.22+Math.sin(y*.13)*2)+Math.cos(y*.25+x*.06)+2)/4;put(x,y,pick(['#243E66','#5C397B','#A44372','#267E7C','#D3A44F'],Math.floor(n*5)));}
+   for(let i=0;i<26;i++)ellipse(H(i,44)*64,H(44,i)*64,1+H(i,45)*4,1+H(45,i)*3,'#B6C9C5');
+  } else if(has('bubble','foam','droplet','condensation','dew','bead','pore','perforation','pockmark')){
+   family='bubbles and pores';label='bubbles and surface pores';vals.fill('#2B4650');
+   for(let i=0;i<105;i++){let x=Math.floor(H(i,46)*64),y=Math.floor(H(46,i)*64),r=1+Math.floor(H(i,47)*4);ellipse(x,y,r,r,pick(['#132833','#477F88','#77B8B8','#A9D7CF'],Math.floor(H(i,48)*4)));put(x-r,y-r,'#D8F0E9');}
+  } else if(has('spiral','shell','snail','fibonacci','whorl')){
+   family='spiral growth';label='spiral growth rings';vals.fill('#5D4938');
+   for(let i=0;i<5;i++){let cx=8+H(i,49)*48,cy=8+H(49,i)*48;for(let a=0;a<720;a+=4){let t=a*Math.PI/180,r=1+a/720*17;put(cx+Math.cos(t)*r,cy+Math.sin(t)*r,pick(['#D8C29A','#9B7952','#644B3C'],Math.floor(a/36)));}}
+  } else if(has('grid','graph paper','isometric','calibration','crosshair','checker','checkered','pixel grid','lattice')){
+   family='technical grid';label='technical grid';vals.fill('#24343B');
+   if(has('isometric')){for(let i=-64;i<128;i+=8){line(i,0,i+32,64,'#47717A');line(i,0,i-32,64,'#47717A');}}
+   else if(has('checker','checkered')){for(let y=0;y<64;y+=8)for(let x=0;x<64;x+=8)rect(x,y,8,8,((x+y)/8)%2?'#D8D6C6':'#27343B');}
+   else {for(let i=0;i<64;i+=8){line(i,0,i,63,'#47717A');line(0,i,63,i,'#47717A');}for(let i=4;i<64;i+=16){line(i-2,32,i+2,32,C.amber);line(32,i-2,32,i+2,C.amber);}}
+  } else if(has('spiral galaxy','geometric wallpaper','op art','zigzag','art deco','memphis','bauhaus','constructivist','greek key','celtic knot','tessellation','seigaiha','asanoha','kagome','islamic star','moroccan','persian carpet')){
+   family='ornamental geometry';label='ornamental geometric repeat';vals.fill('#E8DDBF');
+   for(let y=-8;y<72;y+=16)for(let x=-8;x<72;x+=16){let xx=x+(Math.floor(y/16)%2?8:0),c=pick(['#C95045','#397C75','#DCA64B','#8875A9','#18232B'],Math.floor(H(xx,y)*5));if(has('zigzag','op art')){for(let k=0;k<8;k++)line(xx+k*2,y,xx+k*2+2,y+((k%2)?8:0),c);line(xx,y+8,xx+16,y+8,C.ink);}else{for(let a=0;a<4;a++){let q=a*Math.PI/2;line(xx+8*Math.cos(q),y+8*Math.sin(q),xx+8*Math.cos(q+Math.PI/2),y+8*Math.sin(q+Math.PI/2),c);}ellipse(xx,y,3,3,C.ink);}}
+  } else if(has('sand','gravel','soil','dirt','pebble','aggregate','asphalt','concrete','granite','slate','stone','rock')){
+   family='granular mineral';label='granular mineral surface';vals.fill('#55534E');
+   for(let i=0;i<180;i++){let x=Math.floor(H(i,50)*64),y=Math.floor(H(50,i)*64),r=has('gravel','pebble','aggregate')?1+Math.floor(H(i,51)*3):1,c=pick(['#272B2E','#77766E','#A09C8F','#6A6258','#C1B7A1'],Math.floor(H(i,52)*5));ellipse(x,y,r,r,c);}
+   if(has('asphalt'))for(let i=0;i<18;i++)line(H(i,53)*64,H(53,i)*64,H(i,53)*64+3,H(53,i)*64+1,'#303436');
+  } else if(has('lava','volcanic')){family='molten rock';label='molten rock';}
+  else if(has('flower','leaf','plant','moss','grass','forest','lichen','mushroom','fungus','spore','root','vine','seed','cactus','succulent','fern','bamboo','reed')){
+   family='vegetal growth';label='vegetal growth';vals.fill('#193B2A');
+   for(let i=0;i<115;i++){let x=Math.floor(H(i,54)*64),y=Math.floor(H(54,i)*64),r=1+Math.floor(H(i,55)*4);ellipse(x,y,r,Math.max(1,r-1),pick(['#245336','#397342','#6C9B42','#B2B85A','#142F24'],Math.floor(H(i,56)*5)));if(has('vine','root'))line(x,y,x+Math.floor(H(i,57)*5)-2,y+3,C.green);}
+  } else if(has('snow','ice','frost','glacier','frozen','rime')){
+   family='ice crystal fracture';label='ice and frost';vals.fill('#172D42');
+   for(let i=0;i<32;i++){let x=Math.floor(H(i,58)*64),y=Math.floor(H(58,i)*64),len=3+Math.floor(H(i,59)*10);line(x,y,x+len,y-len,'#8CC9DF');line(x+len,y-len,x+len*2,y-len+2,'#C9F3F5');if(i%3===0)line(x+len,y-len,x+len,y-len-4,'#E0F7FF');}
+  } else if(has('cloth','leather','rubber','plastic','vinyl','polymer','foam','sponge','silicone')){
+   family='soft manufactured material';label='soft manufactured surface';vals.fill('#3E424B');
+   for(let y=0;y<64;y+=4)for(let x=0;x<64;x+=4){let n=H(x,y);rect(x,y,4,4,n>.72?'#777C83':n>.4?'#505761':n>.18?'#353B44':'#292E36');}
+   for(let i=0;i<70;i++){let x=Math.floor(H(i,60)*64),y=Math.floor(H(60,i)*64);put(x,y,'#92999A');}
+  } else {
+   // Unclassified presets still get one of several genuinely different structural renderers,
+   // selected deterministically from the prompt instead of falling into the same noise field.
+   const fallback=seedFromText(prompt)%8;
+   family='specialized fallback '+fallback;label='specialized procedural pattern '+(fallback+1);
+   if(fallback===0){vals.fill('#D8D6C6');for(let y=0;y<64;y+=8)for(let x=0;x<64;x+=8){let c=pick(['#C95045','#DCA64B','#397C75','#8875A9'],Math.floor(H(x,y)*4));line(x+4,y,x+7,y+4,c);line(x+7,y+4,x+4,y+7,c);line(x+4,y+7,x+1,y+4,c);line(x+1,y+4,x+4,y,c);}}
+   if(fallback===1){vals.fill('#17232C');for(let i=0;i<24;i++){let x=H(i,61)*64,y=H(61,i)*64;for(let j=0;j<10;j++){put(x+j,y+Math.round(Math.sin(j+i)*3),pick([C.cyan,C.amber,C.silver],i));}}}
+   if(fallback===2){vals.fill('#51463D');for(let i=0;i<80;i++){let x=H(i,62)*64,y=H(62,i)*64;line(x,y,x+Math.floor(H(i,63)*6),y+Math.floor(H(63,i)*6),pick(['#D8D6C6','#9B7952','#2D2926'],i));}}
+   if(fallback===3){vals.fill('#253E42');for(let y=-8;y<72;y+=12)for(let x=-8;x<72;x+=12){let xx=x+(Math.floor(y/12)%2?6:0);ellipse(xx,y,4,4,pick([C.cyan,C.green,C.amber,C.violet],Math.floor(H(xx,y)*4)));ellipse(xx,y,1,1,C.deep);}}
+   if(fallback===4){vals.fill('#25232D');for(let i=0;i<64;i++){let x=i,y=Math.floor(H(i,64)*64);line(x,0,x,y,pick([C.violet,C.cyan,C.red],i));}}
+   if(fallback===5){vals.fill('#D8D0B9');for(let i=0;i<250;i++){let x=H(i,65)*64,y=H(65,i)*64;put(x,y,pick(['#B8AE98','#8F8574','#E8E0CE'],i));}}
+   if(fallback===6){vals.fill('#26343C');for(let y=0;y<64;y+=12)for(let x=0;x<64;x+=12){rect(x+1,y+1,9,9,pick(['#52616A','#397C75','#C95045','#DCA64B'],Math.floor(H(x,y)*4)));put(x+3,y+3,C.paper);}}
+   if(fallback===7){vals.fill('#241C28');for(let i=0;i<55;i++){let x=H(i,66)*64,y=H(66,i)*64;line(x,y,x+Math.floor(H(i,67)*8)-4,y+Math.floor(H(67,i)*8)-4,pick([C.red,C.amber,C.violet,C.cyan],i));}}
   }
-  else if(has('fish','underwater','sea life')){label='fish wallpaper';vals.fill('#E8DDBF');for(let row=-1;row<5;row++)for(let col=-1;col<4;col++){let x=col*22+(row%2?11:0)+4,y=row*16+6,c=[red,amber,'#477B78','#7C91A5'][Math.abs(row*3+col*5)%4];ellipse(x,y,6,4,c);line(x-7,y,x-10,y-3,c);line(x-7,y,x-10,y+3,c);put(x+3,y-1,'#F6EBD2');put(x+4,y-1,dark);}}
-  else if(has('wood','plank','timber')){label='wood panels';vals.fill('#583321');for(let y=0;y<64;y+=16){rect(0,y,64,16,['#583321','#75472B','#99623A','#603821'][y/16]);line(0,y,63,y,dark);line(0,y+1,63,y+1,'#D1A16A');let seam=(Math.floor(y/16)%2)*19+25;line(seam,y,seam,y+15,dark);line(seam+1,y,seam+1,y+15,'#99623A');for(let k=0;k<5;k++)line((k*13+y)%60,y+3+k%9,Math.min(63,(k*13+y)%60+3),y+3+k%9,'#B9814A');}}
-  else if(has('floral','flower','botanical')){label='floral wallpaper';vals.fill('#E8DDBF');for(let y=4;y<70;y+=16)for(let x=4+(Math.floor(y/16)%2)*8;x<70;x+=16){for(const [dx,dy] of [[0,-3],[3,0],[0,3],[-3,0]])ellipse(x+dx,y+dy,2,3,[red,cyan,amber][Math.abs(x+y)%3]);put(x,y,amber);line(x,y+4,x-1,y+8,green);}}
-  else if(has('brick','masonry')){label='brick wall';vals.fill('#6B6458');for(let y=0;y<64;y+=8)for(let x=-(Math.floor(y/8)%2)*8;x<64;x+=16){rect(x+1,y+1,14,6,['#783D32','#9C4F3D','#B86A50','#D18B68'][Math.abs(Math.floor(x/16)+Math.floor(y/8))%4]);line(x+2,y+2,x+12,y+2,'#D89A77');}}
-  else if(has('checker','floor tile','tile')){vals.fill(dark);for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=16){rect(x+1,y+1,14,14,((x/16+y/16)%2)?metal:'#A6A49A');line(x+2,y+2,x+13,y+2,cream);}}
-  else if(has('hazard','chevron','warning stripes')){vals.fill('#272D31');for(let x=-32;x<96;x+=16)for(let y=0;y<64;y++)if(((x+y)%32+32)%32<9)put(x+y%16,y,amber);for(let y=0;y<64;y+=16)line(0,y,63,y,'#0A0D10');}
-  else if(has('vent','grille','engine vents')){vals.fill('#303C43');for(let y=4;y<64;y+=8){rect(3,y,58,4,dark);line(4,y,59,y,light);line(4,y+1,59,y+1,metal);}for(let x=2;x<64;x+=8){put(x,2,amber);put(x,61,amber);}}
-  else if(has('server','rack')){vals.fill('#111820');for(let y=2;y<64;y+=15){rect(3,y,58,12,'#46535A');rect(6,y+2,23,8,dark);for(let x=8;x<28;x+=4)put(x,y+4,cyan);rect(33,y+2,23,8,'#27343C');line(35,y+4,52,y+4,light);put(54,y+8,green);}}
-  else if(has('circuit','blueprint','data terminal')){vals.fill('#0B252C');for(let y=4;y<64;y+=12){line(0,y,63,y,has('blueprint')?'#436B92':'#236B69');}for(let x=4;x<64;x+=12){line(x,0,x,63,has('blueprint')?'#436B92':'#236B69');}for(let y=8;y<64;y+=16)for(let x=8;x<64;x+=16){rect(x-2,y-2,5,5,cyan);line(x,y,x+5,y,amber);line(x+5,y,x+5,y+4,amber);}if(has('terminal')){rect(7,8,50,40,'#112E36');for(let y=14;y<43;y+=7)line(12,y,12+(y*7)%38,y,green);}}
-  else if(has('cable','conduit','coolant pipe')){vals.fill('#222A30');for(let y=8;y<64;y+=20){rect(0,y,64,7,'#53636A');line(0,y,63,y,light);line(0,y+6,63,y+6,dark);for(let x=6;x<64;x+=16)rect(x,y-2,3,11,amber);}for(let x=12;x<64;x+=24){rect(x,0,6,64,'#34454D');line(x,0,x,63,light);}}
-  else if(has('hex')){vals.fill('#27343B');for(let y=-4;y<68;y+=12)for(let x=-5;x<68;x+=14){let xx=x+((Math.floor(y/12)%2)*7);line(xx,y-4,xx+4,y-2,metal);line(xx+4,y-2,xx+4,y+3,metal);line(xx+4,y+3,xx,y+5,metal);line(xx,y+5,xx-4,y+3,metal);line(xx-4,y+3,xx-4,y-2,metal);line(xx-4,y-2,xx,y-4,metal);put(xx,y,has('stealth')?dark:cyan);}}
-  else if(has('cargo','crate')){vals.fill('#182027');rect(4,4,56,56,'#8A774D');rect(7,7,50,50,'#B49B62');rect(10,10,44,44,'#6D6043');rect(13,13,38,38,'#B49B62');for(let i=0;i<4;i++){line(8,12+i*13,55,12+i*13,'#D0BB7D');line(12+i*13,8,12+i*13,55,'#5D523A');}rect(25,24,14,16,dark);rect(28,27,8,10,amber);line(5,5,58,5,cream);}
-  else if(has('reactor','core','energy conduit','force field')){vals.fill('#101D2A');for(let r=27;r>4;r-=6){for(let a=0;a<360;a+=2){let rad=a*Math.PI/180;put(Math.round(32+Math.cos(rad)*r),Math.round(32+Math.sin(rad)*r),r<12?amber:cyan);}}ellipse(32,32,5,5,cream);for(let a=0;a<360;a+=45){let r=a*Math.PI/180;line(32+Math.round(Math.cos(r)*12),32+Math.round(Math.sin(r)*12),32+Math.round(Math.cos(r)*27),32+Math.round(Math.sin(r)*27),metal);}if(has('force'))for(let i=0;i<64;i+=8)line(i,0,0,i,'#317A9B');}
-  else if(has('control panel','emergency','medical bay','scanner')){vals.fill('#303B42');rect(3,3,58,58,'#58656B');rect(6,6,52,23,dark);for(let x=9;x<56;x+=6){rect(x,10,3,14,has('emergency')?red:has('medical')?green:cyan);}rect(6,33,52,24,'#263239');for(let y=37;y<55;y+=6){line(10,y,32,y,light);rect(38,y,14,3,has('emergency')?red:amber);}for(const [x,y] of [[7,7],[56,7],[7,56],[56,56]])put(x,y,cream);}
-  else if(has('airlock','bulkhead','space station','viewport','window')){vals.fill('#202C34');rect(5,2,54,60,'#69767A');rect(10,5,44,54,'#252E35');rect(15,8,34,48,dark);if(has('window','viewport')){rect(12,10,40,28,'#153F5C');for(let i=0;i<18;i++)put((i*17+3)%64,(i*29+4)%27+10,cream);}else{rect(20,12,24,38,'#47565C');line(32,13,32,49,light);rect(24,28,16,5,amber);}for(let y=7;y<58;y+=10){put(8,y,amber);put(55,y,amber);}}
-  else if(has('alien','biomech','hive','organic')){vals.fill('#172A28');for(let y=0;y<64;y+=8)for(let x=0;x<64;x+=8){let c=((x+y)%3===0)?'#35645A':'#24483F';rect(x+1,y+1,6,6,c);ellipse(x+4,y+4,2,3,'#152B2B');}for(let i=0;i<8;i++){let x=(i*23+5)%64,y=(i*17+9)%64;ellipse(x,y,4,5,i%2?'#76A67B':'#447F6B');put(x,y,amber);}}
-  else if(has('crystal','ice planet','frozen')){vals.fill('#172D42');for(let i=0;i<13;i++){let x=(i*19+3)%64,y=(i*29+5)%64;line(x,y,x+4,y-10,'#4B88A8');line(x+4,y-10,x+8,y,'#A4D9E4');line(x+8,y,x,y,'#6BAEC4');line(x+4,y-10,x+4,y+7,cream);}}
-  else if(has('water','ocean','shallow')){label='water surface';vals.fill('#082B4A');for(let y=0;y<64;y+=8){for(let x=0;x<64;x+=16){const xx=(x+((y/8)%2)*7)%64;line(xx,y,xx+5,y,has('shallow')?'#58B8BD':'#16799A');line(xx+5,y,xx+9,y+2,'#0C537A');line(xx+9,y+2,xx+15,y+2,'#42B8C2');}}}
-  else if(has('sand','desert')){label='sand ground';vals.fill('#B79A63');for(let y=0;y<64;y+=8)for(let x=0;x<64;x+=8){const n=hash(x,y);rect(x,y,8,8,n>.78?'#E2C98C':n>.48?'#C9AD70':n>.22?'#A88A50':'#8C7048');if(n>.72)put(x+2,y+3,'#F4E7BD');}if(has('red'))for(let y=0;y<64;y+=16)line(0,y,63,y,'#A9513D');}
-  else if(has('grass','moss')){label='grass and moss';vals.fill('#245336');for(let y=0;y<64;y+=4)for(let x=0;x<64;x+=4){const n=hash(x,y);rect(x,y,4,4,n>.72?'#6C9B42':n>.4?'#397342':n>.18?'#245336':'#142F24');if(n>.8)line(x,y,x+1,y-2,'#B2B85A');}}
-  else if(has('stone','concrete','granite','slate','marble','rock')){label='stone surface';vals.fill('#414650');for(let y=0;y<64;y+=8)for(let x=0;x<64;x+=8){const n=hash(x,y);rect(x,y,8,8,n>.72?'#A0A4A6':n>.45?'#69717A':n>.2?'#414650':'#24262D');if(n>.68)line(x,y,x+3,y,'#C6C7C4');}for(let i=0;i<10;i++){const x=Math.floor(hash(i,9)*60),y=Math.floor(hash(7,i)*60);line(x,y,x+3,y+2,dark);}}
-  else if(has('fabric','woven','leather','carpet','camouflage')){label='woven fabric';vals.fill('#4D465C');for(let y=0;y<64;y+=4)for(let x=0;x<64;x+=4){let c=((x+y)%8===0)?'#AAA7B9':((x-y)%8===0)?'#252332':'#77758C';rect(x,y,4,4,c);}if(has('leather')){vals.fill('#603321');for(let i=0;i<35;i++)put(Math.floor(hash(i,1)*64),Math.floor(hash(2,i)*64),i%2?'#8B4E2B':'#301C17');}if(has('camouflage')){for(let i=0;i<30;i++)ellipse(Math.floor(hash(i,3)*64),Math.floor(hash(4,i)*64),2+Math.floor(hash(i,5)*3),2,'#397342');}}
-  else if(has('geometric','vintage wallpaper')){label='geometric wallpaper';vals.fill('#E8DDBF');for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=16){line(x+8,y,x+15,y+8,red);line(x+15,y+8,x+8,y+15,cyan);line(x+8,y+15,x,y+8,amber);line(x,y+8,x+8,y,dark);put(x+8,y+8,green);}}
-  else if(has('lava')){vals.fill('#241C28');for(let y=0;y<64;y+=8)for(let x=0;x<64;x+=8){let c=hash(x,y)>.6?'#D95427':hash(x,y)>.35?'#78332D':'#392B32';rect(x,y,8,8,c);if(c==='#D95427'){put(x+3,y+2,amber);put(x+4,y+3,'#FFD16A');}}}
-  else if(has('starfield','star field','space')){vals.fill('#070D1D');for(let i=0;i<90;i++){let x=Math.floor(hash(i,2)*64),y=Math.floor(hash(3,i)*64);put(x,y,i%9===0?cyan:cream);if(i%13===0)put(x+1,y,cream);}if(has('planet'))ellipse(43,24,10,10,'#8D675B');}
-  else if(has('landing pad','industrial floor','robot factory')){vals.fill('#252D31');for(let y=0;y<64;y+=16){line(0,y,63,y,metal);for(let x=0;x<64;x+=16){rect(x+2,y+2,12,12,'#3B484E');put(x+3,y+3,light);}}for(let x=-16;x<80;x+=24){line(x,0,x+16,16,amber);line(x+16,16,x,32,amber);line(x,32,x+16,48,amber);line(x+16,48,x,64,amber);}}
-  else if(has('rust')){vals.fill('#343A3C');for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=16){rect(x+1,y+1,14,14,'#596166');for(let i=0;i<9;i++)put(x+Math.floor(hash(x+i,y)*14),y+Math.floor(hash(y+i,x)*14),i%2?'#A34F32':'#75412F');put(x+2,y+2,light);}}
-  else {label='metal panels';vals.fill('#303B42');for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=32){rect(x+1,y+1,30,14,'#58666D');line(x+2,y+2,x+29,y+2,'#B8C2C3');for(const [dx,dy] of [[4,4],[27,4],[4,11],[27,11]]){put(x+dx,y+dy,cream);put(x+dx+1,y+dy,dark);}}}
-  if(has('red')){for(let y=0;y<64;y+=16)rect(0,y,3,8,red);}
-  if(has('amber','yellow')){for(let x=0;x<64;x+=12)rect(x,0,3,3,amber);}
-  if(has('green')){for(let y=0;y<64;y+=16)rect(60,y,4,8,green);}
-  if(has('purple')){for(let x=0;x<64;x+=8)put(x,63,violet);}
-  if(has('border','framed'))for(let i=0;i<64;i++){put(i,0,cream);put(i,63,cream);put(0,i,cream);put(63,i,cream);}
+  // Color words tint the result without erasing the family-specific geometry.
+  const tint=has('red')?'#C95045':has('orange')?'#D87532':has('yellow','gold','amber')?'#DCA64B':has('green')?'#397342':has('blue','cyan')?'#3979C4':has('purple','violet')?'#8875A9':has('pink')?'#D875A5':has('white','ivory')?'#E8E4D6':has('black','dark','stealth')?'#171923':null;
+  if(tint){for(let y=0;y<64;y++)for(let x=0;x<64;x++){if(H(x+71,y+31)>.91)put(x,y,tint);}}
   for(let i=0;i<4096;i++){const v=parseInt(vals[i].slice(1),16),p=i*4;out.data[p]=(v>>16)&255;out.data[p+1]=(v>>8)&255;out.data[p+2]=v&255;out.data[p+3]=255;}
   tctx.putImageData(out,0,0);texturePixels=vals;
-  document.getElementById('textureStatus').textContent='Generated 64 × 64 '+label+' texture locally. Choose another labeled preset for a different sci-fi material.';
+  document.getElementById('textureStatus').textContent='Generated 64 × 64 '+label+' ('+family+'). Preset geometry is selected by material, not a shared noise template.';
  }
-
  // Built-in offline texture catalog: no API key, network, or remote AI service required.
  const textureCatalog = [
   ["SHIP & STATION",[
@@ -1179,299 +1280,299 @@ input[type=file]{display:none}
    ["Copper pan patina","seamless tileable pixel art texture, copper pan patina"]
   ]],
   ["ARCHITECTURAL & BUILDING DETAIL",[
-   ["Acoustic foam pyramids","tileable seamless pixel art texture, acoustic foam pyramids, distinctive repeatable motif"],
-   ["Perforated acoustic wood","tileable seamless pixel art texture, perforated acoustic wood, distinctive repeatable motif"],
-   ["Bamboo wall mat","tileable seamless pixel art texture, bamboo wall mat, distinctive repeatable motif"],
-   ["Rammed earth layers","tileable seamless pixel art texture, rammed earth layers, distinctive repeatable motif"],
-   ["Adobe brick weathering","tileable seamless pixel art texture, adobe brick weathering, distinctive repeatable motif"],
-   ["Limewash brush strokes","tileable seamless pixel art texture, limewash brush strokes, distinctive repeatable motif"],
-   ["Terrazzo brass inlay","tileable seamless pixel art texture, terrazzo brass inlay, distinctive repeatable motif"],
-   ["Reclaimed parquet","tileable seamless pixel art texture, reclaimed parquet, distinctive repeatable motif"],
-   ["Herringbone wood floor","tileable seamless pixel art texture, herringbone wood floor, distinctive repeatable motif"],
-   ["End-grain wood blocks","tileable seamless pixel art texture, end-grain wood blocks, distinctive repeatable motif"],
-   ["Worn corkboard","tileable seamless pixel art texture, worn corkboard, distinctive repeatable motif"],
-   ["Cork insulation granules","tileable seamless pixel art texture, cork insulation granules, distinctive repeatable motif"],
-   ["Glass block wall","tileable seamless pixel art texture, glass block wall, distinctive repeatable motif"],
-   ["Wire glass safety pane","tileable seamless pixel art texture, wire glass safety pane, distinctive repeatable motif"],
-   ["Lead came stained glass","tileable seamless pixel art texture, lead came stained glass, distinctive repeatable motif"],
-   ["Concrete aggregate cut","tileable seamless pixel art texture, concrete aggregate cut, distinctive repeatable motif"],
-   ["Exposed rebar concrete","tileable seamless pixel art texture, exposed rebar concrete, distinctive repeatable motif"],
-   ["Precast panel joints","tileable seamless pixel art texture, precast panel joints, distinctive repeatable motif"],
-   ["Expansion joint rubber","tileable seamless pixel art texture, expansion joint rubber, distinctive repeatable motif"],
-   ["Roof membrane seams","tileable seamless pixel art texture, roof membrane seams, distinctive repeatable motif"],
-   ["Standing seam roof","tileable seamless pixel art texture, standing seam roof, distinctive repeatable motif"],
-   ["Copper roof shingles","tileable seamless pixel art texture, copper roof shingles, distinctive repeatable motif"],
-   ["Slate roof courses","tileable seamless pixel art texture, slate roof courses, distinctive repeatable motif"],
-   ["Weathered cedar shingles","tileable seamless pixel art texture, weathered cedar shingles, distinctive repeatable motif"],
-   ["Timber end grain","tileable seamless pixel art texture, timber end grain, distinctive repeatable motif"],
-   ["Wood veneer curl","tileable seamless pixel art texture, wood veneer curl, distinctive repeatable motif"],
-   ["Painted brick flake","tileable seamless pixel art texture, painted brick flake, distinctive repeatable motif"],
-   ["Salt-damaged masonry","tileable seamless pixel art texture, salt-damaged masonry, distinctive repeatable motif"],
-   ["Efflorescent basement wall","tileable seamless pixel art texture, efflorescent basement wall, distinctive repeatable motif"],
-   ["Old ceramic grout","tileable seamless pixel art texture, old ceramic grout, distinctive repeatable motif"],
-   ["Hex bathroom tile","tileable seamless pixel art texture, hex bathroom tile, distinctive repeatable motif"],
-   ["Subway tile glaze","tileable seamless pixel art texture, subway tile glaze, distinctive repeatable motif"],
-   ["Pebble shower floor","tileable seamless pixel art texture, pebble shower floor, distinctive repeatable motif"],
-   ["Rubber gym flooring","tileable seamless pixel art texture, rubber gym flooring, distinctive repeatable motif"],
-   ["Gym mat diamonds","tileable seamless pixel art texture, gym mat diamonds, distinctive repeatable motif"],
-   ["Acoustic ceiling tile","tileable seamless pixel art texture, acoustic ceiling tile, distinctive repeatable motif"],
-   ["Suspended ceiling grid","tileable seamless pixel art texture, suspended ceiling grid, distinctive repeatable motif"],
-   ["Raised computer floor","tileable seamless pixel art texture, raised computer floor, distinctive repeatable motif"],
-   ["Cable floor hatch","tileable seamless pixel art texture, cable floor hatch, distinctive repeatable motif"],
-   ["Elevator button panel","tileable seamless pixel art texture, elevator button panel, distinctive repeatable motif"]
+   ["Acoustic foam pyramids","acoustic foam pyramids"],
+   ["Perforated acoustic wood","perforated acoustic wood"],
+   ["Bamboo wall mat","bamboo wall mat"],
+   ["Rammed earth layers","rammed earth layers"],
+   ["Adobe brick weathering","adobe brick weathering"],
+   ["Limewash brush strokes","limewash brush strokes"],
+   ["Terrazzo brass inlay","terrazzo brass inlay"],
+   ["Reclaimed parquet","reclaimed parquet"],
+   ["Herringbone wood floor","herringbone wood floor"],
+   ["End-grain wood blocks","end-grain wood blocks"],
+   ["Worn corkboard","worn corkboard"],
+   ["Cork insulation granules","cork insulation granules"],
+   ["Glass block wall","glass block wall"],
+   ["Wire glass safety pane","wire glass safety pane"],
+   ["Lead came stained glass","lead came stained glass"],
+   ["Concrete aggregate cut","concrete aggregate cut"],
+   ["Exposed rebar concrete","exposed rebar concrete"],
+   ["Precast panel joints","precast panel joints"],
+   ["Expansion joint rubber","expansion joint rubber"],
+   ["Roof membrane seams","roof membrane seams"],
+   ["Standing seam roof","standing seam roof"],
+   ["Copper roof shingles","copper roof shingles"],
+   ["Slate roof courses","slate roof courses"],
+   ["Weathered cedar shingles","weathered cedar shingles"],
+   ["Timber end grain","timber end grain"],
+   ["Wood veneer curl","wood veneer curl"],
+   ["Painted brick flake","painted brick flake"],
+   ["Salt-damaged masonry","salt-damaged masonry"],
+   ["Efflorescent basement wall","efflorescent basement wall"],
+   ["Old ceramic grout","old ceramic grout"],
+   ["Hex bathroom tile","hex bathroom tile"],
+   ["Subway tile glaze","subway tile glaze"],
+   ["Pebble shower floor","pebble shower floor"],
+   ["Rubber gym flooring","rubber gym flooring"],
+   ["Gym mat diamonds","gym mat diamonds"],
+   ["Acoustic ceiling tile","acoustic ceiling tile"],
+   ["Suspended ceiling grid","suspended ceiling grid"],
+   ["Raised computer floor","raised computer floor"],
+   ["Cable floor hatch","cable floor hatch"],
+   ["Elevator button panel","elevator button panel"]
   ]],
   ["TOOLS, WORKSHOPS & MAKER MATERIALS",[
-   ["Workbench scarred plywood","tileable seamless pixel art texture, workbench scarred plywood, distinctive repeatable motif"],
-   ["Workbench cutting mat","tileable seamless pixel art texture, workbench cutting mat, distinctive repeatable motif"],
-   ["Soldering mat grid","tileable seamless pixel art texture, soldering mat grid, distinctive repeatable motif"],
-   ["Breadboard contact holes","tileable seamless pixel art texture, breadboard contact holes, distinctive repeatable motif"],
-   ["Perfboard copper pads","tileable seamless pixel art texture, perfboard copper pads, distinctive repeatable motif"],
-   ["Laser-cut plywood edge","tileable seamless pixel art texture, laser-cut plywood edge, distinctive repeatable motif"],
-   ["3D printed layer lines","tileable seamless pixel art texture, 3d printed layer lines, distinctive repeatable motif"],
-   ["Resin print support scars","tileable seamless pixel art texture, resin print support scars, distinctive repeatable motif"],
-   ["FDM infill honeycomb","tileable seamless pixel art texture, fdm infill honeycomb, distinctive repeatable motif"],
-   ["Filament spool winding","tileable seamless pixel art texture, filament spool winding, distinctive repeatable motif"],
-   ["Sandblasted aluminum","tileable seamless pixel art texture, sandblasted aluminum, distinctive repeatable motif"],
-   ["Bead blasted steel","tileable seamless pixel art texture, bead blasted steel, distinctive repeatable motif"],
-   ["Hand-filed metal","tileable seamless pixel art texture, hand-filed metal, distinctive repeatable motif"],
-   ["Hammered copper dimples","tileable seamless pixel art texture, hammered copper dimples, distinctive repeatable motif"],
-   ["Anvil impact marks","tileable seamless pixel art texture, anvil impact marks, distinctive repeatable motif"],
-   ["Weld bead ripples","tileable seamless pixel art texture, weld bead ripples, distinctive repeatable motif"],
-   ["Grinding wheel scratches","tileable seamless pixel art texture, grinding wheel scratches, distinctive repeatable motif"],
-   ["Drill bit spiral flutes","tileable seamless pixel art texture, drill bit spiral flutes, distinctive repeatable motif"],
-   ["Saw kerf timber","tileable seamless pixel art texture, saw kerf timber, distinctive repeatable motif"],
-   ["Chisel cut wood","tileable seamless pixel art texture, chisel cut wood, distinctive repeatable motif"],
-   ["Plane shavings","tileable seamless pixel art texture, plane shavings, distinctive repeatable motif"],
-   ["Sanding swirl marks","tileable seamless pixel art texture, sanding swirl marks, distinctive repeatable motif"],
-   ["Masking tape residue","tileable seamless pixel art texture, masking tape residue, distinctive repeatable motif"],
-   ["Spray paint overspray","tileable seamless pixel art texture, spray paint overspray, distinctive repeatable motif"],
-   ["Powder coat orange peel","tileable seamless pixel art texture, powder coat orange peel, distinctive repeatable motif"],
-   ["Tool handle knurling","tileable seamless pixel art texture, tool handle knurling, distinctive repeatable motif"],
-   ["Rubber grip stipple","tileable seamless pixel art texture, rubber grip stipple, distinctive repeatable motif"],
-   ["Ratcheting gear teeth","tileable seamless pixel art texture, ratcheting gear teeth, distinctive repeatable motif"],
-   ["Wrench forged steel","tileable seamless pixel art texture, wrench forged steel, distinctive repeatable motif"],
-   ["Chain link wear","tileable seamless pixel art texture, chain link wear, distinctive repeatable motif"],
-   ["Rope fiber twist","tileable seamless pixel art texture, rope fiber twist, distinctive repeatable motif"],
-   ["Paracord weave","tileable seamless pixel art texture, paracord weave, distinctive repeatable motif"],
-   ["Sewn canvas seam","tileable seamless pixel art texture, sewn canvas seam, distinctive repeatable motif"],
-   ["Stitching holes leather","tileable seamless pixel art texture, stitching holes leather, distinctive repeatable motif"],
-   ["Velcro hook field","tileable seamless pixel art texture, velcro hook field, distinctive repeatable motif"],
-   ["Foam cut cells","tileable seamless pixel art texture, foam cut cells, distinctive repeatable motif"],
-   ["Packing paper crumple","tileable seamless pixel art texture, packing paper crumple, distinctive repeatable motif"],
-   ["Cardboard corrugation edge","tileable seamless pixel art texture, cardboard corrugation edge, distinctive repeatable motif"],
-   ["Shipping label adhesive","tileable seamless pixel art texture, shipping label adhesive, distinctive repeatable motif"],
-   ["Crate stencil paint","tileable seamless pixel art texture, crate stencil paint, distinctive repeatable motif"]
+   ["Workbench scarred plywood","workbench scarred plywood"],
+   ["Workbench cutting mat","workbench cutting mat"],
+   ["Soldering mat grid","soldering mat grid"],
+   ["Breadboard contact holes","breadboard contact holes"],
+   ["Perfboard copper pads","perfboard copper pads"],
+   ["Laser-cut plywood edge","laser-cut plywood edge"],
+   ["3D printed layer lines","3d printed layer lines"],
+   ["Resin print support scars","resin print support scars"],
+   ["FDM infill honeycomb","fdm infill honeycomb"],
+   ["Filament spool winding","filament spool winding"],
+   ["Sandblasted aluminum","sandblasted aluminum"],
+   ["Bead blasted steel","bead blasted steel"],
+   ["Hand-filed metal","hand-filed metal"],
+   ["Hammered copper dimples","hammered copper dimples"],
+   ["Anvil impact marks","anvil impact marks"],
+   ["Weld bead ripples","weld bead ripples"],
+   ["Grinding wheel scratches","grinding wheel scratches"],
+   ["Drill bit spiral flutes","drill bit spiral flutes"],
+   ["Saw kerf timber","saw kerf timber"],
+   ["Chisel cut wood","chisel cut wood"],
+   ["Plane shavings","plane shavings"],
+   ["Sanding swirl marks","sanding swirl marks"],
+   ["Masking tape residue","masking tape residue"],
+   ["Spray paint overspray","spray paint overspray"],
+   ["Powder coat orange peel","powder coat orange peel"],
+   ["Tool handle knurling","tool handle knurling"],
+   ["Rubber grip stipple","rubber grip stipple"],
+   ["Ratcheting gear teeth","ratcheting gear teeth"],
+   ["Wrench forged steel","wrench forged steel"],
+   ["Chain link wear","chain link wear"],
+   ["Rope fiber twist","rope fiber twist"],
+   ["Paracord weave","paracord weave"],
+   ["Sewn canvas seam","sewn canvas seam"],
+   ["Stitching holes leather","stitching holes leather"],
+   ["Velcro hook field","velcro hook field"],
+   ["Foam cut cells","foam cut cells"],
+   ["Packing paper crumple","packing paper crumple"],
+   ["Cardboard corrugation edge","cardboard corrugation edge"],
+   ["Shipping label adhesive","shipping label adhesive"],
+   ["Crate stencil paint","crate stencil paint"]
   ]],
   ["SPACE, PLANET & EXTREME WEATHER",[
-   ["Venus sulfur haze ground","tileable seamless pixel art texture, venus sulfur haze ground, distinctive repeatable motif"],
-   ["Mercury impact dust","tileable seamless pixel art texture, mercury impact dust, distinctive repeatable motif"],
-   ["Titan hydrocarbon ice","tileable seamless pixel art texture, titan hydrocarbon ice, distinctive repeatable motif"],
-   ["Io sulfur plains","tileable seamless pixel art texture, io sulfur plains, distinctive repeatable motif"],
-   ["Enceladus ice fractures","tileable seamless pixel art texture, enceladus ice fractures, distinctive repeatable motif"],
-   ["Ganymede dark terrain","tileable seamless pixel art texture, ganymede dark terrain, distinctive repeatable motif"],
-   ["Phobos regolith","tileable seamless pixel art texture, phobos regolith, distinctive repeatable motif"],
-   ["Asteroid breccia","tileable seamless pixel art texture, asteroid breccia, distinctive repeatable motif"],
-   ["Comet sublimation pits","tileable seamless pixel art texture, comet sublimation pits, distinctive repeatable motif"],
-   ["Solar flare corona","tileable seamless pixel art texture, solar flare corona, distinctive repeatable motif"],
-   ["Aurora curtain bands","tileable seamless pixel art texture, aurora curtain bands, distinctive repeatable motif"],
-   ["Magnetosphere flux lines","tileable seamless pixel art texture, magnetosphere flux lines, distinctive repeatable motif"],
-   ["Cosmic ray scorch","tileable seamless pixel art texture, cosmic ray scorch, distinctive repeatable motif"],
-   ["Space debris impact","tileable seamless pixel art texture, space debris impact, distinctive repeatable motif"],
-   ["Radiation pitted hull","tileable seamless pixel art texture, radiation pitted hull, distinctive repeatable motif"],
-   ["Cryovolcano deposits","tileable seamless pixel art texture, cryovolcano deposits, distinctive repeatable motif"],
-   ["Methane lake shore","tileable seamless pixel art texture, methane lake shore, distinctive repeatable motif"],
-   ["Frozen methane cracks","tileable seamless pixel art texture, frozen methane cracks, distinctive repeatable motif"],
-   ["Salt flat polygons","tileable seamless pixel art texture, salt flat polygons, distinctive repeatable motif"],
-   ["Permafrost wedge ice","tileable seamless pixel art texture, permafrost wedge ice, distinctive repeatable motif"],
-   ["Glacial moraine gravel","tileable seamless pixel art texture, glacial moraine gravel, distinctive repeatable motif"],
-   ["Wind-carved sandstone","tileable seamless pixel art texture, wind-carved sandstone, distinctive repeatable motif"],
-   ["Desert varnish streaks","tileable seamless pixel art texture, desert varnish streaks, distinctive repeatable motif"],
-   ["Dust devil spiral tracks","tileable seamless pixel art texture, dust devil spiral tracks, distinctive repeatable motif"],
-   ["Tidal mud cracks","tileable seamless pixel art texture, tidal mud cracks, distinctive repeatable motif"],
-   ["Flood basalt columns","tileable seamless pixel art texture, flood basalt columns, distinctive repeatable motif"],
-   ["Volcanic bomb surface","tileable seamless pixel art texture, volcanic bomb surface, distinctive repeatable motif"],
-   ["Pillow lava pillows","tileable seamless pixel art texture, pillow lava pillows, distinctive repeatable motif"],
-   ["Pumice bubble field","tileable seamless pixel art texture, pumice bubble field, distinctive repeatable motif"],
-   ["Obsidian flow bands","tileable seamless pixel art texture, obsidian flow bands, distinctive repeatable motif"],
-   ["Fumarole mineral crust","tileable seamless pixel art texture, fumarole mineral crust, distinctive repeatable motif"],
-   ["Acid lake shoreline","tileable seamless pixel art texture, acid lake shoreline, distinctive repeatable motif"],
-   ["Sulfur crystal beds","tileable seamless pixel art texture, sulfur crystal beds, distinctive repeatable motif"],
-   ["Meteorite fusion crust","tileable seamless pixel art texture, meteorite fusion crust, distinctive repeatable motif"],
-   ["Lunar bootprint dust","tileable seamless pixel art texture, lunar bootprint dust, distinctive repeatable motif"],
-   ["Mars rover wheel tracks","tileable seamless pixel art texture, mars rover wheel tracks, distinctive repeatable motif"],
-   ["Space station condensation","tileable seamless pixel art texture, space station condensation, distinctive repeatable motif"],
-   ["Microgravity droplet rings","tileable seamless pixel art texture, microgravity droplet rings, distinctive repeatable motif"],
-   ["Solar sail weave","tileable seamless pixel art texture, solar sail weave, distinctive repeatable motif"],
-   ["Planetary ring ice chunks","tileable seamless pixel art texture, planetary ring ice chunks, distinctive repeatable motif"]
+   ["Venus sulfur haze ground","venus sulfur haze ground"],
+   ["Mercury impact dust","mercury impact dust"],
+   ["Titan hydrocarbon ice","titan hydrocarbon ice"],
+   ["Io sulfur plains","io sulfur plains"],
+   ["Enceladus ice fractures","enceladus ice fractures"],
+   ["Ganymede dark terrain","ganymede dark terrain"],
+   ["Phobos regolith","phobos regolith"],
+   ["Asteroid breccia","asteroid breccia"],
+   ["Comet sublimation pits","comet sublimation pits"],
+   ["Solar flare corona","solar flare corona"],
+   ["Aurora curtain bands","aurora curtain bands"],
+   ["Magnetosphere flux lines","magnetosphere flux lines"],
+   ["Cosmic ray scorch","cosmic ray scorch"],
+   ["Space debris impact","space debris impact"],
+   ["Radiation pitted hull","radiation pitted hull"],
+   ["Cryovolcano deposits","cryovolcano deposits"],
+   ["Methane lake shore","methane lake shore"],
+   ["Frozen methane cracks","frozen methane cracks"],
+   ["Salt flat polygons","salt flat polygons"],
+   ["Permafrost wedge ice","permafrost wedge ice"],
+   ["Glacial moraine gravel","glacial moraine gravel"],
+   ["Wind-carved sandstone","wind-carved sandstone"],
+   ["Desert varnish streaks","desert varnish streaks"],
+   ["Dust devil spiral tracks","dust devil spiral tracks"],
+   ["Tidal mud cracks","tidal mud cracks"],
+   ["Flood basalt columns","flood basalt columns"],
+   ["Volcanic bomb surface","volcanic bomb surface"],
+   ["Pillow lava pillows","pillow lava pillows"],
+   ["Pumice bubble field","pumice bubble field"],
+   ["Obsidian flow bands","obsidian flow bands"],
+   ["Fumarole mineral crust","fumarole mineral crust"],
+   ["Acid lake shoreline","acid lake shoreline"],
+   ["Sulfur crystal beds","sulfur crystal beds"],
+   ["Meteorite fusion crust","meteorite fusion crust"],
+   ["Lunar bootprint dust","lunar bootprint dust"],
+   ["Mars rover wheel tracks","mars rover wheel tracks"],
+   ["Space station condensation","space station condensation"],
+   ["Microgravity droplet rings","microgravity droplet rings"],
+   ["Solar sail weave","solar sail weave"],
+   ["Planetary ring ice chunks","planetary ring ice chunks"]
   ]],
   ["ABSTRACT, GRAPHIC & UI BACKGROUNDS",[
-   ["Topographic contour map","tileable seamless pixel art texture, topographic contour map, distinctive repeatable motif"],
-   ["Bathymetric depth lines","tileable seamless pixel art texture, bathymetric depth lines, distinctive repeatable motif"],
-   ["Seismic waveform trace","tileable seamless pixel art texture, seismic waveform trace, distinctive repeatable motif"],
-   ["Circuit schematic backdrop","tileable seamless pixel art texture, circuit schematic backdrop, distinctive repeatable motif"],
-   ["Blueprint dimension marks","tileable seamless pixel art texture, blueprint dimension marks, distinctive repeatable motif"],
-   ["Architectural hatch symbols","tileable seamless pixel art texture, architectural hatch symbols, distinctive repeatable motif"],
-   ["Isometric grid paper","tileable seamless pixel art texture, isometric grid paper, distinctive repeatable motif"],
-   ["Graph paper worn","tileable seamless pixel art texture, graph paper worn, distinctive repeatable motif"],
-   ["Notebook ruled paper","tileable seamless pixel art texture, notebook ruled paper, distinctive repeatable motif"],
-   ["Ledger paper fibers","tileable seamless pixel art texture, ledger paper fibers, distinctive repeatable motif"],
-   ["Carbon copy ghosting","tileable seamless pixel art texture, carbon copy ghosting, distinctive repeatable motif"],
-   ["Fax noise bands","tileable seamless pixel art texture, fax noise bands, distinctive repeatable motif"],
-   ["Dot matrix printer","tileable seamless pixel art texture, dot matrix printer, distinctive repeatable motif"],
-   ["Thermal label stripes","tileable seamless pixel art texture, thermal label stripes, distinctive repeatable motif"],
-   ["Barcode field pattern","tileable seamless pixel art texture, barcode field pattern, distinctive repeatable motif"],
-   ["QR-like pixel mosaic","tileable seamless pixel art texture, qr-like pixel mosaic, distinctive repeatable motif"],
-   ["Crosshair calibration grid","tileable seamless pixel art texture, crosshair calibration grid, distinctive repeatable motif"],
-   ["Optical calibration dots","tileable seamless pixel art texture, optical calibration dots, distinctive repeatable motif"],
-   ["Color checker patches","tileable seamless pixel art texture, color checker patches, distinctive repeatable motif"],
-   ["Retro console menu grid","tileable seamless pixel art texture, retro console menu grid, distinctive repeatable motif"],
-   ["Arcade bezel stipple","tileable seamless pixel art texture, arcade bezel stipple, distinctive repeatable motif"],
-   ["Synthwave horizon grid","tileable seamless pixel art texture, synthwave horizon grid, distinctive repeatable motif"],
-   ["Memphis geometry pattern","tileable seamless pixel art texture, memphis geometry pattern, distinctive repeatable motif"],
-   ["Op art zigzag","tileable seamless pixel art texture, op art zigzag, distinctive repeatable motif"],
-   ["Op art spiral tiles","tileable seamless pixel art texture, op art spiral tiles, distinctive repeatable motif"],
-   ["Bauhaus circle blocks","tileable seamless pixel art texture, bauhaus circle blocks, distinctive repeatable motif"],
-   ["Constructivist diagonal blocks","tileable seamless pixel art texture, constructivist diagonal blocks, distinctive repeatable motif"],
-   ["Art nouveau tendrils","tileable seamless pixel art texture, art nouveau tendrils, distinctive repeatable motif"],
-   ["Art deco fan repeat","tileable seamless pixel art texture, art deco fan repeat, distinctive repeatable motif"],
-   ["Kintsugi crack lines","tileable seamless pixel art texture, kintsugi crack lines, distinctive repeatable motif"],
-   ["Japanese seigaiha waves","tileable seamless pixel art texture, japanese seigaiha waves, distinctive repeatable motif"],
-   ["Asanoha hemp leaf geometry","tileable seamless pixel art texture, asanoha hemp leaf geometry, distinctive repeatable motif"],
-   ["Kagome basket weave","tileable seamless pixel art texture, kagome basket weave, distinctive repeatable motif"],
-   ["Greek key border repeat","tileable seamless pixel art texture, greek key border repeat, distinctive repeatable motif"],
-   ["Celtic knot repeat","tileable seamless pixel art texture, celtic knot repeat, distinctive repeatable motif"],
-   ["Mayan step fret","tileable seamless pixel art texture, mayan step fret, distinctive repeatable motif"],
-   ["Gothic tracery repeat","tileable seamless pixel art texture, gothic tracery repeat, distinctive repeatable motif"],
-   ["Islamic star tessellation","tileable seamless pixel art texture, islamic star tessellation, distinctive repeatable motif"],
-   ["Moroccan zellige","tileable seamless pixel art texture, moroccan zellige, distinctive repeatable motif"],
-   ["Persian carpet medallion","tileable seamless pixel art texture, persian carpet medallion, distinctive repeatable motif"]
+   ["Topographic contour map","topographic contour map"],
+   ["Bathymetric depth lines","bathymetric depth lines"],
+   ["Seismic waveform trace","seismic waveform trace"],
+   ["Circuit schematic backdrop","circuit schematic backdrop"],
+   ["Blueprint dimension marks","blueprint dimension marks"],
+   ["Architectural hatch symbols","architectural hatch symbols"],
+   ["Isometric grid paper","isometric grid paper"],
+   ["Graph paper worn","graph paper worn"],
+   ["Notebook ruled paper","notebook ruled paper"],
+   ["Ledger paper fibers","ledger paper fibers"],
+   ["Carbon copy ghosting","carbon copy ghosting"],
+   ["Fax noise bands","fax noise bands"],
+   ["Dot matrix printer","dot matrix printer"],
+   ["Thermal label stripes","thermal label stripes"],
+   ["Barcode field pattern","barcode field pattern"],
+   ["QR-like pixel mosaic","qr-like pixel mosaic"],
+   ["Crosshair calibration grid","crosshair calibration grid"],
+   ["Optical calibration dots","optical calibration dots"],
+   ["Color checker patches","color checker patches"],
+   ["Retro console menu grid","retro console menu grid"],
+   ["Arcade bezel stipple","arcade bezel stipple"],
+   ["Synthwave horizon grid","synthwave horizon grid"],
+   ["Memphis geometry pattern","memphis geometry pattern"],
+   ["Op art zigzag","op art zigzag"],
+   ["Op art spiral tiles","op art spiral tiles"],
+   ["Bauhaus circle blocks","bauhaus circle blocks"],
+   ["Constructivist diagonal blocks","constructivist diagonal blocks"],
+   ["Art nouveau tendrils","art nouveau tendrils"],
+   ["Art deco fan repeat","art deco fan repeat"],
+   ["Kintsugi crack lines","kintsugi crack lines"],
+   ["Japanese seigaiha waves","japanese seigaiha waves"],
+   ["Asanoha hemp leaf geometry","asanoha hemp leaf geometry"],
+   ["Kagome basket weave","kagome basket weave"],
+   ["Greek key border repeat","greek key border repeat"],
+   ["Celtic knot repeat","celtic knot repeat"],
+   ["Mayan step fret","mayan step fret"],
+   ["Gothic tracery repeat","gothic tracery repeat"],
+   ["Islamic star tessellation","islamic star tessellation"],
+   ["Moroccan zellige","moroccan zellige"],
+   ["Persian carpet medallion","persian carpet medallion"]
   ]],
   ["SMALL DETAILS FOR GAME SPRITES",[
-   ["Rust ring around bolt","tileable seamless pixel art texture, rust ring around bolt, distinctive repeatable motif"],
-   ["Paint chips around handle","tileable seamless pixel art texture, paint chips around handle, distinctive repeatable motif"],
-   ["Finger grease on switch","tileable seamless pixel art texture, finger grease on switch, distinctive repeatable motif"],
-   ["Scratched weapon bluing","tileable seamless pixel art texture, scratched weapon bluing, distinctive repeatable motif"],
-   ["Gunmetal stipple","tileable seamless pixel art texture, gunmetal stipple, distinctive repeatable motif"],
-   ["Wood stock checkering","tileable seamless pixel art texture, wood stock checkering, distinctive repeatable motif"],
-   ["Weapon polymer stipple","tileable seamless pixel art texture, weapon polymer stipple, distinctive repeatable motif"],
-   ["Ammo casing brass","tileable seamless pixel art texture, ammo casing brass, distinctive repeatable motif"],
-   ["Spent shell casing","tileable seamless pixel art texture, spent shell casing, distinctive repeatable motif"],
-   ["Bullet impact crater","tileable seamless pixel art texture, bullet impact crater, distinctive repeatable motif"],
-   ["Scuffed boot leather","tileable seamless pixel art texture, scuffed boot leather, distinctive repeatable motif"],
-   ["Knee pad abrasion","tileable seamless pixel art texture, knee pad abrasion, distinctive repeatable motif"],
-   ["Backpack nylon weave","tileable seamless pixel art texture, backpack nylon weave, distinctive repeatable motif"],
-   ["Backpack zipper teeth","tileable seamless pixel art texture, backpack zipper teeth, distinctive repeatable motif"],
-   ["Tent ripstop grid","tileable seamless pixel art texture, tent ripstop grid, distinctive repeatable motif"],
-   ["Sleeping bag quilting","tileable seamless pixel art texture, sleeping bag quilting, distinctive repeatable motif"],
-   ["Rucksack canvas patches","tileable seamless pixel art texture, rucksack canvas patches, distinctive repeatable motif"],
-   ["Worn glove fingertips","tileable seamless pixel art texture, worn glove fingertips, distinctive repeatable motif"],
-   ["Helmet scrape marks","tileable seamless pixel art texture, helmet scrape marks, distinctive repeatable motif"],
-   ["Visor reflection flecks","tileable seamless pixel art texture, visor reflection flecks, distinctive repeatable motif"],
-   ["Gas mask rubber folds","tileable seamless pixel art texture, gas mask rubber folds, distinctive repeatable motif"],
-   ["Breathing filter pleats","tileable seamless pixel art texture, breathing filter pleats, distinctive repeatable motif"],
-   ["Bandage weave","tileable seamless pixel art texture, bandage weave, distinctive repeatable motif"],
-   ["Medical gauze mesh","tileable seamless pixel art texture, medical gauze mesh, distinctive repeatable motif"],
-   ["Pill blister foil","tileable seamless pixel art texture, pill blister foil, distinctive repeatable motif"],
-   ["Plastic vial ridges","tileable seamless pixel art texture, plastic vial ridges, distinctive repeatable motif"],
-   ["Glass ampoule shine","tileable seamless pixel art texture, glass ampoule shine, distinctive repeatable motif"],
-   ["Syringe barrel markings","tileable seamless pixel art texture, syringe barrel markings, distinctive repeatable motif"],
-   ["Tool pouch canvas","tileable seamless pixel art texture, tool pouch canvas, distinctive repeatable motif"],
-   ["Radio speaker perforations","tileable seamless pixel art texture, radio speaker perforations, distinctive repeatable motif"],
-   ["Walkie-talkie rubber buttons","tileable seamless pixel art texture, walkie-talkie rubber buttons, distinctive repeatable motif"],
-   ["Wristwatch face grid","tileable seamless pixel art texture, wristwatch face grid, distinctive repeatable motif"],
-   ["Old key scratches","tileable seamless pixel art texture, old key scratches, distinctive repeatable motif"],
-   ["Keyring metal wear","tileable seamless pixel art texture, keyring metal wear, distinctive repeatable motif"],
-   ["Coin edge reeding","tileable seamless pixel art texture, coin edge reeding, distinctive repeatable motif"],
-   ["Paper map fold creases","tileable seamless pixel art texture, paper map fold creases, distinctive repeatable motif"],
-   ["Passport security guilloche","tileable seamless pixel art texture, passport security guilloche, distinctive repeatable motif"],
-   ["ID card hologram flecks","tileable seamless pixel art texture, id card hologram flecks, distinctive repeatable motif"],
-   ["Security seal fibers","tileable seamless pixel art texture, security seal fibers, distinctive repeatable motif"],
-   ["Wax stamp cracking","tileable seamless pixel art texture, wax stamp cracking, distinctive repeatable motif"]
+   ["Rust ring around bolt","rust ring around bolt"],
+   ["Paint chips around handle","paint chips around handle"],
+   ["Finger grease on switch","finger grease on switch"],
+   ["Scratched weapon bluing","scratched weapon bluing"],
+   ["Gunmetal stipple","gunmetal stipple"],
+   ["Wood stock checkering","wood stock checkering"],
+   ["Weapon polymer stipple","weapon polymer stipple"],
+   ["Ammo casing brass","ammo casing brass"],
+   ["Spent shell casing","spent shell casing"],
+   ["Bullet impact crater","bullet impact crater"],
+   ["Scuffed boot leather","scuffed boot leather"],
+   ["Knee pad abrasion","knee pad abrasion"],
+   ["Backpack nylon weave","backpack nylon weave"],
+   ["Backpack zipper teeth","backpack zipper teeth"],
+   ["Tent ripstop grid","tent ripstop grid"],
+   ["Sleeping bag quilting","sleeping bag quilting"],
+   ["Rucksack canvas patches","rucksack canvas patches"],
+   ["Worn glove fingertips","worn glove fingertips"],
+   ["Helmet scrape marks","helmet scrape marks"],
+   ["Visor reflection flecks","visor reflection flecks"],
+   ["Gas mask rubber folds","gas mask rubber folds"],
+   ["Breathing filter pleats","breathing filter pleats"],
+   ["Bandage weave","bandage weave"],
+   ["Medical gauze mesh","medical gauze mesh"],
+   ["Pill blister foil","pill blister foil"],
+   ["Plastic vial ridges","plastic vial ridges"],
+   ["Glass ampoule shine","glass ampoule shine"],
+   ["Syringe barrel markings","syringe barrel markings"],
+   ["Tool pouch canvas","tool pouch canvas"],
+   ["Radio speaker perforations","radio speaker perforations"],
+   ["Walkie-talkie rubber buttons","walkie-talkie rubber buttons"],
+   ["Wristwatch face grid","wristwatch face grid"],
+   ["Old key scratches","old key scratches"],
+   ["Keyring metal wear","keyring metal wear"],
+   ["Coin edge reeding","coin edge reeding"],
+   ["Paper map fold creases","paper map fold creases"],
+   ["Passport security guilloche","passport security guilloche"],
+   ["ID card hologram flecks","id card hologram flecks"],
+   ["Security seal fibers","security seal fibers"],
+   ["Wax stamp cracking","wax stamp cracking"]
   ]],
   ["WATER, LIQUIDS & DEPOSITS",[
-   ["Hard water scale rings","tileable seamless pixel art texture, hard water scale rings, distinctive repeatable motif"],
-   ["Soap scum on tile","tileable seamless pixel art texture, soap scum on tile, distinctive repeatable motif"],
-   ["Bath foam bubbles","tileable seamless pixel art texture, bath foam bubbles, distinctive repeatable motif"],
-   ["Oil droplets on water","tileable seamless pixel art texture, oil droplets on water, distinctive repeatable motif"],
-   ["Rainbow gasoline puddle","tileable seamless pixel art texture, rainbow gasoline puddle, distinctive repeatable motif"],
-   ["Diesel sheen puddle","tileable seamless pixel art texture, diesel sheen puddle, distinctive repeatable motif"],
-   ["Rain ripple rings","tileable seamless pixel art texture, rain ripple rings, distinctive repeatable motif"],
-   ["Drip impact crown","tileable seamless pixel art texture, drip impact crown, distinctive repeatable motif"],
-   ["Waterfall foam flecks","tileable seamless pixel art texture, waterfall foam flecks, distinctive repeatable motif"],
-   ["Whitewater turbulence","tileable seamless pixel art texture, whitewater turbulence, distinctive repeatable motif"],
-   ["Estuary sediment bands","tileable seamless pixel art texture, estuary sediment bands, distinctive repeatable motif"],
-   ["River gravel bars","tileable seamless pixel art texture, river gravel bars, distinctive repeatable motif"],
-   ["Tidal pool reflection","tileable seamless pixel art texture, tidal pool reflection, distinctive repeatable motif"],
-   ["Ice melt channels","tileable seamless pixel art texture, ice melt channels, distinctive repeatable motif"],
-   ["Frozen bubble inclusions","tileable seamless pixel art texture, frozen bubble inclusions, distinctive repeatable motif"],
-   ["Lake ice pressure ridges","tileable seamless pixel art texture, lake ice pressure ridges, distinctive repeatable motif"],
-   ["Sea spray salt crystals","tileable seamless pixel art texture, sea spray salt crystals, distinctive repeatable motif"],
-   ["Dried tide line","tileable seamless pixel art texture, dried tide line, distinctive repeatable motif"],
-   ["Evaporated mineral rings","tileable seamless pixel art texture, evaporated mineral rings, distinctive repeatable motif"],
-   ["Rust runoff streaks","tileable seamless pixel art texture, rust runoff streaks, distinctive repeatable motif"],
-   ["Pipe leak mineral trail","tileable seamless pixel art texture, pipe leak mineral trail, distinctive repeatable motif"],
-   ["Condensation rivulets","tileable seamless pixel art texture, condensation rivulets, distinctive repeatable motif"],
-   ["Dew on broad leaf","tileable seamless pixel art texture, dew on broad leaf, distinctive repeatable motif"],
-   ["Frosted spiderweb","tileable seamless pixel art texture, frosted spiderweb, distinctive repeatable motif"],
-   ["Wet soil footprints","tileable seamless pixel art texture, wet soil footprints, distinctive repeatable motif"],
-   ["Mud splash speckles","tileable seamless pixel art texture, mud splash speckles, distinctive repeatable motif"],
-   ["Dried paint puddle","tileable seamless pixel art texture, dried paint puddle, distinctive repeatable motif"],
-   ["Ink bleed in paper","tileable seamless pixel art texture, ink bleed in paper, distinctive repeatable motif"],
-   ["Watercolor pigment blooms","tileable seamless pixel art texture, watercolor pigment blooms, distinctive repeatable motif"],
-   ["Oil paint impasto","tileable seamless pixel art texture, oil paint impasto, distinctive repeatable motif"],
-   ["Resin pour cells","tileable seamless pixel art texture, resin pour cells, distinctive repeatable motif"],
-   ["Epoxy river wood","tileable seamless pixel art texture, epoxy river wood, distinctive repeatable motif"],
-   ["Liquid metal ripples","tileable seamless pixel art texture, liquid metal ripples, distinctive repeatable motif"],
-   ["Mercury bead clusters","tileable seamless pixel art texture, mercury bead clusters, distinctive repeatable motif"],
-   ["Sludge foam scum","tileable seamless pixel art texture, sludge foam scum, distinctive repeatable motif"],
-   ["Industrial coolant rainbow","tileable seamless pixel art texture, industrial coolant rainbow, distinctive repeatable motif"],
-   ["Chemical spill crystals","tileable seamless pixel art texture, chemical spill crystals, distinctive repeatable motif"],
-   ["Acid etch glass","tileable seamless pixel art texture, acid etch glass, distinctive repeatable motif"],
-   ["Lime deposit stalactites","tileable seamless pixel art texture, lime deposit stalactites, distinctive repeatable motif"],
-   ["Brine evaporation crust","tileable seamless pixel art texture, brine evaporation crust, distinctive repeatable motif"],
-   ["Soap bubble film","tileable seamless pixel art texture, soap bubble film, distinctive repeatable motif"]
+   ["Hard water scale rings","hard water scale rings"],
+   ["Soap scum on tile","soap scum on tile"],
+   ["Bath foam bubbles","bath foam bubbles"],
+   ["Oil droplets on water","oil droplets on water"],
+   ["Rainbow gasoline puddle","rainbow gasoline puddle"],
+   ["Diesel sheen puddle","diesel sheen puddle"],
+   ["Rain ripple rings","rain ripple rings"],
+   ["Drip impact crown","drip impact crown"],
+   ["Waterfall foam flecks","waterfall foam flecks"],
+   ["Whitewater turbulence","whitewater turbulence"],
+   ["Estuary sediment bands","estuary sediment bands"],
+   ["River gravel bars","river gravel bars"],
+   ["Tidal pool reflection","tidal pool reflection"],
+   ["Ice melt channels","ice melt channels"],
+   ["Frozen bubble inclusions","frozen bubble inclusions"],
+   ["Lake ice pressure ridges","lake ice pressure ridges"],
+   ["Sea spray salt crystals","sea spray salt crystals"],
+   ["Dried tide line","dried tide line"],
+   ["Evaporated mineral rings","evaporated mineral rings"],
+   ["Rust runoff streaks","rust runoff streaks"],
+   ["Pipe leak mineral trail","pipe leak mineral trail"],
+   ["Condensation rivulets","condensation rivulets"],
+   ["Dew on broad leaf","dew on broad leaf"],
+   ["Frosted spiderweb","frosted spiderweb"],
+   ["Wet soil footprints","wet soil footprints"],
+   ["Mud splash speckles","mud splash speckles"],
+   ["Dried paint puddle","dried paint puddle"],
+   ["Ink bleed in paper","ink bleed in paper"],
+   ["Watercolor pigment blooms","watercolor pigment blooms"],
+   ["Oil paint impasto","oil paint impasto"],
+   ["Resin pour cells","resin pour cells"],
+   ["Epoxy river wood","epoxy river wood"],
+   ["Liquid metal ripples","liquid metal ripples"],
+   ["Mercury bead clusters","mercury bead clusters"],
+   ["Sludge foam scum","sludge foam scum"],
+   ["Industrial coolant rainbow","industrial coolant rainbow"],
+   ["Chemical spill crystals","chemical spill crystals"],
+   ["Acid etch glass","acid etch glass"],
+   ["Lime deposit stalactites","lime deposit stalactites"],
+   ["Brine evaporation crust","brine evaporation crust"],
+   ["Soap bubble film","soap bubble film"]
   ]],
   ["PLANTS, BIOMES & BOTANICAL SURFACES",[
-   ["Succulent wax bloom","tileable seamless pixel art texture, succulent wax bloom, distinctive repeatable motif"],
-   ["Cactus rib skin","tileable seamless pixel art texture, cactus rib skin, distinctive repeatable motif"],
-   ["Agave leaf fibers","tileable seamless pixel art texture, agave leaf fibers, distinctive repeatable motif"],
-   ["Palm bark diamonds","tileable seamless pixel art texture, palm bark diamonds, distinctive repeatable motif"],
-   ["Birch bark curls","tileable seamless pixel art texture, birch bark curls, distinctive repeatable motif"],
-   ["Eucalyptus peeling bark","tileable seamless pixel art texture, eucalyptus peeling bark, distinctive repeatable motif"],
-   ["Pine bark plates","tileable seamless pixel art texture, pine bark plates, distinctive repeatable motif"],
-   ["Cork oak bark","tileable seamless pixel art texture, cork oak bark, distinctive repeatable motif"],
-   ["Willow twig weave","tileable seamless pixel art texture, willow twig weave, distinctive repeatable motif"],
-   ["Root web soil","tileable seamless pixel art texture, root web soil, distinctive repeatable motif"],
-   ["Mangrove root lattice","tileable seamless pixel art texture, mangrove root lattice, distinctive repeatable motif"],
-   ["Lotus leaf microtexture","tileable seamless pixel art texture, lotus leaf microtexture, distinctive repeatable motif"],
-   ["Water lily pad veins","tileable seamless pixel art texture, water lily pad veins, distinctive repeatable motif"],
-   ["Monstera leaf holes","tileable seamless pixel art texture, monstera leaf holes, distinctive repeatable motif"],
-   ["Fern fiddlehead coils","tileable seamless pixel art texture, fern fiddlehead coils, distinctive repeatable motif"],
-   ["Bamboo cross section","tileable seamless pixel art texture, bamboo cross section, distinctive repeatable motif"],
-   ["Reed stem nodes","tileable seamless pixel art texture, reed stem nodes, distinctive repeatable motif"],
-   ["Sugarcane fibers","tileable seamless pixel art texture, sugarcane fibers, distinctive repeatable motif"],
-   ["Wheat husk field","tileable seamless pixel art texture, wheat husk field, distinctive repeatable motif"],
-   ["Corn husk weave","tileable seamless pixel art texture, corn husk weave, distinctive repeatable motif"],
-   ["Sunflower seed head","tileable seamless pixel art texture, sunflower seed head, distinctive repeatable motif"],
-   ["Thistle burr hooks","tileable seamless pixel art texture, thistle burr hooks, distinctive repeatable motif"],
-   ["Burr seed spines","tileable seamless pixel art texture, burr seed spines, distinctive repeatable motif"],
-   ["Dandelion seed parachutes","tileable seamless pixel art texture, dandelion seed parachutes, distinctive repeatable motif"],
-   ["Poppy seed pod pores","tileable seamless pixel art texture, poppy seed pod pores, distinctive repeatable motif"],
-   ["Acorn cap scales","tileable seamless pixel art texture, acorn cap scales, distinctive repeatable motif"],
-   ["Chestnut burr spikes","tileable seamless pixel art texture, chestnut burr spikes, distinctive repeatable motif"],
-   ["Pine needle litter","tileable seamless pixel art texture, pine needle litter, distinctive repeatable motif"],
-   ["Cypress knees bark","tileable seamless pixel art texture, cypress knees bark, distinctive repeatable motif"],
-   ["Fallen blossom carpet","tileable seamless pixel art texture, fallen blossom carpet, distinctive repeatable motif"],
-   ["Rotten fruit skin","tileable seamless pixel art texture, rotten fruit skin, distinctive repeatable motif"],
-   ["Mold bloom on fruit","tileable seamless pixel art texture, mold bloom on fruit, distinctive repeatable motif"],
-   ["Lichen crust orange","tileable seamless pixel art texture, lichen crust orange, distinctive repeatable motif"],
-   ["Desiccated leaf veins","tileable seamless pixel art texture, desiccated leaf veins, distinctive repeatable motif"],
-   ["Pressed flower paper","tileable seamless pixel art texture, pressed flower paper, distinctive repeatable motif"],
-   ["Herbarium specimen paper","tileable seamless pixel art texture, herbarium specimen paper, distinctive repeatable motif"],
-   ["Creeper vine brick","tileable seamless pixel art texture, creeper vine brick, distinctive repeatable motif"],
-   ["Ivy rootlets","tileable seamless pixel art texture, ivy rootlets, distinctive repeatable motif"],
-   ["Bonsai moss soil","tileable seamless pixel art texture, bonsai moss soil, distinctive repeatable motif"],
-   ["Mangrove salt leaves","tileable seamless pixel art texture, mangrove salt leaves, distinctive repeatable motif"]
+   ["Succulent wax bloom","succulent wax bloom"],
+   ["Cactus rib skin","cactus rib skin"],
+   ["Agave leaf fibers","agave leaf fibers"],
+   ["Palm bark diamonds","palm bark diamonds"],
+   ["Birch bark curls","birch bark curls"],
+   ["Eucalyptus peeling bark","eucalyptus peeling bark"],
+   ["Pine bark plates","pine bark plates"],
+   ["Cork oak bark","cork oak bark"],
+   ["Willow twig weave","willow twig weave"],
+   ["Root web soil","root web soil"],
+   ["Mangrove root lattice","mangrove root lattice"],
+   ["Lotus leaf microtexture","lotus leaf microtexture"],
+   ["Water lily pad veins","water lily pad veins"],
+   ["Monstera leaf holes","monstera leaf holes"],
+   ["Fern fiddlehead coils","fern fiddlehead coils"],
+   ["Bamboo cross section","bamboo cross section"],
+   ["Reed stem nodes","reed stem nodes"],
+   ["Sugarcane fibers","sugarcane fibers"],
+   ["Wheat husk field","wheat husk field"],
+   ["Corn husk weave","corn husk weave"],
+   ["Sunflower seed head","sunflower seed head"],
+   ["Thistle burr hooks","thistle burr hooks"],
+   ["Burr seed spines","burr seed spines"],
+   ["Dandelion seed parachutes","dandelion seed parachutes"],
+   ["Poppy seed pod pores","poppy seed pod pores"],
+   ["Acorn cap scales","acorn cap scales"],
+   ["Chestnut burr spikes","chestnut burr spikes"],
+   ["Pine needle litter","pine needle litter"],
+   ["Cypress knees bark","cypress knees bark"],
+   ["Fallen blossom carpet","fallen blossom carpet"],
+   ["Rotten fruit skin","rotten fruit skin"],
+   ["Mold bloom on fruit","mold bloom on fruit"],
+   ["Lichen crust orange","lichen crust orange"],
+   ["Desiccated leaf veins","desiccated leaf veins"],
+   ["Pressed flower paper","pressed flower paper"],
+   ["Herbarium specimen paper","herbarium specimen paper"],
+   ["Creeper vine brick","creeper vine brick"],
+   ["Ivy rootlets","ivy rootlets"],
+   ["Bonsai moss soil","bonsai moss soil"],
+   ["Mangrove salt leaves","mangrove salt leaves"]
   ]]
  ];
  const allTexturePresets=textureCatalog.flatMap(([group,items])=>items.map(([name,prompt])=>({group,name,prompt})));
