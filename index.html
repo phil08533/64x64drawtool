@@ -43,6 +43,20 @@ input[type=file]{display:none}
 #texturePrompt{width:100%;min-height:76px;resize:vertical;background:#fffaf0;border:2px solid var(--ink);border-radius:0;padding:10px;color:var(--ink);font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}
 .texture-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
 .texture-note{font-size:10px;line-height:1.5;color:var(--muted);margin:10px 0 0}
+.layer-list{display:grid;gap:5px;margin-bottom:9px}
+.layer-item{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:7px;border:1px solid var(--ink);padding:5px;background:#e8dfcb}
+.layer-item.selected{outline:2px solid var(--accent);outline-offset:-2px;background:#fff8e8}
+.layer-item button{min-height:30px;padding:4px;box-shadow:none}
+.layer-name{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.layer-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.offset-controls{margin-top:12px;border-top:1px dashed var(--ink);padding-top:10px}
+.offset-fields{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;align-items:end}
+.offset-fields label{font-size:11px;display:grid;gap:4px}
+.offset-fields input{width:100%;min-width:0;background:#fffaf0;border:2px solid var(--ink);border-radius:0;padding:8px;font:inherit}
+.nudge-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:7px}
+.pattern-presets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:8px 0}
+.pattern-presets button{font-size:10px}
+@media(max-width:719px){.offset-fields{grid-template-columns:1fr 1fr auto}}
 </style>
 </head>
 <body>
@@ -52,10 +66,25 @@ input[type=file]{display:none}
  <div class="row"><p class="section-title">Canvas · 64 × 64</p><span id="status" style="font-size:12px;color:var(--muted)">Grid on</span></div>
  <div class="canvas-wrap"><canvas id="view" width="640" height="640" aria-label="64 by 64 pixel drawing canvas"></canvas></div>
  <div class="tools">
-  <button id="pencil" class="active">✎ Pencil</button><button id="eraser">⌫ Eraser</button><button id="fill">▧ Fill</button><button id="eyedrop">◉ Pick color</button>
+  <button id="pencil" class="active">✎ Pencil</button><button id="line">╱ Line</button><button id="eraser">⌫ Eraser</button><button id="fill">▧ Fill</button><button id="eyedrop">◉ Pick color</button>
   <button id="undo">↶ Undo</button><button id="redo">↷ Redo</button><button id="grid" class="active">▦ Grid</button><button id="clear" class="danger">Clear</button>
  </div>
  <p class="hint">Draw with your finger or S Pen. Each stroke paints crisp individual pixels. Grid lines are only a guide and never appear in your PNG.</p>
+</section>
+<section class="panel">
+ <p class="section-title">Layers / stack</p>
+ <div id="layerList" class="layer-list"></div>
+ <div class="layer-actions">
+  <button id="addLayer">＋ New</button><button id="duplicateLayer">Duplicate</button>
+  <button id="copyLayer">Copy layer</button><button id="pasteLayer">Paste layer</button>
+  <button id="deleteLayer" class="danger">Delete</button><button id="toggleLayer">Hide / show</button>
+ </div>
+ <div class="offset-controls">
+  <label class="small" for="layerX">Active layer position (pixels)</label>
+  <div class="offset-fields"><label>X <input id="layerX" type="number" min="-63" max="63" value="0"></label><label>Y <input id="layerY" type="number" min="-63" max="63" value="0"></label><button id="applyOffset">Move</button></div>
+  <div class="nudge-row"><button data-dx="0" data-dy="-1">↑ 1 px</button><button data-dx="-1" data-dy="0">← 1 px</button><button data-dx="1" data-dy="0">→ 1 px</button><button data-dx="0" data-dy="1">↓ 1 px</button></div>
+ </div>
+ <p class="hint">Layers stack from bottom to top. Select a layer to draw on it. Copy/Paste duplicates a layer; move it by coordinates or one pixel at a time. Off-canvas pixels are clipped, not deleted.</p>
 </section>
 <section class="panel">
  <p class="section-title">Color</p><label class="small" for="color">Choose any color</label>
@@ -65,7 +94,8 @@ input[type=file]{display:none}
 <section class="panel">
  <p class="section-title">Local texture generator</p>
  <p class="hint" style="margin-top:-4px">Describe a tiny game texture. Runs entirely in your browser with procedural generation—no account, server, or downloads.</p>
- <textarea id="texturePrompt" placeholder="e.g. mossy stone, rusty metal, blue alien skin, dark wood, sand">mossy stone</textarea>
+ <div class="pattern-presets"><button data-pattern="wood panels">Wood panels</button><button data-pattern="fish wallpaper">Fish wallpaper</button><button data-pattern="brick wall">Brick wall</button><button data-pattern="checker tile">Floor tiles</button><button data-pattern="floral wallpaper">Floral wallpaper</button><button data-pattern="metal panels">Metal panels</button></div>
+ <textarea id="texturePrompt" placeholder="Choose a pattern above or describe one">wood panels</textarea>
  <div class="texture-preview"><canvas id="texturePreview" width="64" height="64" aria-label="Generated 64 by 64 texture preview"></canvas></div>
  <div class="texture-actions"><button id="generateTexture" class="primary">✦ Generate</button><button id="useTexture">Use on canvas</button><button id="downloadTexture">↓ Texture PNG</button><button id="randomTexture">Randomize</button></div>
  <p class="texture-note" id="textureStatus">Enter a material or style, then generate. Try: stone, grass, water, wood, metal, lava, ice, sand, brick, alien, fabric.</p>
@@ -80,11 +110,36 @@ input[type=file]{display:none}
 (()=> {
  const N=64,S=10,view=document.getElementById('view'),ctx=view.getContext('2d',{alpha:false});
  const color=document.getElementById('color'),hex=document.getElementById('hex');
- let pixels=Array(N*N).fill(null),grid=true,tool='pencil',drawing=false,last=-1,undo=[],redo=[];
+ let pixels=Array(N*N).fill(null),grid=true,tool='pencil',drawing=false,last=-1,undo=[],redo=[],lineStart=null,layerClipboard=null;
  const blank=()=>Array(N*N).fill(null);
+ let layers=[{id:1,name:'Layer 1',pixels:blank(),x:0,y:0,visible:true}],activeLayer=1,nextLayerId=2;
+ pixels=layers[0].pixels;
+ const active=()=>layers.find(l=>l.id===activeLayer)||layers[0];
+ function syncLayerUI(){
+  const list=document.getElementById('layerList');list.innerHTML='';
+  [...layers].reverse().forEach(l=>{
+   const row=document.createElement('div');row.className='layer-item'+(l.id===activeLayer?' selected':'');
+   const vis=document.createElement('button');vis.textContent=l.visible?'●':'○';vis.title='Toggle visibility';vis.onclick=()=>{l.visible=!l.visible;syncLayerUI();render();};
+   const name=document.createElement('button');name.className='layer-name';name.textContent=l.name;name.title='Select '+l.name;name.onclick=()=>selectLayer(l.id);
+   const pos=document.createElement('span');pos.style.cssText='font-size:10px;color:var(--muted)';pos.textContent=l.x+','+l.y;
+   row.append(vis,name,pos);list.append(row);
+  });
+  document.getElementById('layerX').value=active().x;document.getElementById('layerY').value=active().y;
+  document.getElementById('pasteLayer').disabled=!layerClipboard;
+ }
+ function selectLayer(id){activeLayer=id;pixels=active().pixels;syncLayerUI();render();}
+ function addLayer(copy=false){
+  const src=active(),l={id:nextLayerId++,name:'Layer '+nextLayerId,pixels:copy?src.pixels.slice():blank(),x:copy?src.x:0,y:copy?src.y:0,visible:true};
+  layers.push(l);activeLayer=l.id;pixels=l.pixels;syncLayerUI();render();
+ }
+ function compositePixels(){
+  const out=blank();
+  for(const l of layers){if(!l.visible)continue;for(let y=0;y<N;y++)for(let x=0;x<N;x++){const xx=x+l.x,yy=y+l.y;if(xx<0||xx>=N||yy<0||yy>=N)continue;const v=l.pixels[y*N+x];if(v)out[yy*N+xx]=v;}}
+  return out;
+ }
  function render(){
-  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,640,640);
-  for(let i=0;i<pixels.length;i++){if(pixels[i]){ctx.fillStyle=pixels[i];ctx.fillRect((i%N)*S,Math.floor(i/N)*S,S,S);}}
+  ctx.clearRect(0,0,640,640);ctx.fillStyle='#ffffff';ctx.fillRect(0,0,640,640);
+  for(const l of layers){if(!l.visible)continue;for(let i=0;i<l.pixels.length;i++){if(l.pixels[i]){const x=i%N+l.x,y=Math.floor(i/N)+l.y;if(x>=0&&x<N&&y>=0&&y<N){ctx.fillStyle=l.pixels[i];ctx.fillRect(x*S,y*S,S,S);}}}}
   if(grid){ctx.beginPath();ctx.strokeStyle='rgba(30,35,50,.22)';ctx.lineWidth=1;for(let i=0;i<=N;i++){let p=i*S+.5;ctx.moveTo(p,0);ctx.lineTo(p,640);ctx.moveTo(0,p);ctx.lineTo(640,p);}ctx.stroke();}
   document.getElementById('undo').disabled=!undo.length;document.getElementById('redo').disabled=!redo.length;
  }
@@ -93,22 +148,33 @@ input[type=file]{display:none}
  function setColor(c){if(/^#[0-9a-f]{6}$/i.test(c)){color.value=c;hex.value=c.toUpperCase();}}
  function setTool(t){tool=t;document.querySelectorAll('.tools button').forEach(b=>b.classList.remove('active'));document.getElementById(t).classList.add('active');}
  function paint(e){let {x,y}=cell(e),i=y*N+x;if(i===last)return;last=i;
-  if(tool==='eyedrop'){if(pixels[i])setColor(pixels[i]);return;}
+  if(tool==='eyedrop'){const composite=compositePixels();if(composite[i])setColor(composite[i]);return;}
   if(tool==='fill'){let old=pixels[i],next=color.value.toUpperCase();if(old===next)return;let stack=[i];while(stack.length){let j=stack.pop();if(j<0||j>=N*N||pixels[j]!==old)continue;pixels[j]=next;let xx=j%N,yy=Math.floor(j/N);if(xx)stack.push(j-1);if(xx<63)stack.push(j+1);if(yy)stack.push(j-N);if(yy<63)stack.push(j+N);}render();setTool('pencil');return;}
   let next=tool==='eraser'?null:color.value.toUpperCase();if(pixels[i]!==next){pixels[i]=next;render();}
  }
- view.addEventListener('pointerdown',e=>{e.preventDefault();view.setPointerCapture(e.pointerId);drawing=true;last=-1;snapshot();paint(e);});
+ view.addEventListener('pointerdown',e=>{e.preventDefault();view.setPointerCapture(e.pointerId);drawing=true;last=-1;snapshot();if(tool==='line'){lineStart=cell(e);return;}paint(e);});
  view.addEventListener('pointermove',e=>{if(drawing){e.preventDefault();paint(e);}});
- function stop(){drawing=false;last=-1;}view.addEventListener('pointerup',stop);view.addEventListener('pointercancel',stop);view.addEventListener('lostpointercapture',stop);
+ function drawLine(a,b){let x0=a.x,y0=a.y,x1=b.x,y1=b.y,dx=Math.abs(x1-x0),sx=x0<x1?1:-1,dy=-Math.abs(y1-y0),sy=y0<y1?1:-1,err=dx+dy;while(true){pixels[y0*N+x0]=color.value.toUpperCase();if(x0===x1&&y0===y1)break;const e2=2*err;if(e2>=dy){err+=dy;x0+=sx;}if(e2<=dx){err+=dx;y0+=sy;}}}
+ function stop(e){if(tool==='line'&&drawing&&lineStart&&e){drawLine(lineStart,cell(e));render();}drawing=false;last=-1;lineStart=null;}
+ view.addEventListener('pointerup',stop);view.addEventListener('pointercancel',()=>{drawing=false;lineStart=null;last=-1;});view.addEventListener('lostpointercapture',()=>{drawing=false;lineStart=null;last=-1;});
  color.addEventListener('input',()=>setColor(color.value));hex.addEventListener('change',()=>{let v=hex.value.trim();if(!v.startsWith('#'))v='#'+v;if(/^#[0-9a-f]{6}$/i.test(v))setColor(v);else hex.value=color.value.toUpperCase();});
- document.getElementById('pencil').onclick=()=>setTool('pencil');document.getElementById('eraser').onclick=()=>setTool('eraser');document.getElementById('fill').onclick=()=>setTool('fill');document.getElementById('eyedrop').onclick=()=>setTool('eyedrop');
+ document.getElementById('pencil').onclick=()=>setTool('pencil');document.getElementById('line').onclick=()=>setTool('line');document.getElementById('eraser').onclick=()=>setTool('eraser');document.getElementById('fill').onclick=()=>setTool('fill');document.getElementById('eyedrop').onclick=()=>setTool('eyedrop');
  document.getElementById('grid').onclick=()=>{grid=!grid;document.getElementById('grid').classList.toggle('active',grid);document.getElementById('status').textContent=grid?'Grid on':'Grid off';render();};
  document.getElementById('undo').onclick=()=>{if(undo.length){redo.push(pixels.slice());pixels=undo.pop();render();}};
  document.getElementById('redo').onclick=()=>{if(redo.length){undo.push(pixels.slice());pixels=redo.pop();render();}};
- document.getElementById('clear').onclick=()=>{if(confirm('Clear the whole canvas?')){snapshot();pixels=blank();render();}};
- document.getElementById('export').onclick=()=>{let c=document.createElement('canvas');c.width=c.height=64;let x=c.getContext('2d');x.clearRect(0,0,64,64);for(let i=0;i<pixels.length;i++){if(pixels[i]){x.fillStyle=pixels[i];x.fillRect(i%64,Math.floor(i/64),1,1);}}let a=document.createElement('a');a.download='pixel-art-64x64.png';a.href=c.toDataURL('image/png');a.click();};
+ document.getElementById('clear').onclick=()=>{if(confirm('Clear the active layer?')){snapshot();pixels=blank();active().pixels=pixels;render();}};
+ document.getElementById('addLayer').onclick=()=>addLayer(false);
+ document.getElementById('duplicateLayer').onclick=()=>addLayer(true);
+ document.getElementById('copyLayer').onclick=()=>{const l=active();layerClipboard={pixels:l.pixels.slice(),x:l.x,y:l.y,name:l.name};syncLayerUI();document.getElementById('textureStatus').textContent='Copied '+l.name+' to the layer clipboard.';};
+ document.getElementById('pasteLayer').onclick=()=>{if(layerClipboard){layers.push({id:nextLayerId++,name:'Pasted '+nextLayerId,pixels:layerClipboard.pixels.slice(),x:layerClipboard.x,y:layerClipboard.y,visible:true});activeLayer=layers[layers.length-1].id;pixels=active().pixels;syncLayerUI();render();}};
+ document.getElementById('deleteLayer').onclick=()=>{if(layers.length<2){alert('Keep at least one layer.');return;}layers=layers.filter(l=>l.id!==activeLayer);selectLayer(layers[layers.length-1].id);};
+ document.getElementById('toggleLayer').onclick=()=>{active().visible=!active().visible;syncLayerUI();render();};
+ function moveActive(x,y){const l=active();l.x=Math.max(-63,Math.min(63,x));l.y=Math.max(-63,Math.min(63,y));syncLayerUI();render();}
+ document.getElementById('applyOffset').onclick=()=>moveActive(parseInt(document.getElementById('layerX').value||0,10),parseInt(document.getElementById('layerY').value||0,10));
+ document.querySelectorAll('[data-dx]').forEach(b=>b.onclick=()=>moveActive(active().x+Number(b.dataset.dx),active().y+Number(b.dataset.dy)));
+ document.getElementById('export').onclick=()=>{let c=document.createElement('canvas');c.width=c.height=64;let x=c.getContext('2d'),merged=compositePixels();x.clearRect(0,0,64,64);for(let i=0;i<merged.length;i++){if(merged[i]){x.fillStyle=merged[i];x.fillRect(i%64,Math.floor(i/64),1,1);}}let a=document.createElement('a');a.download='pixel-art-64x64.png';a.href=c.toDataURL('image/png');a.click();};
  document.getElementById('imageInput').onchange=e=>{let f=e.target.files[0];if(!f)return;let im=new Image();im.onload=()=>{snapshot();let c=document.createElement('canvas');c.width=c.height=64;let x=c.getContext('2d');x.clearRect(0,0,64,64);x.imageSmoothingEnabled=false;x.drawImage(im,0,0,64,64);let d=x.getImageData(0,0,64,64).data;pixels=blank();for(let i=0;i<4096;i++){if(d[i*4+3])pixels[i]='#'+[d[i*4],d[i*4+1],d[i*4+2]].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();}render();URL.revokeObjectURL(im.src);e.target.value='';};im.src=URL.createObjectURL(f);};
- document.getElementById('saveProject').onclick=()=>{let b=new Blob([JSON.stringify({width:64,height:64,pixels})],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='pixel64-project.json';a.click();URL.revokeObjectURL(u);};
+ document.getElementById('saveProject').onclick=()=>{let b=new Blob([JSON.stringify({width:64,height:64,pixels:compositePixels(),layers,activeLayer})],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='pixel64-project.json';a.click();URL.revokeObjectURL(u);};
  document.getElementById('projectInput').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let o=JSON.parse(r.result);if(o.width!==64||o.height!==64||!Array.isArray(o.pixels)||o.pixels.length!==4096)throw Error();snapshot();pixels=o.pixels.map(v=>typeof v==='string'&&/^#[0-9a-f]{6}$/i.test(v)?v.toUpperCase():null);render();}catch{alert('That is not a valid Pixel64 project file.');}e.target.value='';};r.readAsText(f);};
  ['#191914','#F3ECDC','#262820','#9E3025','#C65332','#D5A63C','#72794C','#9AA06B','#5C4938','#B8753B','#D8C8A5','#77756B','#795548','#E7B7A0','#A9B7A0','#B8A68A'].forEach(c=>{let b=document.createElement('button');b.className='swatch';b.style.background=c;b.title=c;b.setAttribute('aria-label','Use '+c);b.onclick=()=>setColor(c);document.getElementById('swatches').appendChild(b);});
 
@@ -170,11 +236,92 @@ input[type=file]{display:none}
  }
  document.getElementById('generateTexture').onclick=()=>{textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
  document.getElementById('randomTexture').onclick=()=>{const prompts=['mossy stone','rusty metal','alien skin','blue water','dark wood','lava rock','ice crystal','desert sand','red brick','woven fabric'];document.getElementById('texturePrompt').value=prompts[Math.floor(Math.random()*prompts.length)];textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
- document.getElementById('useTexture').onclick=()=>{snapshot();pixels=texturePixels.slice();render();document.getElementById('textureStatus').textContent='Texture copied to your drawing canvas. You can edit it with the normal tools.';};
+ document.getElementById('useTexture').onclick=()=>{snapshot();pixels=texturePixels.slice();active().pixels=pixels;render();document.getElementById('textureStatus').textContent='Texture copied to '+active().name+'. Add another layer for details.';};
  document.getElementById('downloadTexture').onclick=()=>{const a=document.createElement('a');a.download='game-texture-64x64.png';a.href=textureCanvas.toDataURL('image/png');a.click();};
+ // Pattern-oriented generator: deliberately structured repeatable tiles, not random noise.
+ function generateTexture(){
+  const prompt=document.getElementById('texturePrompt').value.toLowerCase();
+  const out=tctx.createImageData(64,64), vals=Array(4096).fill('#000000');
+  const wood=['#38231A','#583321','#75472B','#99623A','#B9814A','#D1A16A'];
+  const paper=['#E8DDBF','#D7C7A2','#C3B58F','#F3EAD5'];
+  const ink=['#233C3A','#315D55','#C05C42','#E3B85D','#F4E8C8'];
+  const fish=['#C05C42','#DDAA43','#477B78','#7C91A5'];
+  const mortar='#6B6458',brick=['#783D32','#9C4F3D','#B86A50','#D18B68'];
+  const put=(x,y,c)=>{if(x>=0&&x<64&&y>=0&&y<64)vals[y*64+x]=c;};
+  const rect=(x,y,w,h,c)=>{for(let yy=y;yy<y+h;yy++)for(let xx=x;xx<x+w;xx++)put(xx,yy,c);};
+  const line=(x0,y0,x1,y1,c)=>{let dx=Math.abs(x1-x0),sx=x0<x1?1:-1,dy=-Math.abs(y1-y0),sy=y0<y1?1:-1,e=dx+dy;while(true){put(x0,y0,c);if(x0===x1&&y0===y1)break;let q=2*e;if(q>=dy){e+=dy;x0+=sx;}if(q<=dx){e+=dx;y0+=sy;}}};
+  const ellipse=(cx,cy,rx,ry,c)=>{for(let y=-ry;y<=ry;y++)for(let x=-rx;x<=rx;x++)if(x*x/(rx*rx)+y*y/(ry*ry)<=1)put(cx+x,cy+y,c);};
+  // Background base with a paper/wood palette.
+  vals.fill(paper[0]);
+  const isFish=/fish|underwater|sea life|ocean wallpaper/.test(prompt);
+  const isFloral=/flower|floral|botanical|leaf wallpaper/.test(prompt);
+  const isBrick=/brick|masonry/.test(prompt);
+  const isTile=/tile|checker|floor/.test(prompt);
+  const isMetal=/metal panel|steel panel|sci.?fi panel/.test(prompt);
+  const isWallpaper=/wallpaper|repeat|pattern/.test(prompt);
+  const isWood=/wood|panel|plank|timber/.test(prompt);
+  if(isFish){
+   vals.fill(paper[0]);
+   // Repeating staggered fish motif, with scale texture and little eyes.
+   for(let row=-1;row<5;row++)for(let col=-1;col<4;col++){
+    const cx=col*22+(row%2?11:0)+4,cy=row*16+6;
+    const fc=fish[(Math.abs(row*3+col*5))%fish.length];
+    ellipse(cx,cy,6,4,fc);line(cx-2,cy-1,cx+3,cy-1,'#F0D7A6');
+    line(cx-2,cy+1,cx+2,cy+1,'#F0D7A6');
+    // tail
+    put(cx-7,cy,fc);put(cx-8,cy-1,fc);put(cx-8,cy+1,fc);
+    put(cx+3,cy-1,'#F6EBD2');put(cx+4,cy-1,'#25251F');
+    // fins
+    put(cx,cy-4,fc);put(cx-1,cy-5,fc);put(cx,cy+4,fc);
+    if(isWallpaper){put(cx+10,cy+7,'#C9B994');put(cx+11,cy+8,'#C9B994');}
+   }
+  }else if(isFloral){
+   vals.fill('#E8DDBF');
+   for(let y=4;y<70;y+=16)for(let x=4+(Math.floor(y/16)%2)*8;x<70;x+=16){
+    const p=['#C05C42','#477B78','#D5A84F'][Math.abs(x+y)%3];
+    for(const [dx,dy] of [[0,-3],[3,0],[0,3],[-3,0]])ellipse(x+dx,y+dy,2,3,p);
+    put(x,y,'#E3B85D');line(x,y+4,x-1,y+8,'#52724A');put(x-2,y+6,'#52724A');put(x+1,y+7,'#52724A');
+   }
+  }else if(isBrick){
+   vals.fill(mortar);
+   for(let y=0;y<64;y+=8)for(let x=-(Math.floor(y/8)%2)*8;x<64;x+=16){
+    const col=brick[Math.abs(Math.floor(x/16)+Math.floor(y/8))%brick.length];rect(x+1,y+1,14,6,col);line(x+2,y+2,x+12,y+2,'#D89A77');
+   }
+  }else if(isTile){
+   vals.fill('#332F2A');
+   for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=16){const col=((x/16+y/16)%2)?'#D6C6A5':'#87917A';rect(x+1,y+1,14,14,col);line(x+2,y+2,x+13,y+2,'#F1E4C9');}
+  }else if(isMetal){
+   vals.fill('#343B3D');
+   for(let y=0;y<64;y+=16)for(let x=0;x<64;x+=32){rect(x+1,y+1,30,14,'#687477');line(x+2,y+2,x+29,y+2,'#C1C8BE');for(const [dx,dy] of [[4,4],[27,4],[4,11],[27,11]])put(x+dx,y+dy,'#D9D4C3');}
+  }else if(isWood){
+   vals.fill(wood[1]);
+   for(let y=0;y<64;y+=16){
+    rect(0,y,64,16,wood[(Math.floor(y/16)+1)%wood.length]);
+    line(0,y,63,y,'#2C1B15');line(0,y+1,63,y+1,wood[4]);
+    // staggered board joins and hand-drawn grain
+    const seam=(Math.floor(y/16)%2)*19+25;line(seam,y,seam,y+15,'#2C1B15');line(seam+1,y,seam+1,y+15,wood[2]);
+    for(let k=0;k<4;k++){let gx=(k*17+Math.floor(y/16)*7)%60,gy=y+3+(k*3)%10;line(gx,gy,Math.min(63,gx+3+(k%4)),gy,wood[(k+2)%wood.length]);}
+    if(y===16||y===48){ellipse(seam-5,y+8,2,1,'#2C1B15');put(seam-5,y+8,wood[4]);}
+   }
+  }else{
+   // Material mode: blocky grain and broad bands, avoiding generic cloudy noise.
+   const isStone=/stone|rock|concrete/.test(prompt),isGrass=/grass|moss|leaf/.test(prompt),isWater=/water|ocean|river/.test(prompt),isSand=/sand|dirt|desert/.test(prompt),isLava=/lava/.test(prompt);
+   const pal=isStone?['#33363A','#555A5B','#74766F','#A5A08B']:isGrass?['#203F2B','#38613A','#6F8240','#A3A65C']:isWater?['#14364A','#1E6274','#31949A','#91C5B5']:isSand?['#8A6A42','#B08B56','#D0B77B','#E4D5A5']:isLava?['#321D28','#8C3029','#D64C27','#F2A43B']:wood;
+   for(let y=0;y<64;y++)for(let x=0;x<64;x++){let v=(Math.floor(x/4)*3+Math.floor(y/3)*5+Math.floor(rand()*4))%pal.length;put(x,y,pal[v]);}
+  }
+  // Add a restrained, repeating border when the prompt asks for framed panels.
+  if(/border|framed/.test(prompt)){for(let i=0;i<64;i++){put(i,0,'#26251F');put(i,63,'#26251F');put(0,i,'#26251F');put(63,i,'#26251F');}}
+  for(let i=0;i<4096;i++){const col=vals[i],v=parseInt(col.slice(1),16),p=i*4;out.data[p]=(v>>16)&255;out.data[p+1]=(v>>8)&255;out.data[p+2]=v&255;out.data[p+3]=255;}
+  tctx.putImageData(out,0,0);texturePixels=vals;
+  const label=isFish?'fish wallpaper':isFloral?'floral wallpaper':isBrick?'brick wall':isTile?'floor tile':isMetal?'metal panels':isWood?'wood panels':'material pattern';
+  document.getElementById('textureStatus').textContent='Built a 64 × 64 repeating '+label+'. This is a pattern tool, not a text-to-image AI.';
+ }
+ document.querySelectorAll('[data-pattern]').forEach(b=>b.onclick=()=>{document.getElementById('texturePrompt').value=b.dataset.pattern;textureSeed=(Math.random()*4294967295)>>>0;generateTexture();});
+ document.getElementById('generateTexture').onclick=()=>{textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
+ document.getElementById('randomTexture').onclick=()=>{const prompts=['wood panels','fish wallpaper','brick wall','checker tile','floral wallpaper','metal panels','mossy stone','sand texture'];document.getElementById('texturePrompt').value=prompts[Math.floor(Math.random()*prompts.length)];textureSeed=(Math.random()*4294967295)>>>0;generateTexture();};
  generateTexture();
 
- render();
+ render();syncLayerUI();
 })();
 </script>
 </body>
